@@ -1,0 +1,288 @@
+\documentclass[b5paper,11pt,fleqn,openright]{memoir}
+\semiisopage[12]
+\setlength{\uppermargin}{60pt}
+\setlength{\headsep}{24pt}
+\checkandfixthelayout[nearest]
+
+\usepackage{cmbright}  % nice font
+
+\usepackage[utf8]{inputenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amsmath,amsfonts,amssymb,bm}%,amsthm}
+\usepackage{gensymb}
+\usepackage[capitalise]{cleveref}
+\usepackage{graphicx,subcaption}
+\usepackage{siunitx}
+\usepackage{stmaryrd}
+\usepackage{pgffor}
+\usepackage{enumitem}
+%\includeonly{mainmatter/uasstop.tex}
+\usepackage[final]{pdfpages}
+
+\usepackage{nomencl}
+\makenomenclature
+
+%float barrier
+\usepackage{placeins}
+
+\usepackage{lmodern}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% math stuff
+\usepackage{cancel} 
+\usepackage{bm}
+\usepackage{upgreek}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage{amssymb}
+
+
+
+
+%pgf plot
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{tikz}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{patterns}
+\usetikzlibrary{patterns.meta} 
+\usetikzlibrary{positioning}
+
+\usepgfplotslibrary{patchplots}
+
+\usetikzlibrary{external}
+% \tikzexternalize % activate!
+% \usetikzlibrary{shapes.geometric, arrows,positioning, calc, arrows.meta,scopes}
+% and optionally (as of Pgfplots 1.3):
+
+\pgfplotsset{plot coordinates/math parser=false}
+\newlength\figureheight
+\newlength\figurewidth 
+
+
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepgfplotslibrary{groupplots, external}
+
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor3}{rgb}{0.92900,0.69400,0.12500}%
+\definecolor{mycolor4}{rgb}{0.46670,0.67450,0.18820}%
+\definecolor{mycolor5}{rgb}{0.49400,0.18400,0.55600}%
+
+\newlength{\twosubht}
+\newsavebox{\twosubbox}
+
+
+% definitions
+\newcommand{\uniform}{$SG_U$}
+\newcommand{\princ}{$SG_P$}
+\newcommand{\userdefine}{$SG_A$}
+
+\newcommand{\uniforms}{$SG_U$ }
+\newcommand{\princs}{$SG_P$ }
+\newcommand{\userdefines}{$SG_A$ }
+
+
+\newlength{\imwidth}
+\setlength{\imwidth}{14.cm}
+
+\newlength{\imwidthmax}
+\setlength{\imwidthmax}{15.cm}
+
+%style=numeric-comp
+\usepackage[natbib=true, style=numeric-comp, backend=biber, defernumbers, maxbibnames=99, maxcitenames=2, sorting=nyt, eprint=false, giveninits=true]{biblatex}
+\addbibresource{ownPub/myownpubs.bib}
+\addbibresource{bib.bib} 
+\AtEveryBibitem{%
+  % \clearfield{issn} % Remove issn
+  \ifentrytype{online}{}{% Remove url except for @online
+    \clearfield{url}
+  }
+}
+\setlength\bibitemsep{1.5\itemsep}
+
+% \definecolor{mylinkcolor}{rgb}{0.6745098039, 0.4196078431, 0.5921568627}%
+\definecolor{mylinkcolor}{rgb}{0.,0.5019607843,0.6745098039}%
+\definecolor{mycitecolor}{rgb}{0.9294117647, 0.4274509804, 0.4509803922}%
+\definecolor{myurlcolor}{rgb}{0.4156862745, 0.6509803922, 0.6862745098}%
+
+
+\hypersetup{
+  linkcolor  = mylinkcolor,
+  citecolor  = mylinkcolor,
+  urlcolor   = mylinkcolor,
+  colorlinks = true,
+}
+
+
+
+\DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+\renewbibmacro*{cite}{%
+  \printtext[bibhyperref]{%
+    \printfield{labelprefix}%
+    \ifkeyword{myPapers}
+      {\printfield{labelnumber}}
+      {\ifkeyword{myPapers2}
+      {\printfield{labelnumber}}
+      {\printfield{labelalpha}%
+      \printfield{extraalpha}}}}}
+
+
+
+\defbibenvironment{bibliographyNUM}
+  {\list
+     {\printtext[labelnumberwidth]{%
+        \printfield{labelprefix}%
+        \printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}}
+  {\endlist}
+  {\item}
+
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+  \printtext{\bibstring{in}\intitlepunct}}}
+  
+ \preto\fullcite{\AtNextCite{\defcounter{maxnames}{99}}}
+  
+\newlength\drop
+\makeatletter
+\newcommand*\titleM{\begingroup% Misericords, T&H p 153
+\setlength\drop{0.08\textheight}
+\centering
+\vspace*{\drop}
+{\Huge\mdseries \thetitle }\\[\baselineskip]
+%{\scshape the subtitle}\\[\baselineskip]
+\vfill
+{\large\mdseries \theauthor}\par
+\vfill
+{\mdseries Department of Civil and Mechanical Engineering\\Technical University of Denmark, 2800 Kongens Lyngby\\\@date}\par
+\vspace*{0\drop}
+\endgroup}
+\makeatother
+
+
+\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\usepackage{mathalpha}
+
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{<-> mathx10}{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareMathAccent{\widebar}{0}{mathx}{"73}
+
+%\chapterstyle{southall}
+
+
+\makechapterstyle{southall-mod}{%
+  \chapterstyle{default}
+  \setlength{\afterchapskip}{1\baselineskip} %%%%%%%%% MOD: WAS 5\baselineskip
+  \setlength{\beforechapskip}{18pt}%    \headindent %%%%%%% MOD: WAS 36pt
+  \setlength{\midchapskip}{\textwidth}% \rightblock
+  \addtolength{\midchapskip}{-\beforechapskip}
+  \renewcommand*{\chapterheadstart}{}%\vspace*{0pt}} %%%% MOD: WAS 2\baselineskip
+%%%  \renewcommand*{\chaptitlefont}{\huge\rmfamily\raggedright}
+  \renewcommand*{\chaptitlefont}{\huge\rmfamily\memRTLraggedright}
+  \renewcommand*{\chapnumfont}{\chaptitlefont}
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapternamenum}{}
+  \renewcommand*{\afterchapternum}{}
+  \renewcommand*{\printchapternum}{%
+    \begin{minipage}[t][\baselineskip][b]{\beforechapskip}
+      {\vspace{0pt}\chapnumfont%%%\figureversion{lining}
+                   \thechapter}
+    \end{minipage}}
+  \renewcommand*{\printchaptertitle}[1]{%
+    \hfill\begin{minipage}[t]{\midchapskip}
+      {\vspace{0pt}\chaptitlefont ##1\par}\end{minipage}}
+  \renewcommand*{\afterchaptertitle}{%
+    \par\vspace{\baselineskip}%
+    \hrulefill \par\nobreak\noindent \vskip \afterchapskip}}
+
+\newcommand{\InsertBlankPages}[1]{
+  \foreach \blank in {1,...,#1} {
+    \newpage
+    \thispagestyle{plain}
+    \mbox{}
+  }%
+}
+
+\newlength{\commalabelwd}
+\newcommand{\commalabel}[2]{%
+  \settowidth\commalabelwd{\normalfont#2\hspace{\labelsep}}%
+  \normalfont#2\ifdim#1<\commalabelwd\fi\hfill
+}
+
+
+
+% \chapterstyle{southall-mod}
+% \chapterstyle{brotherton}
+% \chapterstyle{madsen}
+\chapterstyle{veelo}
+
+\setcounter{tocdepth}{3}
+\setsecnumdepth{subsection}
+
+
+\title{Thesis Title}
+\author{Ph.D. Candidate}
+\date{Monnth Year}
+
+\newcommand{\red}[1]{{\color{red}#1}}
+
+
+\begin{document}
+
+
+\frontmatter
+
+\includepdf[pages=-,width=\paperwidth, templatesize={\paperwidth}{250mm}, offset=0 -0.2mm]{Cover/Front.pdf}
+\cleardoublepage
+
+
+\openany
+\include{frontmatter/frontmatter.tex}
+
+\mainmatter
+\openright
+\include{mainmatter/introduction.tex}
+
+
+\newrefcontext[labelprefix=]
+\printbibliography[notkeyword=myPub,notkeyword=myMan]
+
+
+\appendix
+\chapter{Appendix}
+\include{appendix/appendix.tex}
+
+\pagestyle{plain}
+
+\FloatBarrier
+\chapter*{Publications}
+\addcontentsline{toc}{chapter}{Publications}%
+\include{ownPub/ownPub.tex}
+
+\cleardoublepage
+
+\thispagestyle{empty}
+\movetoevenpage
+% Include back page here
+\includepdf[pages=-,width=1\paperwidth, templatesize={\paperwidth}{\paperheight}, offset=0 -0.2mm]{Cover/Back.pdf}
+
+
+
+
+\end{document}

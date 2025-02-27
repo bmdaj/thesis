@@ -1,0 +1,64 @@
+\begin{titlingpage}
+  \titleM
+  \clearpage
+  \noindent\textbf{Thesis title:} \\\noindent Thesis title
+  \vspace{1.5em}
+
+  \noindent\textbf{Author:}\\\noindent Ph.D. Candidate\\Department of Civil and Mechanical Engineering\\ Technical University of Denmark
+  \vspace{0.5em}
+
+  \noindent\textbf{Main Supervisor:}\\\noindent Main superviser\\Department of Civil and Mechanical Engineering\\ Technical University of Denmark
+  \vspace{0.5em}
+
+  \noindent\textbf{Co-supervisors:}\\
+  \noindent Co-superviser\\Department of Civil and Mechanical Engineering\\ Technical University of Denmark
+  \vspace{0.5em}
+
+  \noindent\textbf{Funding and competing interests:}\\\noindent This work was funded by the Villum Foundation, through the Villum investigator project InnoTop. The author has no competing interests.
+  \vspace{1.5em}
+
+  \noindent\textbf{Duration:}\\\noindent The work has been carried out between the DATA0 and the DATA1.
+  \vspace{2.2em}
+
+  \noindent \copyright Ph.D. Candidate
+  \vspace{1em}
+
+  \noindent Department of Civil and Mechanical Engineering\\Technical University of Denmark\\ Nils Koppels Allé, Building 404 \\ DK-2800 Kongens Lyngby, Denmark
+  \vspace{1em}
+
+  \noindent MEK-PHD ISSN: \#\#\#\#-\#\#\#\#
+\end{titlingpage}
+\setcounter{page}{3}
+\chapter*{Preface}
+
+Bla bla bla...
+
+\noindent Kongens Lyngby, \today,\\
+\vspace{0.1cm}\\
+\noindent \textit{Ph.D. Candidate}
+
+\chapter*{Abstract}
+
+Bla bla bla...
+
+\chapter*{Resumé}
+
+Bla bla bla...
+
+\cleardoublepage
+\chapter*{List of Publications}
+\nocite{ownpub0,ownpub1}
+\newrefcontext[sorting=none,labelprefix=P]
+\printbibliography[env=bibliographyNUM,keyword=myPub,title={List of publications},heading=none,resetnumbers]
+\newrefcontext[sorting=none,labelprefix=M]
+\printbibliography[env=bibliographyNUM,keyword=myMan,heading=none,resetnumbers]
+%https://tex.stackexchange.com/questions/553753/how-to-add-list-of-publication-in-thesis-class
+%\endrefcontext
+
+\cleardoublepage
+
+{
+  \hypersetup{linkcolor=black}
+  \tableofcontents*
+}
+

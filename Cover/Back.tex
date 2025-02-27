@@ -1,0 +1,64 @@
+% For generating front cover page for DTU thesis since DTU does not want to do it anymore...
+% Created by: Kenneth Jensen, PhD student, DTU Construct, 22 January 2024
+% NOTE: compile using XeLaTeX/lualatex for font support
+
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes.multipart}
+\usepackage{showframe}
+\usepackage{fontspec}
+\usepackage[11pt]{moresize}
+\usepackage{setspace}
+
+% Set font to Neo Sans Pro (DTU font, must be installed on PC)
+\setmainfont{Neo Sans Pro}
+
+% Set page size and margins
+\usepackage[paperheight=24cm, paperwidth=17cm, margin=0cm, heightrounded]{geometry}
+
+% Set page color
+\definecolor{customcolor}{RGB}{29, 94, 234} % DTU blue
+\pagecolor{customcolor}
+
+% Textbox command
+\newcommand{\positiontextbox}[5][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0pt, right, fill=none, align=left, #1] at ($(current page.north west) + (#2,-#3)$) {#4};
+  \end{tikzpicture}%
+}
+
+\renewcommand{\baselinestretch}{1.25}
+
+\begin{document}
+
+% DTU Construct
+\positiontextbox[text=white, font=\footnotesize, fill=none]{1.1cm}{19.9cm}{
+DTU Construct \\ Section of Solid Mechanics \\ Technical University of Denmark \\
+\\
+Koppels Allé, Bld. 404 \\ DK-2800 Kgs. Lyngby \\ Denmark \\ Phone: (+45) 4525 1960 \\
+\\
+www.construct.dtu.dk \\
+\\
+January 2024 \\
+\\
+ISBN: 978-87-7475-791-7
+}
+
+% DCAMM
+\positiontextbox[text=white, font=\footnotesize, fill=none]{10.6cm}{19.9cm}{
+DCAMM \\ Danish Center for Applied Mathematics \\ and Mechanics \\
+\\
+Koppels Allé, Bld. 404 \\ DK-2800 Kgs. Lyngby \\ Denmark \\ Phone: (+45) 4525 1960 \\
+\\
+www.dcamm.dk \\
+\\
+DCAMM Special Record No. S\#\#\# \\
+\\
+ISSN: \#\#\#\#-\#\#\#\#
+}
+
+\end{document}

@@ -1,0 +1,69 @@
+% For generating front cover page for DTU thesis since DTU does not want to do it anymore...
+% Created by: Kenneth Jensen, PhD student, DTU Construct, 22 January 2024
+% NOTE: compile using XeLaTeX/lualatex for font support
+
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes.multipart}
+\usepackage{showframe}
+\usepackage{fontspec}
+\usepackage[11pt]{moresize}
+\usepackage{wallpaper}
+
+% Set font to Neo Sans Pro (DTU font, must be installed on PC)
+\setmainfont{Neo Sans Pro}
+
+% Set page size and margins
+\usepackage[paperheight=24cm, paperwidth=17cm, margin=0cm, heightrounded]{geometry}
+
+% Set page color
+\definecolor{customcolor}{RGB}{47, 62, 234} % DTU blue
+\pagecolor{customcolor}
+
+% Textbox command
+\newcommand{\positiontextbox}[5][]{%
+    \begin{tikzpicture}[remember picture, overlay]
+    \node[inner sep=0pt, right, fill=none, align=left, #1] at ($(current page.north west) + (#2,-#3)$) {#4};
+  \end{tikzpicture}%
+}
+
+% Picture (insert as background picture to allow text overlay)
+\ThisCenterWallPaper{1}{DTU_Background_Patterns_RGB/DTU_Background_Pattern_Blue_RGB/DTU_Background_Pattern_Blue_RGB.jpg}
+\setlength{\wpXoffset}{0cm}
+\setlength{\wpYoffset}{-5cm}
+
+\begin{document}
+
+% Picture
+%\begin{figure*}[b!] % Align with bottom of page
+    %\vspace{5cm}   % Vertical alignment of picture
+%    \includegraphics[width=\textwidth, trim=0 0 0 17.5cm, clip]{DTU_Background_Patterns_RGB/%DTU_Background_Pattern_Blue_RGB/DTU_Background_Pattern_Blue_RGB.jpg}
+%\end{figure*}
+
+% Insert DTU logo
+\begin{tikzpicture}[overlay, remember picture]
+\node[anchor = north west, % Set relative to top left corner
+      xshift = 0.7cm,      % X-coordinate
+      yshift = -1cm]       % Y-coordinate
+     at (current page.north west)
+     %{\includegraphics[width=1cm]{DTU_Logo/DTU_logo_red.png}};    % Red
+     {\includegraphics[width=1cm]{DTU_Logo/DTU_logo_white.png}};  % White
+\end{tikzpicture}
+
+% DTU Construct
+\positiontextbox[text=white, font=\footnotesize, fill=none]{10cm}{1.4cm}{\bfseries{DTU Construct} \\ Department of Civil and Mechanical Engineering}
+
+% PhD Thesis
+\positiontextbox[text=white, font=\huge, fill=none]{12cm}{22cm}{\bfseries{PhD Thesis}}
+
+% Title
+\positiontextbox[text=white, font=\huge, fill=none]{0.9cm}{5cm}{\bfseries{Thesis Title}}
+
+% Author
+\positiontextbox[text=white, font=\huge, fill=none]{0.9cm}{7.7cm}{Ph.D. Candidate}
+
+\end{document}
