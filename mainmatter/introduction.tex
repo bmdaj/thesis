@@ -2,6 +2,18 @@
 
 Bla bla bla...
 
+Current state-of-the-art design approaches for photonic devices often rely on trial-and-error
+experience-based multi-stage approaches using simplified physics models for individual
+components. This may in part be due to the extensively developed and well-understood models
+for the temporal and spatial confinement of light in pure photonic structures, such as photonic
+crystals and waveguides, and in part due to the complexity of the full physics problems. Further, such design approaches often ignore multi-physics effects, such as . If these
+effects are strong, and simultaneously have a large influence on the optical field, their omission in
+the design process may lead to a suboptimal final device.
+
+This Ph.D. project aims to address these challenges by employing novel
+multi-physics design optimization techniques, which accurately capture 
+the important effects of the full physics problem.
+
 %\begin{figure}[tb]
 %    \centering
 %    \makebox[\textwidth][c]{\includegraphics[width=1\imwidth]{figures/simpModel.png}}%
@@ -24,9 +36,80 @@ Bla bla bla...
 
 \section{Multiphysics effects in nano-optics}
 
+RECHECK THAT EVERYTHING HERE IS CORRECT AND MAKES SENSE. 
+
+Nature offers a wide range of examples of nano-optical systems that exhibit 
+multi-physics effects, see Figure 1.
+For example, the wings of the butterfly exhibit structural coloration due to the
+ interaction of light 
+with nanostructures in the wing scales. The color of the wings can change due to
+ mechanical motion, where the angle of incidence of light changes.
+The opal is another example of a natural nano-optical system, where the color of the opal
+changes due to the periodic structure of the crystal. The color of the opal can change
+due to the angle of incidence of light, or due to temperature changes in the evironment, 
+which can result in evaporation, changing the spacing between the crystal planes.
+Another example of a nano-optical system is the soap bubble, where the color of the bubble
+changes due to the varying thickness of the bubble. The color of the bubble can change due to
+mechanical stresses, evaporation due to temperature changes, or due to the chemical composition
+of the bubble.
+%butterfly example, chameleon, firefly bioluminesce with heat, opal iridescence (change with heat/water).
+%Soap bubles, they will change color when through mechanical stresses, evaporation due to temperature changes, chemical composition, etc.
+
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/motivation_natural.png}}%%
+    \caption{Examples of mascroscopic nano-optical systems that exhibit multi-physics effects. From left to right, nanostructures in wings of the butterfly, the colloidal crystal structure in the opal, and the thin-film effects in the varying thickness soap bubble.}
+    \label{fig:motivation_natural}
+\end{figure}
+
+% Wikimedia commons:
+% 1. https://commons.wikimedia.org/wiki/File:Peleides_blue_morpho_(Morpho_peleides).jpg
+% 2. https://commons.wikimedia.org/wiki/File:Opal-53714.jpg
+% https://www.reddit.com/r/educationalgifs/comments/56sg9x/a_butterflys_wings_can_change_color_when_soaked/
+%Sources:
+%The GIF came from this video
+
+%Ding, Y. Structural colors from Morpho peleides butterfly wing scales. J. Appl. Phys. 2009: 106, 074702
+
+%Van Hooijdonk, E., et al. Detailed experimental analysis of the structural fluorescence in the butterfly Morpho sulkowskyi (Nymphalidae) J. Nanophoton. 2011: 5(1), 053525
+
+
+The field of nano-optics ...
+
 \section{Topology optimization in nano-optics}
+
+As seen by the examples in Figure 1, nano-optical systems exhibit multi-physics effects,
+where ingenously engineered geometry and material properties play a crucial role in the
+optical response of the system. Inspired by these natural structures a goal of nano-optics
+design is to optimize the geometry and material properties of the system to achieve a desired
+optical response. Topology optimization offers a systematic approach to optimize the geometry
+and material properties of a system to obtain a desired optical performance under a set of constraints.
+
+Topology optimization is a systematic design method that can optimize designs based on a target FOM and a set of constraints. 
+Say that it was introduced in the field of mechanics (CITE BENDSOE), but then it was extended to 
+nano-optic and nanphotonic systems (CITE JENSEN, SIGMUND).
+
+In Figure XX we we show an example of a topology optimziation problem in nano-optics. The 
+main idea is two optimize the distribution of material in the design domain for two different materials, 
+where the material distribution is optimized to maximize a FOM. ADD SOMETHING ABOUT THE SOURCE.
+
+
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/top_opt.png}}%%
+    \caption{Topology optimization of a nano-optic system, excited by a source. The simulation domain is composed by a passive domain (blue) where the material is fixed, and a design domain (grey), where the material distribution is optimized for two different materials.}
+    \label{fig:top_opt}
+\end{figure}
 
 \section{Structure of the Thesis}
 
+This thesis covers multi-physics topology optimization problems in nano-optic systems. It provides an overview
+of different type of multi-physics problems.
 
-Bla bla bla...
+\textbf{Chapter 1} presents ...
+
+\textbf{Chapter 2} presents ...
+
+This thesis consists of a collection of papers, including unpublished work on
+systems of coupled dipole emitter problems. The published content is included in the attached
+papers.

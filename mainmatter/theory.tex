@@ -24,6 +24,94 @@ Bla bla bla...
 
 \section{Modeling optical systems -- an electromagnetic wave problem}
 
+\subsection*{The macroscopic Maxwell's equations}
+
+Macroscopic electromagnetic systems can be described by Maxwell's equations. The time-domain Maxwell's equations in a linear, isotropic, and homogeneous medium can be written as
+\begin{align}
+    \nabla \times \mathbf{E} (\mathbf{r},t) &= - \frac{\partial \mathbf{B}(\mathbf{r},t)}{\partial t}, \quad \quad &\text{(Faraday's law)} \label{eq:curlE_time}\\
+    \nabla \times \mathbf{H} (\mathbf{r},t) &= \varepsilon \frac{\partial \mathbf{E}(\mathbf{r},t)}{\partial t} + \mathbf{j}(\mathbf{r},t), \quad \quad &\text{(Ampère's law)} \label{eq:curlH_time}\\
+    \nabla \cdot \mathbf{D} (\mathbf{r},t) &= \rho(\mathbf{r},t), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_time}\\
+    \nabla \cdot \mathbf{B} (\mathbf{r},t) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_time}
+\end{align}
+where $\mathbf{E}$ and $\mathbf{H}$ are the electric and magnetic fields, respectively, $\mathbf{D} = \varepsilon \mathbf{E}$ is the electric displacement field, $\mathbf{B} = \mu \mathbf{H}$ is the magnetic induction field, $\varepsilon$ is the permittivity, and $\mu$ is the permeability.
+
+In the presence of polarization $\mathbf{P}$ and magnetization $\mathbf{M}$, the fields $\mathbf{D}$ and $\mathbf{B}$ are related to $\mathbf{E}$ and $\mathbf{H}$ by $\mathbf{D}(\mathbf{r}, t) = \varepsilon_0 \mathbf{E}(\mathbf{r}, t) + \mathbf{P}(\mathbf{r}, t)$ and $\mathbf{H}(\mathbf{r}, t) = \mu_0^{-1} \mathbf{B}(\mathbf{r}, t) - \mathbf{M}(\mathbf{r}, t)$
+
+where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the permeability of free space.
+
+
+\subsection*{Electromagnetics in the frequency domain}
+
+The time-dependence in Maxwell's equations can be separated by assuming a harmonic time-dependence of the fields:
+
+\begin{equation}
+    \mathbf{E}(\mathbf{r}, t) = \Re \{ \mathbf{E}(\mathbf{r}) e^{-i\omega t} \} = \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{i\omega t} + \mathbf{E}^*(\mathbf{r}) e^{-i\omega t}\right], \label{eq:E_harmonic}\\
+\end{equation}
+
+Then, the time-domain Maxwell's equations can be written as
+
+\begin{align}
+    \nabla \times \mathbf{E} &= -i\omega \mu \mathbf{H}, \quad \quad &\text{(Faraday's law)} \label{eq:curlE_freq}\\
+    \nabla \times \mathbf{H} &= i\omega \varepsilon \mathbf{E}, \quad \quad &\text{(Ampère's law)} \label{eq:curlH_freq}\\
+    \nabla \cdot \mathbf{D} &= 0, \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_freq}\\
+    \nabla \cdot \mathbf{B} &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_freq}
+\end{align}
+
+WRITE WAVE EQUATION
+
+\subsection*{Piecewise homogeneous media and boundary conditions}
+
+\subsection*{Modeling single emitters: the Green's function formalism}
+
+\subsection*{Some useful properties of Maxwell's equations}
+
+Linearity, superposition, conservation laws (charge, energy, momentum), time-reversal symmetry/recirpocity
+self-adjointness, duality symmetry ...
+
+\subsection*{Point-like emitters: the Green's function formalism}
+
+\section{The finite element method in electromagnetics}
+
+(CHECK IANS THESIS)
+
+The weak form of the wave equation can be written as (CHECK CHATGPT):
+\begin{equation}
+    \int_{\Omega} \nabla \times \mathbf{E} \cdot \nabla \times \mathbf{v} - k^2 \int_{\Omega} \mathbf{E} \cdot \mathbf{v} = \int_{\Omega} \mathbf{J} \cdot \mathbf{v} \quad \forall \mathbf{v} \in V,
+\end{equation}
+The weak form can be discretized by using the finite-element method. An example is shown in Figure YY, 
+where we have discretized the two-dimensional domain in Figure XX into a set of triangular edge elements. 
+The edge elements, or Nedelec elements (CITE), of first kind are a natural choice for the electromagnetic 
+wave equation, as they are divergence-free and enforce the continuity of the tangential electric field 
+across the element boundaries, which is a natural boundary condition for Maxwell's equations 
+\footnote{For 2D models where the field discontinuity at the material interfaces 
+is in the out-of-plane direction (e.g., Publication 3), one can use Lagrange element without 
+exciting spurious modes.}. In Figure YY
+we show the structure of a Nedelec element alongside a quiver plot of the shape function one of the edges.
+Using the shape functions we can calculate the contribution of the different elements to the weak form of the
+wave equation, which can be assembled into a system of equations in the strong form:
+\begin{equation}
+    \mathbf{K} \mathbf{E} = \mathbf{F},
+\end{equation}
+where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source
+ term. In the case of eigenvalue problems the source term is zero ($\mathbf{F}=0$), and the system of equations 
+that needs to be solved is given by:
+\begin{equation}
+    \left(\mathbf{K} - \lambda \mathbf{I} \right) \mathbf{E} =  \mathbf{0},
+\end{equation}
+
+Note that the stiffness matrix is symmetric indefinite, restricting the use of iterative solvers (e.g., Cholesky factorization, Krylov method) to solve the system of equations. Instead LU factorization is a common choice for direct solvers.
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/FEM.png}}%%
+    \caption{Geometrical discretization of the physical domain into the finite element mesh, which is composed of Nedelec vector-elements. The element colored in light blue is a triangular element with three nodes and three edges, where we have sketched a quiver plot for the shape function $\mathbf{N}_2$ for Edge 2.}
+    \label{fig:fem}
+\end{figure}
+
+Eigenvalue vs RHS problems
+
+
+Lagrange elements vs Edge elements. Comment spurious modes.
+
 \section{Beyond single-physics -- coupled optical systems}
 
 Differentiate between weak and strong coupling.
@@ -32,4 +120,12 @@ Differentiate between weak and strong coupling.
 
 \subsection{Adjoint sensitivity analysis}
 
+\section{A practical note on computational implementation}
+
+Using first order edge, or nodal, elements a rule of thumb is to include at least 10 elements per wavelength.
+
+Discuss direct vs iterative solvers, discuss condition number of the system.
+Sparsity, symmetry, definitiness
+Discuss the practical implementation, with COMSOL and other means (Fenics, gridap, etc).
+Check Niels, Ian's thesis, and other references.
 Bla bla bla...
