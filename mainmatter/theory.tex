@@ -33,12 +33,38 @@ Macroscopic electromagnetic systems can be described by Maxwell's equations. The
     \nabla \cdot \mathbf{D} (\mathbf{r},t) &= \rho(\mathbf{r},t), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_time}\\
     \nabla \cdot \mathbf{B} (\mathbf{r},t) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_time}
 \end{align}
-where $\mathbf{E}$ and $\mathbf{H}$ are the electric and magnetic fields, respectively, $\mathbf{D} = \varepsilon \mathbf{E}$ is the electric displacement field, $\mathbf{B} = \mu \mathbf{H}$ is the magnetic induction field, $\varepsilon$ is the permittivity, and $\mu$ is the permeability.
+where $\mathbf{E}$ and $\mathbf{H}$ are the electric and magnetic fields, respectively, 
+$\mathbf{D} = \varepsilon \mathbf{E}$ is the electric displacement field, 
+$\mathbf{B} = \mu \mathbf{H}$ is the magnetic induction field, 
+$\varepsilon$ is the permittivity, and $\mu$ is the permeability.
 
-In the presence of polarization $\mathbf{P}$ and magnetization $\mathbf{M}$, the fields $\mathbf{D}$ and $\mathbf{B}$ are related to $\mathbf{E}$ and $\mathbf{H}$ by $\mathbf{D}(\mathbf{r}, t) = \varepsilon_0 \mathbf{E}(\mathbf{r}, t) + \mathbf{P}(\mathbf{r}, t)$ and $\mathbf{H}(\mathbf{r}, t) = \mu_0^{-1} \mathbf{B}(\mathbf{r}, t) - \mathbf{M}(\mathbf{r}, t)$
+Give an explanation of Maxwell's equations. Perhaps with some bullet points?
 
+In the presence of polarization $\mathbf{P}$ and magnetization $\mathbf{M}$, 
+the fields $\mathbf{D}$ and $\mathbf{B}$ are related to $\mathbf{E}$ and 
+$\mathbf{H}$ by the following equations:
+\begin{align}
+    \mathbf{D}(\mathbf{r}, t) &= \varepsilon_0 \mathbf{E}(\mathbf{r}, t) + \mathbf{P}(\mathbf{r}, t), \\
+    \mathbf{H}(\mathbf{r}, t) &= \mu_0^{-1} \mathbf{B}(\mathbf{r}, t) - \mathbf{M}(\mathbf{r}, t),
+\end{align}
 where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the permeability of free space.
 
+Using Maxwell's equations and applying the curl operator to Faraday's law and Ampère's law, 
+together with the definition of the polarization and magnetization,
+we can derive the wave equation for the electric and magnetic fields:
+\begin{equation}
+\begin{aligned}
+    & \nabla \times \nabla \times \mathbf{E}+\frac{1}{c^2} \frac{\partial^2 \mathbf{E}}{\partial t^2}=-\mu_0 \frac{\partial}{\partial t}\left(\mathbf{j}+\frac{\partial \mathbf{P}}{\partial t}+\nabla \times \mathbf{M}\right), \\
+    & \nabla \times \nabla \times \mathbf{H}+\frac{1}{c^2} \frac{\partial^2 \mathbf{H}}{\partial t^2}=\nabla \times \mathbf{j}+\nabla \times \frac{\partial \mathbf{P}}{\partial t}-\frac{1}{c^2} \frac{\partial^2 \mathbf{M}}{\partial t^2}
+\end{aligned}
+\end{equation}
+where $c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum.
+
+Note that this mascroscopic fields in Maxwell's equations are spatial averages of the
+microscopic fields, and the charge and current densities are continous in space and time.
+For an atomic scale description of the electromagnetic fields, one can use the microscopic
+Maxwell's equations, which include a description of matter based on discrete charged particles
+(e.g., electrons, protons, etc.).
 
 \subsection*{Electromagnetics in the frequency domain}
 
@@ -57,18 +83,47 @@ Then, the time-domain Maxwell's equations can be written as
     \nabla \cdot \mathbf{B} &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_freq}
 \end{align}
 
-WRITE WAVE EQUATION
+WRITE WAVE EQUATION, CHECK PHOTONIC CRYSTAL BOOK TOO (EQ. 7). USE AN OPERATOR LIKE STEVEN? 
+THIS CAN BE USED TO TALK ABOUT THE MATHEMATICAL PROPERTIES OF THE OPERATOR.
 
-\subsection*{Piecewise homogeneous media and boundary conditions}
+\subsection*{Boundary conditions at material interfaces}
+
+In many physical systems, and specially in computational optics, the medium can be divided
+into different regions with different material properties. Although a piecewise homogeneous
+medium is an inhomoegeneous medium, the inhomogeneities are confined to the boundaries and 
+the optical problem can be solved in each region separately. The solutions to the optical problems
+are connected by the boundary conditions at the interfaces between the regions; and thus between
+materials. These boundary conditions can be derived from Maxwell's equations, and for a boundary
+$\Gamma_{ij}$ separating domain $i$ from domain $j$ yield the tangential field conditions:
+\begin{align}
+    \mathbf{n} \times (\mathbf{E}_i - \mathbf{E}_j) &= 0 \label{eq:BC_E}\\
+    \mathbf{n} \times (\mathbf{H}_i - \mathbf{H}_j) &= \mathbf{K} , \label{eq:BC_H}
+\end{align} 
+and the normal field conditions:
+\begin{align}
+    \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) &= \rho_s \label{eq:BC_D}\\
+    \mathbf{n} \cdot (\mathbf{B}_i - \mathbf{B}_j) &= 0, \label{eq:BC_B}
+\end{align}
+where $\mathbf{n}$ is the normal vector to the boundary, $\mathbf{K}$ is the surface current density,
+ and $\rho_s$ is the surface charge density. Note that In many optical problems there are no 
+ sources in the individual domains, and $\mathbf{K}$ and $\rho$ are zero.
+
+ LINK THIS TO THE NEDELEC ELEMENTS!
 
 \subsection*{Modeling single emitters: the Green's function formalism}
 
 \subsection*{Some useful properties of Maxwell's equations}
 
-Linearity, superposition, conservation laws (charge, energy, momentum), time-reversal symmetry/recirpocity
+Linearity, hermitian operator (can be related to recirpocity too), superposition, 
+conservation laws (charge, energy, momentum), time-reversal symmetry/recirpocity
 self-adjointness, duality symmetry ...
 
+positive semi-definite. Therefore all of the eigenvalues are nonnegative, and is real. Can
+be relate to solver choice later.
+
 \subsection*{Point-like emitters: the Green's function formalism}
+
+TODO: Add if we do coupled-emitter project.
 
 \section{The finite element method in electromagnetics}
 
@@ -113,6 +168,21 @@ Eigenvalue vs RHS problems
 Lagrange elements vs Edge elements. Comment spurious modes.
 
 \section{Beyond single-physics -- coupled optical systems}
+
+Coupled multi-physics systems are physical systems where the solution of one of the physical 
+problem depends on the solution of another physical problem. Let's consider that the two
+problems can be described by linear partial differential equations, where the first problem
+is described by the equation $\mathcal{L}_1 [\mathbf{u}]= \mathbf{a}$ and the second problem is described by the 
+equation $\mathcal{L}_2 [\mathbf{w}]= \mathbf{b}$.
+
+ If this relation is unidirectional
+we call it \textbf{weak coupling}, and if the relation is bidirectional we call it 
+\textbf{strong coupling}.
+
+In weaky coupled systems, both physical problems can be solved independently in a seggregated 
+manner, where the solution of one problem is used in the the other problem.
+
+In strongly coupled systems, the physical problems are solved simultaneously.
 
 Differentiate between weak and strong coupling.
 
