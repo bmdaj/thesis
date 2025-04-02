@@ -1,6 +1,13 @@
 \chapter{Theoretical framework}
 
-Bla bla bla...
+This chapter covers the theoretical foundations to understand the contents of this thesis, 
+and is divided in four main sections. The first section presents the fundamental physics
+governing optical problems, in the singlek physics picture. The second section provides 
+an introduction to solving optical problems numerically using the finite-element method.
+The third section introduces the concept of coupled optical systems, in the multi-physics
+picture. The fourth section discusses the topology optimization of multi-physics systems.
+With these tools we can understand how to solve the inverse design problems in the following
+chapter.
 
 %\begin{figure}[tb]
 %    \centering
@@ -118,6 +125,8 @@ Linearity, hermitian operator (can be related to recirpocity too), superposition
 conservation laws (charge, energy, momentum), time-reversal symmetry/recirpocity
 self-adjointness, duality symmetry ...
 
+Hyperbolic PDE (wave equation). Real eigenvalues and diagonalizable.
+
 positive semi-definite. Therefore all of the eigenvalues are nonnegative, and is real. Can
 be relate to solver choice later.
 
@@ -167,6 +176,14 @@ Eigenvalue vs RHS problems
 
 Lagrange elements vs Edge elements. Comment spurious modes.
 
+Symmetry conditions can be applied to reduce the computational
+cost of the solutions by employing perfect electric conductor (PEC) and perfect magnetic 
+conductor (PMC) boundary conditions. The PEC boundary condition
+imposes symmetry for magnetic fields and antisymmetry for electric fields and electric 
+currents, by setting the tangential component of the electric field to zero: $\mathbf{n}\times \mathbf{E} = 0$ .
+The PMC boundary condition imposes symmetry for electric fields and antisymmetry for magnetic fields
+by setting the normal component of the magnetic field to zero: $\mathbf{n}\cdot \mathbf{H} = 0$.
+
 \section{Beyond single-physics -- coupled optical systems}
 
 Coupled multi-physics systems are physical systems where the solution of one of the physical 
@@ -188,7 +205,74 @@ Differentiate between weak and strong coupling.
 
 \section{Topology optimization of multiphysics systems}
 
+\begin{equation}
+    \begin{array}{clr}
+    \max\limits_{\xi} & \Phi(\xi, \mathbf{u}) & \text { (Objective function) } \\
+    \text { s.t. } & \mathbf{S}_i(\xi, \mathbf{u})-\mathbf{f}_i=0 \quad \forall i \in\left[1, N_S\right] & \text { (State equations) } \\
+    & c_j(\xi, \mathbf{u}) \leq 0 \quad \forall j \in\left[1, N_c\right] & \text { (Inequality constraints) } \\
+    & \xi_{\text {min }} \leq \xi \leq \xi_{\text {max }} & \text { (Box constraints) }
+    \end{array}
+\end{equation}
+
+The optimization problem is solved using the algorithm of the Method of Moving
+Asymptotes (MMA) (CITE) and Globally Convergent Method of Moving Ssymptotes (GCMMA) (CITE).
+
+\subsection{From densities to material properties}
+
+To regularize the optimization and introduce a weak sense of geometric length scale, we filter
+the density field using a filter operation. The filtered density can be calculated using a 
+convolution-based filter operation (CITE)
+\begin{equation}
+    \begin{aligned}
+    & \tilde{\xi}(\mathbf{r})=\frac{\sum_{k \in \mathcal{B}_{e, h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k \xi_k}{\sum_{k \in \mathcal{B}_{e, h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k}, \\
+    & w(\mathbf{r})=\left\{r_f-|\mathbf{r}| \quad \forall|\mathbf{r}| \leq r_f, \quad r_f \geq 0, \quad \mathbf{r} \in \Omega\right.\,,
+    \end{aligned}
+\end{equation}
+
+where $A_k$ is the area of the kth element, and $\mathcal{B}_{e, h}$ denotes the
+$h^\text{th}$ set of finite elements whose center point is within a filter radius $r_f$ of the
+$h^\text{th}$ element. One can also filter by solving a Helmholtz-type PDE (CITE):
+\begin{equation}
+    -\left(\frac{r_f}{2 \sqrt{3}}\right)^2 \nabla \tilde{\xi}+\tilde{\xi}=\xi
+\end{equation}
+The filter operation is followed by a smoothed Heaviside threshold:
+\begin{equation}
+    \bar{\tilde{\xi}}=\frac{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(\tilde{\xi}-\eta))}{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(1-\eta))}, \quad \beta \in[1, \infty[, \eta \in[0,1],
+\end{equation}
+where $\beta$ and $\eta$ control the threshold sharpness and value, respectively.
+
+The physical field cna be interpolated to the filtered density field using a material interpolation.
+In multi-physics problems, we will have one material interpolation for each different physical problem
+\footnote{If the problem stem from the same physics (e.g., solving two optical problems), the material interpolation can be re-used.}.
+In general, the material interpolation can be written as:
+\begin{equation}
+    \zeta(\bar{\tilde{\xi}})=\zeta_0+\bar{\tilde{\xi}}^p\left(\zeta_1-\zeta_0\right)
+\end{equation}
+where $\zeta$ is the material property, $\zeta_0$ and $\zeta_1$ are the material properties of the void and solid, respectively, and $p$
+is a penalization factor (usually, $p=3$ for compliance optimization and $p$=1 for other problems). Note that for some
+special cases, like optical optimization problems with metals, it is benefitial to employ a non-linear material interpolation.
+
+Do it in such a way that it works for multiphysics.
+Invert order of threshold and filter operations.
+
 \subsection{Adjoint sensitivity analysis}
+
+(CHECK NIELS THESIS)
+
+The adjoint sensitivity analysis is used to efficiently calculate the gradient of the objective function with 
+respect to the design variables. In this thesis, we use the adjoint sensitivity analysis  in the context of 
+multi-physics problems, where multiple complex-valued PDE are solved. Let us rewrite the FOM by adding the residual
+of the state equation and its complex conjugate, multiplied by the Lagrange multipliers, $\lambda_i$ and $\lambda_{i+N}$, 
+respectively:
+\begin{equation}
+    \tilde{\Phi} =\Phi + \sum^N_i \left[ \lambda_{i}^{\top}\left(\mathbf{S}_i \mathbf{u}^*_i -\mathbf{f}_i\right) + 
+    \lambda_{i+N}^{\dagger}\left(\mathbf{S}_{i}^* \mathbf{u}^*_i -\mathbf{f}_i^*\right) \right]
+\end{equation}
+
+\subsubsection*{Coupled source problems}
+
+\subsubsection*{Coupled state-equation problems}
+
 
 \section{A practical note on computational implementation}
 
