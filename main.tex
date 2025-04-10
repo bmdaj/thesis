@@ -1,12 +1,28 @@
-\documentclass[b5paper,11pt,fleqn,openright]{memoir}
+  \documentclass[b5paper,11pt,fleqn,openright]{memoir}
 \semiisopage[12]
 \setlength{\uppermargin}{60pt}
 \setlength{\headsep}{24pt}
 \checkandfixthelayout[nearest]
 
-\usepackage{cmbright}  % nice font
+%\usepackage{cmbright}  % nice font
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}      % Add this line
+
+%\usepackage{lmodern}
+%\usepackage{newpxtext}
+%\usepackage{antt}
+%\usepackage{mathpazo}
+%\usepackage{eulervm}
+%\usepackage{fourier}
+%\usepackage{pxfonts}
+
+\usepackage{kpfonts}%  for math    
+\usepackage{indentfirst}
+
+%\usepackage{times}
+%\renewcommand{\rmdefault}{lmr} % Set Latin Modern Roman as the default font
+
 \usepackage[hidelinks]{hyperref}
 \usepackage{amsmath,amsfonts,amssymb,bm}%,amsthm}
 \usepackage{gensymb}
@@ -25,7 +41,6 @@
 %float barrier
 \usepackage{placeins}
 
-\usepackage{lmodern}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
@@ -38,7 +53,8 @@
 \usepackage{relsize}
 \usepackage{amssymb}
 
-
+\usepackage{empheq}
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
 
 
 %pgf plot
@@ -174,14 +190,14 @@
 \makeatother
 
 
-\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
-\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
-\usepackage{mathalpha}
+%\newcommand{\diff}[2]{\frac{\partial #1}{\partial #2}}
+%\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+%\usepackage{mathalpha}
 
-\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
-\DeclareFontShape{U}{mathx}{m}{n}{<-> mathx10}{}
-\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
-\DeclareMathAccent{\widebar}{0}{mathx}{"73}
+%\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+%\DeclareFontShape{U}{mathx}{m}{n}{<-> mathx10}{}
+%\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+%\DeclareMathAccent{\widebar}{0}{mathx}{"73}
 
 %\chapterstyle{southall}
 

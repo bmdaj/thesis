@@ -29,69 +29,123 @@ chapter.
 %    \label{fig:Rank}
 %\end{figure}
 
-\section{Modeling optical systems -- an electromagnetic wave problem}
+\section{Nano-optics -- Light as an electromagnetic wave}
+
+In classical optics, light is treated as an electromagnetic (EM) wave, which can be described by 
+solving Maxwell's equations. Solving these partial differential equations can be complicated, and 
+depending on the characteristic size ($s$) of objects compared to the light's wavelength ($\lambda$) 
+simpler limiting cases can be used to describe optical phenomena:
+\begin{itemize}
+    \item \textbf{Ray Optics ($s \ll \lambda$):} When objects are much larger than the wavelength, light is modeled as straight-line rays.
+    \item \textbf{Quasistatics \& lumped circuit models ($s \gg \lambda$):} When objects are much smaller than the wavelength, the wave natue of light dissapears, 
+    and can be approximated quasistatically (i.e., solving Poisson's equation). For instance, electronic devices can be modeled in this regime using circuit models w
+    ith lumped elements, like resistors or capacitors. 
+\end{itemize}
+In the fields of photonics and \emph{nano-optics}, where the visible 
+(\(\lambda \sim 400\)--\(800\) nm) and infrared (\(\lambda \sim 800\)--\(2500\) nm)
+ spectral regions are most commonly explored, components often have nano- to
+  microscale dimensions. As a result, we are in the \textbf{wave-optics} regime ($\lambda \sim s$ ),  
+  where we cannot resort to simpler models like ray optics or quasistatic/lumped circuits models,
+  and instead need to solve Maxwell's equations. Given the complexity of Maxwell's
+  equations very few problems (e.g., problems with high symmetry, separability, few parameters) 
+  can be solved analytically and for most problems requires 
+  numerical solutions (e.g., the finite element method).
+
 
 \subsection*{The macroscopic Maxwell's equations}
 
-Macroscopic electromagnetic systems can be described by Maxwell's equations. The time-domain Maxwell's equations in a linear, isotropic, and homogeneous medium can be written as
+Light propagation in a \emph{macroscopic} electromagnetic systems can be described by Maxwell's equations. The time-domain Maxwell's 
+equations in a linear, isotropic, and homogeneous medium can be written as:
+
 \begin{align}
-    \nabla \times \mathbf{E} (\mathbf{r},t) &= - \frac{\partial \mathbf{B}(\mathbf{r},t)}{\partial t}, \quad \quad &\text{(Faraday's law)} \label{eq:curlE_time}\\
-    \nabla \times \mathbf{H} (\mathbf{r},t) &= \varepsilon \frac{\partial \mathbf{E}(\mathbf{r},t)}{\partial t} + \mathbf{j}(\mathbf{r},t), \quad \quad &\text{(Ampère's law)} \label{eq:curlH_time}\\
-    \nabla \cdot \mathbf{D} (\mathbf{r},t) &= \rho(\mathbf{r},t), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_time}\\
-    \nabla \cdot \mathbf{B} (\mathbf{r},t) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_time}
+    \nabla \times \bm{\mathcal{E}} (\mathbf{r},t) &= - \frac{\partial \bm{\mathcal{B}}(\mathbf{r},t)}{\partial t}, \quad \quad &\text{(Faraday's law)} \label{eq:faraday}\\
+    \nabla \times \bm{\mathcal{H}} (\mathbf{r},t) &= \frac{\partial \bm{\mathcal{D}}(\mathbf{r},t)}{\partial t} + \bm{\mathcal{J}}(\mathbf{r},t), \quad \quad &\text{(Ampère's law)} \label{eq:ampere}\\
+    \nabla \cdot \bm{\mathcal{D}} (\mathbf{r},t) &= \mathcal{\rho}(\mathbf{r},t), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:gauss_E}\\
+    \nabla \cdot \bm{\mathcal{B}} (\mathbf{r},t) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:Gauss_B}
 \end{align}
-where $\mathbf{E}$ and $\mathbf{H}$ are the electric and magnetic fields, respectively, 
-$\mathbf{D} = \varepsilon \mathbf{E}$ is the electric displacement field, 
-$\mathbf{B} = \mu \mathbf{H}$ is the magnetic induction field, 
-$\varepsilon$ is the permittivity, and $\mu$ is the permeability.
+where $\bm{\mathcal{E}}$ and $\bm{\mathcal{H}}$ are the time-dependent electric and magnetic (induction) fields, respectively, 
+$\bm{\mathcal{D}}$ is the time-dependent electric displacement field,  
+$\bm{\mathcal{B}}$ is the time-dependent magnetic (flux-density) field, $\bm{\mathcal{J}}$ is the current density,
+and $\mathcal{\rho}$ is the time-dependent charge density. Maxwell's equations combine previously established
+physical laws, in 4 equations:
+\begin{itemize}
+    \item \textbf{Faraday's law} [Eq.~\eqref{eq:faraday}] describes how a time-varying magnetic field induces an electric field.
+    \item \textbf{Ampère's law} [Eq.~\eqref{eq:ampere}] describes how a time-varying electric field and electric current density induce a magnetic field.
+    \item \textbf{Gauss's law for electricity} [Eq.~\eqref{eq:gauss_E}] describes how electric charges create an electric field. 
+    \item \textbf{Gauss's law for magnetism} [Eq.~\eqref{eq:Gauss_B}] states that there are no magnetic monopoles, and thus the magnetic field lines are closed loops.
+\end{itemize}
 
-Give an explanation of Maxwell's equations. Perhaps with some bullet points?
+Note that the mascroscopic fields in Maxwell's equations 
+are spatial averages of the
+microscopic fields, and the charge and current densities are continous in space and time.
+For an atomic scale description of the electromagnetic fields, one can use the \emph{microscopic}
+Maxwell's equations, which include a quantized description of matter based on discrete charged particles
+(e.g., electrons, protons, etc.), and currents.\\
 
-In the presence of polarization $\mathbf{P}$ and magnetization $\mathbf{M}$, 
-the fields $\mathbf{D}$ and $\mathbf{B}$ are related to $\mathbf{E}$ and 
-$\mathbf{H}$ by the following equations:
+To understand how materials respond to electromagnetic fields,
+we need to introduce the constitutive equations. These materials can be modeled
+with the presence of a time-dependent polarization $\bm{\mathcal{P}}$ and magnetization $\bm{\mathcal{M}}$, 
+which relate the fields $\bm{\mathcal{D}}$ and $\bm{\mathcal{B}}$ to the fields $\bm{\mathcal{E}}$ and 
+$\bm{\mathcal{H}}$ by the constitutive equations:
 \begin{align}
-    \mathbf{D}(\mathbf{r}, t) &= \varepsilon_0 \mathbf{E}(\mathbf{r}, t) + \mathbf{P}(\mathbf{r}, t), \\
-    \mathbf{H}(\mathbf{r}, t) &= \mu_0^{-1} \mathbf{B}(\mathbf{r}, t) - \mathbf{M}(\mathbf{r}, t),
+    \bm{\mathcal{D}}(\mathbf{r}, t) &= \varepsilon_0 \bm{\mathcal{E}}(\mathbf{r}, t) + \bm{\mathcal{P}}(\mathbf{r}, t), \label{eq:D}\\ 
+    \bm{\mathcal{H}}(\mathbf{r}, t) &= \mu_0^{-1} \bm{\mathcal{B}}(\mathbf{r}, t) - \bm{\mathcal{M}}(\mathbf{r}, t) \label{eq:H},
 \end{align}
-where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the permeability of free space.
+where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the permeability of free space. 
+note that the polarization and magnetization also depend on the electric and magnetic fields; as an example the
+polarization can be written as a series expansion in powers of the electric field: 
+$\bm{\mathcal{P}}=\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(1)} \bm{\mathcal{E}}+\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(2)} \bm{\mathcal{E}} \bm{\mathcal{E}}+\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(3)} \bm{\mathcal{E}} \bm{\mathcal{E}} \bm{\mathcal{E}}+\cdots$,
+where $\bm{\mathcal{\chi}}^{n}$ is the $n^\text{th}$ order component of the electric susceptibility. In this thesis
+we will only consider linear materials, where only the first-order terms in the expansion are considered. \\
 
-Using Maxwell's equations and applying the curl operator to Faraday's law and Ampère's law, 
-together with the definition of the polarization and magnetization,
-we can derive the wave equation for the electric and magnetic fields:
+
+Using Maxwell's equations and applying the curl operator to Faraday's law [Eq.~\eqref{eq:faraday}] and Ampère's law [Eq.~\eqref{eq:ampere}], 
+together with the constitutive relations for $\mathbf{D}$ and $\mathbf{B}$ in Eq.~\eqref{eq:D} and Eq.~\eqref{eq:H}, one gets two coupled
+wave equations for the electric and magnetic fields:
 \begin{equation}
 \begin{aligned}
-    & \nabla \times \nabla \times \mathbf{E}+\frac{1}{c^2} \frac{\partial^2 \mathbf{E}}{\partial t^2}=-\mu_0 \frac{\partial}{\partial t}\left(\mathbf{j}+\frac{\partial \mathbf{P}}{\partial t}+\nabla \times \mathbf{M}\right), \\
-    & \nabla \times \nabla \times \mathbf{H}+\frac{1}{c^2} \frac{\partial^2 \mathbf{H}}{\partial t^2}=\nabla \times \mathbf{j}+\nabla \times \frac{\partial \mathbf{P}}{\partial t}-\frac{1}{c^2} \frac{\partial^2 \mathbf{M}}{\partial t^2}
+    & \nabla \times \nabla \times \bm{\mathcal{E}}+\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{E}}}{\partial t^2}=-\mu_0 \frac{\partial}{\partial t}\left(\bm{\mathcal{J}}+\frac{\partial \bm{\mathcal{P}}}{\partial t}+\nabla \times \bm{\mathcal{M}}\right), \\
+    & \nabla \times \nabla \times \bm{\mathcal{H}}+\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{H}}}{\partial t^2}=\nabla \times \bm{\mathcal{J}}+\nabla \times \frac{\partial \bm{\mathcal{P}}}{\partial t}-\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{M}}}{\partial t^2}
 \end{aligned}
 \end{equation}
-where $c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum.
-
-Note that this mascroscopic fields in Maxwell's equations are spatial averages of the
-microscopic fields, and the charge and current densities are continous in space and time.
-For an atomic scale description of the electromagnetic fields, one can use the microscopic
-Maxwell's equations, which include a description of matter based on discrete charged particles
-(e.g., electrons, protons, etc.).
+where $c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum. This equation described the wave nature of electromagnetic fields,
+and is generally valid for any material.
 
 \subsection*{Electromagnetics in the frequency domain}
 
 The time-dependence in Maxwell's equations can be separated by assuming a harmonic time-dependence of the fields:
-
 \begin{equation}
-    \mathbf{E}(\mathbf{r}, t) = \Re \{ \mathbf{E}(\mathbf{r}) e^{-i\omega t} \} = \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{i\omega t} + \mathbf{E}^*(\mathbf{r}) e^{-i\omega t}\right], \label{eq:E_harmonic}\\
+    \bm{\mathcal{E}}(\mathbf{r}, t) = \Re \{ \mathbf{E}(\mathbf{r}) e^{-i\omega t} \}= \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{i\omega t} + \mathbf{E}^*(\mathbf{r}) e^{-i\omega t}\right],
 \end{equation}
-
-Then, the time-domain Maxwell's equations can be written as
-
+where $\mathbf{E}$ is the complex field phasor, $\omega=ck$ is the angular frequency of the light, and $k=2\pi/\lambda$ is the wavenumber.
+Using this complex field, the time-domain Maxwell's equations can be written as
 \begin{align}
-    \nabla \times \mathbf{E} &= -i\omega \mu \mathbf{H}, \quad \quad &\text{(Faraday's law)} \label{eq:curlE_freq}\\
-    \nabla \times \mathbf{H} &= i\omega \varepsilon \mathbf{E}, \quad \quad &\text{(Ampère's law)} \label{eq:curlH_freq}\\
-    \nabla \cdot \mathbf{D} &= 0, \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_freq}\\
-    \nabla \cdot \mathbf{B} &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_freq}
+    \nabla \times \mathbf{E}(\mathbf{r}) &= -i\omega \mathbf{B}(\omega, \mathbf{r}), \quad \quad &\text{(Faraday's law)} \label{eq:curlE_freq}\\
+    \nabla \times \mathbf{H}(\mathbf{r}) &= i\omega  \mathbf{D}(\mathbf{r}) + \mathbf{j}(\mathbf{r}), \quad \quad &\text{(Ampère's law)} \label{eq:curlH_freq}\\
+    \nabla \cdot \mathbf{D}(\mathbf{r}) &= \rho(\mathbf{r}), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_freq}\\
+    \nabla \cdot \mathbf{B}(\mathbf{r}) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_freq}
 \end{align}
 
-WRITE WAVE EQUATION, CHECK PHOTONIC CRYSTAL BOOK TOO (EQ. 7). USE AN OPERATOR LIKE STEVEN? 
-THIS CAN BE USED TO TALK ABOUT THE MATHEMATICAL PROPERTIES OF THE OPERATOR.
+where all fields now are complex phasors that also depend on the frequency
+(e.g., $\mathbf{E}(\omega, \mathbf{r})$) and only have spatial dependence. In a similar fashion,
+the material parameters are complex functions of space and frequency (e.g., $\varepsilon(\omega, \mathbf{r}$)). 
+Note that the frequency-domain Maxwell's equations are equivalent to applying Fourier transform in time to the time domain
+equations [Eqs.~\eqref{eq:faraday}-\eqref{eq:Gauss_B}].\\
+
+By using the frequency-domain constitutive relations and applying the curl operator to Faraday's law [Eq.~\eqref{eq:curlE_freq}] and Ampère's law [Eq.~\eqref{eq:curlH_freq}],
+we can combine both equations into a single wave equation for the electric field\footnote{A similar procedure one can be applied to derive a wave equation for the magnetic field.
+}:
+
+\begin{equation}
+    \nabla \times \left(\frac{1}{\mu} \nabla \times \mathbf{E}\right) - k^2 \varepsilon \mathbf{E} = -i\omega \mu \mathbf{j}(\mathbf{r})\,. 
+\end{equation}
+This is the Helmholtz equation for the electric field. This equation can 
+be further simplified by adopting an operator nomenclature:
+\begin{empheq}[box={\fboxsep=5pt\fboxrule=0.5pt\fbox}]{equation}\label{eq:helmholtz}
+    \mathcal{L}[\mathbf{E}(\mathbf{r})] = \mathbf{f}\,,
+\end{empheq}
+where $\mathcal{L} \triangleq \nabla \times \left[(1/\mu) \nabla \times \mathbf{\square} \right] - k^2 \square $ is a differential operator acting on a vector field $\mathbf{\square}$, 
+and $\mathbf{f} = -i\omega \mu \mathbf{j}(\mathbf{r})$ is the source term. This equation is the cornerstone of the numerical analysis in this thesis.
 
 \subsection*{Boundary conditions at material interfaces}
 
@@ -120,6 +174,25 @@ where $\mathbf{n}$ is the normal vector to the boundary, $\mathbf{K}$ is the sur
 \subsection*{Modeling single emitters: the Green's function formalism}
 
 \subsection*{Some useful properties of Maxwell's equations}
+The following are some key properties of Maxwell's equations and the Helmholtz operator that are useful for understanding their mathematical and physical behavior:
+\begin{itemize}
+    \item \textbf{Linearity:} The operator introduced in Eq.~\eqref{eq:helmholtz} is linear, meaning the superposition principle holds. If $\mathbf{E}_1$ and $\mathbf{E}_2$ are two solutions to the Helmholtz equation, such that $\mathcal{L}[\mathbf{E}_1] = \mathbf{f}_1$ and $\mathcal{L}[\mathbf{E}_2] = \mathbf{f}_2$, then their linear combination ($\mathbf{E}_3 = \alpha \mathbf{E}_1 + \beta \mathbf{E}_2$) is also a solution:
+    \begin{equation}
+        \mathcal{L}[\mathbf{E}_3] = \mathcal{L}[\alpha \mathbf{E}_1 + \beta \mathbf{E}_2] = \alpha \mathcal{L}[\mathbf{E}_1] + \beta \mathcal{L}[\mathbf{E}_2] = \alpha \mathbf{f}_1 + \beta \mathbf{f}_2 = \mathbf{f}_3\,.
+    \end{equation}
+    As an example, for a source term multiplied by a proportionality factor this will also multiply the field solution by the same factor. 
+
+    \item \textbf{Hermiticity:} The operator $\mathcal{L}$ is self-adjoint, meaning that the inner product of two solutions is invariant under the operator:
+    \begin{equation}
+        \int \mathbf{E}_1^* \cdot \mathcal{L}[\mathbf{E}_2] d\mathbf{r} = \int \mathcal{L}[\mathbf{E}_1]^* \cdot \mathbf{E}_2 d\mathbf{r}\,,
+    \end{equation}
+    This property ensures that purely real eigenvalues and orthogonal eigenfunctions\footnote{Except for de}, as shown in \cite{phot_crys}. Moreover,
+    one can show that the operator is \textbf{positive semi-definitive}, meaning that all eigenvalues are non-negative.
+    DEFINE DERIVATIVE D NOT TO BE ITALIC.
+    \item 
+\end{itemize}
+
+
 
 Linearity, hermitian operator (can be related to recirpocity too), superposition, 
 conservation laws (charge, energy, momentum), time-reversal symmetry/recirpocity
