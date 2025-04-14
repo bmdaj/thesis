@@ -174,34 +174,79 @@ where $\mathbf{n}$ is the normal vector to the boundary, $\mathbf{K}$ is the sur
 \subsection*{Modeling single emitters: the Green's function formalism}
 
 \subsection*{Some useful properties of Maxwell's equations}
-The following are some key properties of Maxwell's equations and the Helmholtz operator that are useful for understanding their mathematical and physical behavior:
+The following are some key properties of Maxwell's equations and the Helmholtz operator that will be useful throughout this thesis.:
 \begin{itemize}
-    \item \textbf{Linearity:} The operator introduced in Eq.~\eqref{eq:helmholtz} is linear, meaning the superposition principle holds. If $\mathbf{E}_1$ and $\mathbf{E}_2$ are two solutions to the Helmholtz equation, such that $\mathcal{L}[\mathbf{E}_1] = \mathbf{f}_1$ and $\mathcal{L}[\mathbf{E}_2] = \mathbf{f}_2$, then their linear combination ($\mathbf{E}_3 = \alpha \mathbf{E}_1 + \beta \mathbf{E}_2$) is also a solution:
+    \item \textbf{Linearity and superposition:} The operator introduced in Eq.~\eqref{eq:helmholtz} is linear, meaning the superposition principle holds. If $\mathbf{E}_1$ and $\mathbf{E}_2$ are t
+    wo solutions to the Helmholtz equation, such that $\mathcal{L}[\mathbf{E}_1] = \mathbf{f}_1$ and 
+    $\mathcal{L}[\mathbf{E}_2] = \mathbf{f}_2$, then their linear combination ($\mathbf{E}_3 = \alpha \mathbf{E}_1 + \beta \mathbf{E}_2$) 
+    is also a solution:
     \begin{equation}
         \mathcal{L}[\mathbf{E}_3] = \mathcal{L}[\alpha \mathbf{E}_1 + \beta \mathbf{E}_2] = \alpha \mathcal{L}[\mathbf{E}_1] + \beta \mathcal{L}[\mathbf{E}_2] = \alpha \mathbf{f}_1 + \beta \mathbf{f}_2 = \mathbf{f}_3\,.
     \end{equation}
-    As an example, for a source term multiplied by a proportionality factor this will also multiply the field solution by the same factor. 
+    For instance, if the source term is scaled by a proportionality factor, the resulting field solution will also be scaled by the same factor, maintaining the proportional relationship. 
 
     \item \textbf{Hermiticity:} The operator $\mathcal{L}$ is self-adjoint, meaning that the inner product of two solutions is invariant under the operator:
     \begin{equation}
-        \int \mathbf{E}_1^* \cdot \mathcal{L}[\mathbf{E}_2] d\mathbf{r} = \int \mathcal{L}[\mathbf{E}_1]^* \cdot \mathbf{E}_2 d\mathbf{r}\,,
+        \int \mathbf{E}_1^* \cdot \mathcal{L}[\mathbf{E}_2] \d \mathbf{r} = \int \mathcal{L}[\mathbf{E}_1]^* \cdot \mathbf{E}_2 \d \mathbf{r}\,,
     \end{equation}
-    This property ensures that purely real eigenvalues and orthogonal eigenfunctions\footnote{Except for de}, as shown in \cite{phot_crys}. Moreover,
-    one can show that the operator is \textbf{positive semi-definitive}, meaning that all eigenvalues are non-negative.
-    DEFINE DERIVATIVE D NOT TO BE ITALIC.
-    \item 
+    This property ensures that purely real eigenvalues and orthogonal eigenmodes\footnote{Except for degenerate eigenmodes, which will not necessarily be orthogonal.}, as shown in \cite{phot_crys}. Moreover,
+    one can show that the operator is \textbf{positive semi-definitive}, meaning that all eigenvalues ($k^2$) are non-negative. Since all eigenvalues are real and non-negative, the operator $\mathcal{L}$ is \textbf{diagonalizable}.
+    RELATE TO SOLVER CHOICE LATER.
+    
+    \item \textbf{Scale-invariance:} The Helmholtz operator $\mathcal{L}(\mathbf{r})$ is invariant under a change of scale. 
+    If $\mathbf{E}(\mathbf{r})$ is a solution to the Helmholtz equation for the frequency $\omega$, then $\mathbf{E}(\alpha \mathbf{r})$ 
+    is also a solution for any scaling factor $\alpha$, given a constant
+     dielectric permittivity $\varepsilon(\omega, \mathbf{r}) = \varepsilon (\omega^\prime, \alpha \mathbf{r})$ at a frequency $\omega^\prime = \alpha \omega$ \cite{phot_crys}. Similarly,
+     if we scale the dielectric permittivity by a value $\alpha$ the electric field distribution is constant when working at a re-scaled version of the 
+     frequency $\omega^\prime=\omega/\alpha $ \cite{phot_crys}.
+    In other words, as long as the permittivity is constant under spatial transformations, there is no fundamental lengthscale or dielectric permittivity  
+    values in mascroscopic electromagnetic systems. Note however, that in general the dielectric permittivity is a function of the frequency $\varepsilon(\omega)\neq \varepsilon(\omega^\prime)$, 
+    breaking scale-invariance.
+    
+    \item \textbf{Conservation laws:} Maxwell's equations inherently satisfy several conservation laws, which are fundamental to physical systems MAKE SURE OF THE SYMBOLS AND EQUATIONS THEY ARE TIME-DOMAIN:
+    \begin{itemize}
+        \item \textbf{Charge conservation:} The continuity equation ensures that charge is conserved in the system:
+        \begin{equation}
+            \nabla \cdot \mathbf{J} + \frac{\partial \rho}{\partial t} = 0.
+        \end{equation}
+        This equation relates the divergence of the current density $\mathbf{J}$ to the time rate of change of the charge density $\rho$.
+
+        \item \textbf{Energy conservation:} The Poynting theorem describes the conservation of electromagnetic energy:
+        \begin{equation}
+            \nabla \cdot \mathbf{S} + \frac{\partial u}{\partial t} = -\mathbf{J} \cdot \mathbf{E},
+        \end{equation}
+        where $\mathbf{S} = \mathbf{E} \times \mathbf{H}$ is the Poynting vector representing the energy flux, and $u = (1/2) (\varepsilon |\mathbf{E}|^2 + \mu |\mathbf{H}|^2)$ is the electromagnetic energy density.
+
+        \item \textbf{Momentum conservation:} The electromagnetic fields carry momentum, and the conservation of momentum is described by the Maxwell stress tensor $\mathbf{T}$:
+        \begin{equation}
+            \nabla \cdot \mathbf{T} + \frac{\partial \mathbf{p}}{\partial t} = \mathbf{f},
+        \end{equation}
+        where $\mathbf{p}$ is the momentum density and $\mathbf{f}$ is the force density acting on the system. The electromagnetic fields also carry \textbf{angular momentum}, and its conservation is described by the angular momentum density $\mathbf{L}$:
+                    \begin{equation}
+                        \frac{\partial \mathbf{L}}{\partial t} + \nabla \cdot \mathbf{M} = \boldsymbol{\tau},
+                    \end{equation}
+                    where $\mathbf{M}$ is the angular momentum flux density tensor, and $\boldsymbol{\tau} = \mathbf{r} \times \mathbf{f}$ represents the torque density acting on the system.
+    \end{itemize}
+    
+    \item \textbf{Time-reversal symmetry:} Maxwell's equations remain valid if we reverse the direction of time ($t\to-t$). It can be shown that under time-reversal symmetry
+                                                the fields transform as $\bm{\mathcal{E}}(\mathbf{r}, t)\to\bm{\mathcal{E}}(\mathbf{r}, -t)$,  $\bm{\mathcal{D}}(\mathbf{r}, t)\to\bm{\mathcal{D}}(\mathbf{r}, -t)$,
+                                                 $\bm{\mathcal{H}}(\mathbf{r}, t)\to-\bm{\mathcal{H}}(\mathbf{r}, -t)$, and $\bm{\mathcal{B}}(\mathbf{r}, t)\to-\bm{\mathcal{B}}(\mathbf{r}, -t)$, while the current density and charge density transform as 
+                                                 $\bm{\mathcal{J}}(\mathbf{r}, t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\bm{\mathcal{\rho}}(\mathbf{r}, t)\to\bm{\mathcal{\rho}}(\mathbf{r}, -t)$, respectively \cite{reciprocity}.
+                                                 Applying these transformations to Maxwell's equations in Eqs. \eqref{eq:curlE_freq}-\eqref{eq:divB_freq} shows that the equations remain invariant under time-reversal. This 
+                                                 symmetry can be extended by considering \textbf{Parity-time (PT) symmetry}, which combines time-reversal with spatial inversion ($\mathbf{r}\to-\mathbf{r}$) and is satisfied for materials with
+                                                 $\varepsilon(\mathbf{r}) = \varepsilon^*(-\mathbf{r})$ and $\mu(\mathbf{r}) = \mu^*(-\mathbf{r})$. There are however some situations where time-reversal symmetry and/or PT symmetry is broken, 
+                                                 such as in the presence of non-reciprocal materials (e.g., magneto-optical materials) or materials with optical losses \cite{ownpub0}.VERIFY AND CITE SOME PT SYMMETRY PAPER.
+        
+    \item \textbf{Reciprocity:} In an optical system the source and the detector of electromagnetic fields can be interchanged without changing the physical situation. Let's consider a system where two volumes $\Omega_1$ and $\Omega_2$ 
+    have two current densities $\mathbf{j}_1$ and $\mathbf{j}_2$ that create the fields $\mathbf{E}_1$, $\mathbf{H}_1$ and $\mathbf{E}_2$, $\mathbf{H}_2$ respectively. Using the Lorentz recirpocity theorem one can show that \cite{novotny}:      
+    \begin{equation}
+        \int_{\Omega_1} \mathbf{E}_1^* \cdot \mathbf{j}_2 = \int_{\Omega_2}  \mathbf{E}_2^* \cdot \mathbf{j}_1 d\mathbf{r} = 0.
+    \end{equation}
+    For losless media this is equivalent to time-reversal symmetry, but for lossy systems reciprocity still remains valid \cite{Carminati:98}. Reciprocity is a very useful property of Maxwell's equations, as it can be used to 
+    greatly simplify some formulations of inverse design problems [CITE LASER PAPER].
+
+
 \end{itemize}
-
-
-
-Linearity, hermitian operator (can be related to recirpocity too), superposition, 
-conservation laws (charge, energy, momentum), time-reversal symmetry/recirpocity
-self-adjointness, duality symmetry ...
-
-Hyperbolic PDE (wave equation). Real eigenvalues and diagonalizable.
-
-positive semi-definite. Therefore all of the eigenvalues are nonnegative, and is real. Can
-be relate to solver choice later.
 
 \subsection*{Point-like emitters: the Green's function formalism}
 
