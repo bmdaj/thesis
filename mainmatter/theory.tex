@@ -137,9 +137,9 @@ we can combine both equations into a single wave equation for the electric field
 }:
 
 \begin{equation}
-    \nabla \times \left(\frac{1}{\mu} \nabla \times \mathbf{E}\right) - k^2 \varepsilon \mathbf{E} = -i\omega \mu \mathbf{j}(\mathbf{r})\,. 
+    \nabla \times \left(\frac{1}{\mu(\mathbf{r})} \nabla \times \mathbf{E}(\mathbf{r})\right) - k^2 \varepsilon(\mathbf{r}) \mathbf{E}(\mathbf{r}) = -i\omega \mu \mathbf{j}(\mathbf{r})\,. 
 \end{equation}
-This is the Helmholtz equation for the electric field. This equation can 
+This is the Helmholtz equation for the electric field RECHECK MAKE SURE IT IS CORRECT. This equation can 
 be further simplified by adopting an operator nomenclature:
 \begin{empheq}[box={\fboxsep=5pt\fboxrule=0.5pt\fbox}]{equation}\label{eq:helmholtz}
     \mathcal{L}[\mathbf{E}(\mathbf{r})] = \mathbf{f}\,,
@@ -254,12 +254,25 @@ TODO: Add if we do coupled-emitter project.
 
 \section{The finite element method in electromagnetics}
 
-(CHECK IANS THESIS)
+(RECHECK DO DERIVATION BY HAND, COMPARE NIELS AND IANS THESIS)
 
-The weak form of the wave equation can be written as (CHECK CHATGPT):
+The weak form of the wave equation can be written as:
+
+    \begin{equation}
+        \int_\Omega \left[ \left( \nabla \times \mathbf{T} \right) \cdot \frac{1}{\mu} \left( \nabla \times \mathbf{E} \right) \right] \d \Omega 
+        - \int_\Gamma \mathbf{T} \cdot \left[ \mathbf{n} \times \left( \frac{1}{\mu} \cdot \nabla \times \mathbf{E} \right) \right] \d \Gamma \\
+        = \int_\Omega \mathbf{T} \cdot \mathbf{f} \d \Omega,
+        \quad \forall \mathbf{E} \in V.
+    \end{equation}
+where $\mathbf{T}$ is a test function, $\Omega$ is the volume of the domain, and $\Gamma$ is the boundary where Neuman boundary conditions
+are prescribed. By using  the standard Galerkin method (where the test and basis functions are the same), one can use the \textbf{Finite Element Method} 
+(FEM) to discretize the weak form 
+into a linear system of equations:
 \begin{equation}
-    \int_{\Omega} \nabla \times \mathbf{E} \cdot \nabla \times \mathbf{v} - k^2 \int_{\Omega} \mathbf{E} \cdot \mathbf{v} = \int_{\Omega} \mathbf{J} \cdot \mathbf{v} \quad \forall \mathbf{v} \in V,
+    \mathbf{K} \mathbf{E} = \mathbf{F},
 \end{equation}
+where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source term.
+
 The weak form can be discretized by using the finite-element method. An example is shown in Figure YY, 
 where we have discretized the two-dimensional domain in Figure XX into a set of triangular edge elements. 
 The edge elements, or Nedelec elements (CITE), of first kind are a natural choice for the electromagnetic 
