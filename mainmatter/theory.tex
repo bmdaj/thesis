@@ -189,16 +189,17 @@ The following are some key properties of Maxwell's equations and the Helmholtz o
     \begin{equation}
         \int \mathbf{E}_1^* \cdot \mathcal{L}[\mathbf{E}_2] \d \mathbf{r} = \int \mathcal{L}[\mathbf{E}_1]^* \cdot \mathbf{E}_2 \d \mathbf{r}\,,
     \end{equation}
-    This property ensures that purely real eigenvalues and orthogonal eigenmodes\footnote{Except for degenerate eigenmodes, which will not necessarily be orthogonal.}, as shown in \cite{phot_crys}. Moreover,
-    one can show that the operator is \textbf{positive semi-definitive}, meaning that all eigenvalues ($k^2$) are non-negative. Since all eigenvalues are real and non-negative, the operator $\mathcal{L}$ is \textbf{diagonalizable}.
-    RELATE TO SOLVER CHOICE LATER.
+    This property ensures that purely real eigenvalues and orthogonal eigenmodes\footnote{Except for degenerate eigenmodes, which will not necessarily be orthogonal.}, as shown in~\cite{phot_crys}. Moreover,
+    one can show that the operator is \textbf{indefinite}, meaning that all eigenvalues ($k^2$) can be zero, positive or negative. Note that, for materials with gain or loss, where $\Im{\varepsilon}\neq 0$, and conservation
+    boundary conditions (e.g., absorbing boundary conditions) the Maxwell operator
+    is not Hermitian, and the eigenvalues can be complex.
     
     \item \textbf{Scale-invariance:} The Helmholtz operator $\mathcal{L}(\mathbf{r})$ is invariant under a change of scale. 
     If $\mathbf{E}(\mathbf{r})$ is a solution to the Helmholtz equation for the frequency $\omega$, then $\mathbf{E}(\alpha \mathbf{r})$ 
     is also a solution for any scaling factor $\alpha$, given a constant
-     dielectric permittivity $\varepsilon(\omega, \mathbf{r}) = \varepsilon (\omega^\prime, \alpha \mathbf{r})$ at a frequency $\omega^\prime = \alpha \omega$ \cite{phot_crys}. Similarly,
+     dielectric permittivity $\varepsilon(\omega, \mathbf{r}) = \varepsilon (\omega^\prime, \alpha \mathbf{r})$ at a frequency $\omega^\prime = \alpha \omega$~\cite{phot_crys}. Similarly,
      if we scale the dielectric permittivity by a value $\alpha$ the electric field distribution is constant when working at a re-scaled version of the 
-     frequency $\omega^\prime=\omega/\alpha $ \cite{phot_crys}.
+     frequency $\omega^\prime=\omega/\alpha $~\cite{phot_crys}.
     In other words, as long as the permittivity is constant under spatial transformations, there is no fundamental lengthscale or dielectric permittivity  
     values in mascroscopic electromagnetic systems. Note however, that in general the dielectric permittivity is a function of the frequency $\varepsilon(\omega)\neq \varepsilon(\omega^\prime)$, 
     breaking scale-invariance.
@@ -231,18 +232,18 @@ The following are some key properties of Maxwell's equations and the Helmholtz o
     \item \textbf{Time-reversal symmetry:} Maxwell's equations remain valid if we reverse the direction of time ($t\to-t$). It can be shown that under time-reversal symmetry
                                                 the fields transform as $\bm{\mathcal{E}}(\mathbf{r}, t)\to\bm{\mathcal{E}}(\mathbf{r}, -t)$,  $\bm{\mathcal{D}}(\mathbf{r}, t)\to\bm{\mathcal{D}}(\mathbf{r}, -t)$,
                                                  $\bm{\mathcal{H}}(\mathbf{r}, t)\to-\bm{\mathcal{H}}(\mathbf{r}, -t)$, and $\bm{\mathcal{B}}(\mathbf{r}, t)\to-\bm{\mathcal{B}}(\mathbf{r}, -t)$, while the current density and charge density transform as 
-                                                 $\bm{\mathcal{J}}(\mathbf{r}, t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\bm{\mathcal{\rho}}(\mathbf{r}, t)\to\bm{\mathcal{\rho}}(\mathbf{r}, -t)$, respectively \cite{reciprocity}.
+                                                 $\bm{\mathcal{J}}(\mathbf{r}, t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\bm{\mathcal{\rho}}(\mathbf{r}, t)\to\bm{\mathcal{\rho}}(\mathbf{r}, -t)$, respectively~\cite{reciprocity}.
                                                  Applying these transformations to Maxwell's equations in Eqs. \eqref{eq:curlE_freq}-\eqref{eq:divB_freq} shows that the equations remain invariant under time-reversal. This 
                                                  symmetry can be extended by considering \textbf{Parity-time (PT) symmetry}, which combines time-reversal with spatial inversion ($\mathbf{r}\to-\mathbf{r}$) and is satisfied for materials with
                                                  $\varepsilon(\mathbf{r}) = \varepsilon^*(-\mathbf{r})$ and $\mu(\mathbf{r}) = \mu^*(-\mathbf{r})$. There are however some situations where time-reversal symmetry and/or PT symmetry is broken, 
-                                                 such as in the presence of non-reciprocal materials (e.g., magneto-optical materials) or materials with optical losses \cite{ownpub0}.VERIFY AND CITE SOME PT SYMMETRY PAPER.
+                                                 such as in the presence of non-reciprocal materials (e.g., magneto-optical materials) or materials with optical losses~\cite{ownpub0}.VERIFY AND CITE SOME PT SYMMETRY PAPER.
         
     \item \textbf{Reciprocity:} In an optical system the source and the detector of electromagnetic fields can be interchanged without changing the physical situation. Let's consider a system where two volumes $\Omega_1$ and $\Omega_2$ 
-    have two current densities $\mathbf{j}_1$ and $\mathbf{j}_2$ that create the fields $\mathbf{E}_1$, $\mathbf{H}_1$ and $\mathbf{E}_2$, $\mathbf{H}_2$ respectively. Using the Lorentz recirpocity theorem one can show that \cite{novotny}:      
+    have two current densities $\mathbf{j}_1$ and $\mathbf{j}_2$ that create the fields $\mathbf{E}_1$, $\mathbf{H}_1$ and $\mathbf{E}_2$, $\mathbf{H}_2$ respectively. Using the Lorentz recirpocity theorem one can show that~\cite{novotny}:      
     \begin{equation}
         \int_{\Omega_1} \mathbf{E}_1^* \cdot \mathbf{j}_2 = \int_{\Omega_2}  \mathbf{E}_2^* \cdot \mathbf{j}_1 d\mathbf{r} = 0.
     \end{equation}
-    For losless media this is equivalent to time-reversal symmetry, but for lossy systems reciprocity still remains valid \cite{Carminati:98}. Reciprocity is a very useful property of Maxwell's equations, as it can be used to 
+    For losless media this is equivalent to time-reversal symmetry, but for lossy systems reciprocity still remains valid~\cite{Carminati:98}. Reciprocity is a very useful property of Maxwell's equations, as it can be used to 
     greatly simplify some formulations of inverse design problems [CITE LASER PAPER].
 
 
@@ -267,34 +268,26 @@ The weak form of the wave equation can be written as:
 where $\mathbf{T}$ is a test function, $\Omega$ is the volume of the domain, and $\Gamma$ is the boundary where Neuman boundary conditions
 are prescribed. By using  the standard Galerkin method (where the test and basis functions are the same), one can use the \textbf{Finite Element Method} 
 (FEM) to discretize the weak form 
-into a linear system of equations:
+into the strong form which is based on a linear system of equations:
 \begin{equation}
     \mathbf{K} \mathbf{E} = \mathbf{F},
 \end{equation}
-where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source term.
-
-The weak form can be discretized by using the finite-element method. An example is shown in Figure YY, 
-where we have discretized the two-dimensional domain in Figure XX into a set of triangular edge elements. 
-The edge elements, or Nedelec elements (CITE), of first kind are a natural choice for the electromagnetic 
+where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source term. 
+An example of system discretization via FEM is shown in \autoref{fig:fem},  where we have discretized the two-dimensional 
+domain in \autoref{fig:top_opt} into a set of triangular edge elements. The edge elements, or Nedelec elements (CITE), 
+of first kind [\autoref{fig:fem}] are a natural choice for the electromagnetic 
 wave equation, as they are divergence-free and enforce the continuity of the tangential electric field 
 across the element boundaries, which is a natural boundary condition for Maxwell's equations 
 \footnote{For 2D models where the field discontinuity at the material interfaces 
-is in the out-of-plane direction (e.g., Publication 3), one can use Lagrange element without 
-exciting spurious modes.}. In Figure YY
-we show the structure of a Nedelec element alongside a quiver plot of the shape function one of the edges.
-Using the shape functions we can calculate the contribution of the different elements to the weak form of the
-wave equation, which can be assembled into a system of equations in the strong form:
+is in the out-of-plane direction~\cite{ownpub3}, one can use Lagrange element without 
+exciting spurious modes.}. Using the shape functions of the Nedelec elements, the electric field in the element can be written as:
 \begin{equation}
-    \mathbf{K} \mathbf{E} = \mathbf{F},
+    \boldsymbol{E}^e=\sum_i \boldsymbol{N}_i(\mathbf{r}) E_i
 \end{equation}
-where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source
- term. In the case of eigenvalue problems the source term is zero ($\mathbf{F}=0$), and the system of equations 
-that needs to be solved is given by:
-\begin{equation}
-    \left(\mathbf{K} - \lambda \mathbf{I} \right) \mathbf{E} =  \mathbf{0},
-\end{equation}
+where $i$ denotes the element edges, $\boldsymbol{N}_i$ are the shape functions, and $E_i$ are the edge values of the electric field. As an example,
+see the first order triangular element in \autoref{fig:fem}, where the shape function highlights the fact that they enforce tangential field
+continuity over material interfaces. 
 
-Note that the stiffness matrix is symmetric indefinite, restricting the use of iterative solvers (e.g., Cholesky factorization, Krylov method) to solve the system of equations. Instead LU factorization is a common choice for direct solvers.
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/FEM.png}}%%
@@ -302,10 +295,9 @@ Note that the stiffness matrix is symmetric indefinite, restricting the use of i
     \label{fig:fem}
 \end{figure}
 
-Eigenvalue vs RHS problems
-
-
-Lagrange elements vs Edge elements. Comment spurious modes.
+Note that the stiffness matrix is sparse symmetric indefinite matrix, restricting the use of iterative solvers 
+(e.g., Cholesky factorization, Krylov method) to solve the system of equations. Instead LU factorization is 
+a common choice for direct linear solvers such as UMFPACK (CITE), MUMPS (CITE), or PARDISO (CITE).
 
 Symmetry conditions can be applied to reduce the computational
 cost of the solutions by employing perfect electric conductor (PEC) and perfect magnetic 
@@ -336,23 +328,27 @@ Differentiate between weak and strong coupling.
 
 \section{Topology optimization of multiphysics systems}
 
+The general constrained optimization problem for multiphysics systems can be expressed as:
 \begin{equation}
     \begin{array}{clr}
-    \max\limits_{\xi} & \Phi(\xi, \mathbf{u}) & \text { (Objective function) } \\
-    \text { s.t. } & \mathbf{S}_i(\xi, \mathbf{u})-\mathbf{f}_i=0 \quad \forall i \in\left[1, N_S\right] & \text { (State equations) } \\
-    & c_j(\xi, \mathbf{u}) \leq 0 \quad \forall j \in\left[1, N_c\right] & \text { (Inequality constraints) } \\
+    \max\limits_{\xi} & \Phi(\xi, \mathbf{u}_i) \quad \quad \quad \quad \,\,\,\, \forall i \in\left[1, N_S\right]& \text { (Objective function) } \\
+    \text { s.t. } & \mathbf{S}_i(\xi, \mathbf{u}_i)-\mathbf{f}_i=0 \quad \forall i \in\left[1, N_S\right] & \text { (State equations) } \\
+    & c_j(\xi, \mathbf{u}) \leq 0 \quad \quad \quad \, \forall j \in\left[1, N_c\right] & \text { (Inequality constraints) } \\
     & \xi_{\text {min }} \leq \xi \leq \xi_{\text {max }} & \text { (Box constraints) }
     \end{array}
 \end{equation}
-
-The optimization problem is solved using the algorithm of the Method of Moving
-Asymptotes (MMA) (CITE) and Globally Convergent Method of Moving Ssymptotes (GCMMA) (CITE).
+where $\Phi$ is the FOM to be minimized for a design field $\xi$ with upper bound $\xi_{\text {max }}$ and lower bound $\xi_{\text {min }}$,
+ subject to the residual of the state equations of all the different physical problems and constraints. In multiphysics optimization problems 
+there are $N_S$ state equations, $N_c$ inequality constraints, and $\xi$ is the design variable. The optimization problem is solved using
+ the gradient-based algorithm of the Method of Moving
+Asymptotes (MMA)~\cite{MMA} and Globally Convergent Method of Moving Asymptotes (GCMMA)~\cite{GCMMA}, by iteratively updating the design field until a termination
+criterion is met.
 
 \subsection{From densities to material properties}
 
 To regularize the optimization and introduce a weak sense of geometric length scale, we filter
-the density field using a filter operation. The filtered density can be calculated using a 
-convolution-based filter operation (CITE)
+the density field using a \textbf{filter operation}. The filtered density can be calculated using a 
+convolution-based filter operation~\cite{projection}
 \begin{equation}
     \begin{aligned}
     & \tilde{\xi}(\mathbf{r})=\frac{\sum_{k \in \mathcal{B}_{e, h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k \xi_k}{\sum_{k \in \mathcal{B}_{e, h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k}, \\
@@ -362,26 +358,25 @@ convolution-based filter operation (CITE)
 
 where $A_k$ is the area of the kth element, and $\mathcal{B}_{e, h}$ denotes the
 $h^\text{th}$ set of finite elements whose center point is within a filter radius $r_f$ of the
-$h^\text{th}$ element. One can also filter by solving a Helmholtz-type PDE (CITE):
+$h^\text{th}$ element. One can also filter by solving a Helmholtz-type PDE~\cite{PDE_filter}:
 \begin{equation}
     -\left(\frac{r_f}{2 \sqrt{3}}\right)^2 \nabla \tilde{\xi}+\tilde{\xi}=\xi
 \end{equation}
-The filter operation is followed by a smoothed Heaviside threshold:
+The filter operation is followed by a \textbf{smoothed Heaviside threshold}~\cite{projection}:
 \begin{equation}
     \bar{\tilde{\xi}}=\frac{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(\tilde{\xi}-\eta))}{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(1-\eta))}, \quad \beta \in[1, \infty[, \eta \in[0,1],
 \end{equation}
 where $\beta$ and $\eta$ control the threshold sharpness and value, respectively.
 
-The physical field cna be interpolated to the filtered density field using a material interpolation.
-In multi-physics problems, we will have one material interpolation for each different physical problem
-\footnote{If the problem stem from the same physics (e.g., solving two optical problems), the material interpolation can be re-used.}.
+The physical field cna be interpolated to the filtered density field using a \textbf{material interpolation}.
+In multi-physics problems, we will have one material interpolation for each different physical problem\footnote{If the problem stem from the same physics (e.g., solving two optical problems), the material interpolation can be re-used.}.
 In general, the material interpolation can be written as:
 \begin{equation}
     \zeta(\bar{\tilde{\xi}})=\zeta_0+\bar{\tilde{\xi}}^p\left(\zeta_1-\zeta_0\right)
 \end{equation}
 where $\zeta$ is the material property, $\zeta_0$ and $\zeta_1$ are the material properties of the void and solid, respectively, and $p$
 is a penalization factor (usually, $p=3$ for compliance optimization and $p$=1 for other problems). Note that for some
-special cases, like optical optimization problems with metals, it is benefitial to employ a non-linear material interpolation.
+special cases, like optical optimization problems with metals, it is benefitial to employ a non-linear material interpolation~\cite{nonlinear_interp}.
 
 Do it in such a way that it works for multiphysics.
 Invert order of threshold and filter operations.
@@ -392,18 +387,40 @@ Invert order of threshold and filter operations.
 
 The adjoint sensitivity analysis is used to efficiently calculate the gradient of the objective function with 
 respect to the design variables. In this thesis, we use the adjoint sensitivity analysis  in the context of 
-multi-physics problems, where multiple complex-valued PDE are solved. Let us rewrite the FOM by adding the residual
-of the state equation and its complex conjugate, multiplied by the Lagrange multipliers, $\lambda_i$ and $\lambda_{i+N}$, 
-respectively:
+multi-physics problems, where multiple complex-valued PDE are solved. For simplicity, in this derivations we only consider
+real fields, but the same procedure can be used to derive the expressions with complex fields (e.g., for optical problems).
+
+We will consider two  general coupling types: $N$ physics are coupled sequentually, where physics 1 feeds into physics 2, and physics 2 
+feeds into physics 3, and so on, until physics $N$; and the case where $N-1$ physics are coupled in parallel to physics 1. The rest of possibilities are just 
+combinations of these two coupling cases and can straightforwardly be derived from them. Moreover, we will consider two different coupling mechanisms,
+coupling through the source terms and coupling to through the material properties; the general case where both are present is just a combination of the two.
+
+SAY THAT WE CONSIDER THAT EVERYTHING ENDS UP IN PHYSICS 1
+
+\subsubsection*{Coupling through material properties: $\mathbf{S}_i = \mathbf{S}_i(\bar{\tilde{\xi}}, \mathbf{u}_j)$}
+
+Let us consider the case where the system is coupled through the material properties encoded in the system
+matrices $\mathbf{S}_i$. As shown in \hyperref[app:appendix1]{Appendix 1}, the adjoint sensitivities for a coupled multiphysics problem can be calculated as:
 \begin{equation}
-    \tilde{\Phi} =\Phi + \sum^N_i \left[ \lambda_{i}^{\top}\left(\mathbf{S}_i \mathbf{u}^*_i -\mathbf{f}_i\right) + 
-    \lambda_{i+N}^{\dagger}\left(\mathbf{S}_{i}^* \mathbf{u}^*_i -\mathbf{f}_i^*\right) \right]
+    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
 \end{equation}
+where the Lagrange multipliers $\lambda_i$ for the $i$-th physics, can be found through the adjoint equations:
+\begin{align}
+    \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}}\,\\
+    \mathbf{S}^\top_{i}\lambda_{i} &= - \sum^{C_i}_j \mathbf{u}^\top_j \left(\frac{\partial \mathbf{S}_j}{\partial \mathbf{u}_{i}}\right)^\top \lambda_j \quad \forall i \in [1, N-1]\, , \quad \forall j \in [1, C_i] \,.
+\end{align}
+where $C_i$ is the number of physics coupled to the $i$-th physics.
 
-\subsubsection*{Coupled source problems}
 
-\subsubsection*{Coupled state-equation problems}
 
+
+\subsubsection*{Coupling through the source terms: $\mathbf{f}_i = \mathbf{f}_i(\bar{\tilde{\xi}}, \mathbf{u}_j)$}
+
+
+In the case of coupling through the source terms, the adjoint sensitivities can be calculated as:
+\begin{equation}
+    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{f}_i}{\partial \xi} - \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i  \right)\,.
+\end{equation}
 
 \section{A practical note on computational implementation}
 
