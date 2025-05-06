@@ -1,8 +1,33 @@
 \section{Adjoint sensitivity analysis in coupled mutliphysics problems -- sequential and parallel coupling}\label{app:appendix1}
 
-In this appendix we derive the expressions for the adjoint sensitivity analysis in seggregatedly coupled multiphysics problems.
- This means that the coupling is unidirectinal, so that $\mathbf{u}_1 \to \mathbf{u}_2$ and $\mathbf{u}_1 \not\to \mathbf{u}_2$, for two
- coupled state fields $\mathbf{u}_1$ and $\mathbf{u}_2$. For simplicity, we consider
+In this appendix we derive the expressions for the adjoint sensitivity analysis in weakly coupled multiphysics problems. As shown in Sec.
+() this means that the total system of equations will be upper or lower triangular:
+\begin{equation} \label{eq:multiphysics_weak}
+    \begin{bmatrix}
+        \mathbf{K}_1 & \mathbf{C}_{12} & \cdots & \mathbf{C}_{1N} \\
+        0 & \mathbf{K}_2 & \cdots & \mathbf{C}_{2N} \\
+        \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & \mathbf{K}_N
+    \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{u}_1\\
+        \mathbf{u}_2\\
+        \vdots\\
+        \mathbf{u}_N
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \mathbf{f}_1\\
+        \mathbf{f}_2\\
+        \vdots\\
+        \mathbf{f}_N
+    \end{bmatrix}\,,
+\end{equation}
+where we have chosen the upper diagonal version of the weakly coupled problem. In this case, we can solve the system of equations sequentially in a seggregated fashion,
+ where problem $i$ is solved first, and the solution is used to solve the next problem 
+ ($\mathbf{u}_1 \to \mathbf{u}_2 \to \cdots \to \mathbf{u}_N$). Note that 
+
+For simplicity, we consider
 only real fields. We also restrict ourselves to coupling through material properties (Sec. XX), but this can be extended to other couplings
 (e.g., source terms, Sec. YY).\\
 
@@ -18,7 +43,11 @@ Now we will see how this can be used to calculate the sensitivities when the phy
 
 In the sequential case, the solutions of the different physics couple one-to-one in a seggregated fashion (
 $\mathbf{u}_1 \to \mathbf{u}_2 \to \cdots \to \mathbf{u}_N$)
-and there is no other coupling mechanism between the physics. In this case, taking the derivative of the FOM with respect to the design variable $\xi$:
+and there is no other coupling mechanism between the physics. In this case the system of equations can be written as in Eq.~\eqref{eq:multiphysics_weak}.
+
+
+
+In this case, taking the derivative of the FOM with respect to the design variable $\xi$:
 \begin{equation}\label{eq:adj_seq}
     \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \mathcal{D}^{(1)}_\circ \left[\Phi\right] + 
     \sum^N_i \lambda_{i}^{\top} \left[ \left(\frac{\partial \mathbf{S}_i}{\partial \xi} +  \mathcal{D}^{(i)}_\circ \left[\mathbf{S}_i\right]\right) \mathbf{u}_i

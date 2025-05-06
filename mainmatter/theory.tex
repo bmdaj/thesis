@@ -249,9 +249,9 @@ The following are some key properties of Maxwell's equations and the Helmholtz o
 
 \end{itemize}
 
-\subsection*{Point-like emitters: the Green's function formalism}
+%\subsection*{Point-like emitters: the Green's function formalism}
 
-TODO: Add if we do coupled-emitter project.
+%TODO: Add if we do coupled-emitter project.
 
 \section{The finite element method in electromagnetics}
 
@@ -269,7 +269,7 @@ where $\mathbf{T}$ is a test function, $\Omega$ is the volume of the domain, and
 are prescribed. By using  the standard Galerkin method (where the test and basis functions are the same), one can use the \textbf{Finite Element Method} 
 (FEM) to discretize the weak form 
 into the strong form which is based on a linear system of equations:
-\begin{equation}
+\begin{equation}\label{eq:discretized}
     \mathbf{K} \mathbf{E} = \mathbf{F},
 \end{equation}
 where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source term. 
@@ -312,19 +312,68 @@ by setting the normal component of the magnetic field to zero: $\mathbf{n}\cdot 
 Coupled multi-physics systems are physical systems where the solution of one of the physical 
 problem depends on the solution of another physical problem. Let's consider that the two
 problems can be described by linear partial differential equations, where the first problem
-is described by the equation $\mathcal{L}_1 [\mathbf{u}]= \mathbf{a}$ and the second problem is described by the 
-equation $\mathcal{L}_2 [\mathbf{w}]= \mathbf{b}$.
+is described by the equation $\mathcal{L}_1 [\mathbf{u}_1]= \mathbf{f}_1$ and the second problem is described by the 
+equation $\mathcal{L}_2 [\mathbf{u}_2]= \mathbf{f}_2$. These equations can be discretize into the strong form,
+as $\mathbf{K}_1 \mathbf{u} = \mathbf{a}$ and $\mathbf{K}_2 \mathbf{u}_2 = \mathbf{f}_2$, where $\mathbf{K}_1$ and $\mathbf{K}_2$ are the stiffness matrices of the two problems.
+If the stifness matrices and/or loading terms depend on the the solution of the other problem, we say that the two physics problems are
+coupled. For linear problems\footnote{In nonlinear systems the matrices and loading terms can depend on the field solution $(\mathbf{u_1}, \mathbf{u_2})$
+and one cannot use a linear solver to find the solution to the system of equations.} it is possible to write out the two equations as a system of equations:
+\begin{equation}
+    \begin{bmatrix}
+        \mathbf{K}^*_1 & \mathbf{C}_{12} \\
+        \mathbf{C}_{21} & \mathbf{K}^*_2
+    \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{u}_1 \\
+        \mathbf{u}_2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \mathbf{f}_1^* \\
+        \mathbf{f}_2^*
+    \end{bmatrix}\,.
+\end{equation}
+where $\mathbf{C}_{12}$ is the term that couples physics $2$ to physics $1$, $\mathbf{C}_{21}$ is the term that couples physics $1$ to physics $2$, and the star (*) denotes that when written into the system of equations
+the matrices and loading terms might change, so that the loading terms do not depend on the solution vector $[\mathbf{u}_1 \mathbf{u}_2]$. If the coupling matrices are non-zero ($\mathbf{C}_{12}\neq 0$ and $\mathbf{C}_{21}\neq 0$), we say that physics $1$ and $2$ are 
+\textbf{strongly coupled}, since there is feedback between the two. If the coupling matrices are zero $\mathbf{C}_{12}=\mathbf{C}_{21}=0$, we say that the physics 
+are \textbf{decoupled}, since they can be solved independently. Lastly, in the case where $\mathbf{C}_{12}\neq 0$ but $\mathbf{C}_{21} = 0$ we say that the physics are \textbf{weakly
+coupled} since the solution of physics $1$ depends on the solution of physics $2$, but not the other way around.
 
- If this relation is unidirectional
-we call it \textbf{weak coupling}, and if the relation is bidirectional we call it 
-\textbf{strong coupling}.
+ In the case of $N$ coupled problems, the system of equations can be written as:
+\begin{equation} \label{eq:multiphysics_strong}
+    \begin{bmatrix}
+        \mathbf{K}_1 & \mathbf{C}_{12} & \cdots & \mathbf{C}_{1N} \\
+        \mathbf{C}_{21} & \mathbf{K}_2 & \cdots & \mathbf{C}_{2N} \\
+        \vdots & \vdots & \ddots & \vdots\\
+        \mathbf{C}_{N1} & \mathbf{C}_{N2} & \cdots & \mathbf{K}_N
+    \end{bmatrix}
+    \begin{bmatrix}
+        \mathbf{u}_1\\
+        \mathbf{u}_2\\
+        \vdots\\
+        \mathbf{u}_N
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \mathbf{f}_1\\
+        \mathbf{f}_2\\
+        \vdots\\
+        \mathbf{f}_N
+    \end{bmatrix}\,.
+\end{equation}
+where we have dropped the star notation for convenience. In this case the definition of weak and strong coupling
+becomes more complex since two physics might be coupled indirectly though other physics. Nevertheless, following a similar logic as in the two physics case, if the Coupled
+system is defined by a upper or lower triangular matrix, we can say that the system is weakly coupled. For matrices with more non-diagonal
+zero entries the system will be strongly coupled, while if there are more non-diagonal zero entries than non-zero entries, we can say that the system is weakly coupled. Lastly,
+for a diagonal matrix the system will be decoupled, and the equations can be solved independently.
 
-In weaky coupled systems, both physical problems can be solved independently in a seggregated 
-manner, where the solution of one problem is used in the the other problem.
-
-In strongly coupled systems, the physical problems are solved simultaneously.
-
-Differentiate between weak and strong coupling.
+In general, there are two possibilities for solving coupled problems. If it is possible to write a system of equations
+as in \eqref{eq:multiphysics_strong}, we can use a \textbf{monolithic} approach, where the system of equations is solved as a single system.
+This is the most efficient way of solving the system of equations, since it allows to use direct solvers (e.g., LU factorization) to solve the system of equations.
+However, this approach is not always possible, and in some cases it is more efficient to solve the system of equations in a \textbf{segregated} manner.
+In this case, the system of equations is solved iteratively, where the solution of one problem is used to update the other problem, until a convergence criterion is satisfied.
+This approach is more flexible, since it allows to use different solvers for each problem, but it is less efficient since it requires more iterations to converge; 
+except for weakly coupled systems, where the solution of one problem is used to update the other problem, and the system of equations can be solved in a single step.
 
 \section{Topology optimization of multiphysics systems}
 
