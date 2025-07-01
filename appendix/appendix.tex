@@ -1,7 +1,8 @@
-\section{Adjoint sensitivity analysis in coupled mutliphysics problems -- sequential and parallel coupling}\label{app:appendix1}
-
-In this appendix we derive the expressions for the adjoint sensitivity analysis in weakly coupled multiphysics problems. As shown in Sec.
-() this means that the total system of equations will be upper or lower triangular:
+\section{Sensitivity analysis in weakly coupled multiphysics problems}\label{app:appendix1}
+In this appendix we derive the expressions for the adjoint sensitivity analysis of a general weakly coupled linear multiphysics problem involving $N$ physics, represented as $\mathbf{S}\mathbf{u}=\mathbf{f}$, where $\mathbf{S}$ is the system matrix of the coupled problem, $\mathbf{u}$ is the solution, and $\mathbf{f}$ is the forcing/excitation term. For simplicity, in this adjoint sensitivity analysis we consider
+only real-valued problems, but this approach can be extended to consider complex-valued problems
+as shown in \cite{ownpub0} for a simpler two-physics ($N=2$) problem.
+As shown in \autoref{sec:topopt_theory} for $N$ weakly coupled problems the total system of equations will be upper or lower triangular:
 \begin{equation} \label{eq:multiphysics_weak}
     \begin{bmatrix}
         \mathbf{K}_1 & \mathbf{C}_{12} & \cdots & \mathbf{C}_{1N} \\
@@ -23,110 +24,149 @@ In this appendix we derive the expressions for the adjoint sensitivity analysis 
         \mathbf{f}_N
     \end{bmatrix}\,,
 \end{equation}
-where we have chosen the upper diagonal version of the weakly coupled problem. In this case, we can solve the system of equations sequentially in a seggregated fashion,
- where problem $i$ is solved first, and the solution is used to solve the next problem 
- ($\mathbf{u}_1 \to \mathbf{u}_2 \to \cdots \to \mathbf{u}_N$). Note that 
+where we have chosen the upper diagonal version of the weakly coupled problem and the system of equations has been rewriten in terms of the stiffness ($\mathbf{K}_i$) and 
+coupling matrices ($\mathbf{C}_{ij}$) so that the right-hand-side $\mathbf{f}=[\mathbf{f}_1, \cdots, \mathbf{f}_N]$ does not depend
+on the solution vector $\mathbf{u}=[\mathbf{u}_1, \cdots, \mathbf{u}_N]$. This notation is equivalent to having $N$ equations of the form:
+\begin{align}
+\left\{
+    \begin{aligned}
+        \quad \mathbf{K}_1(\mathbf{u}_2, \mathbf{u}_3, \ldots, \mathbf{u}_N)\, \mathbf{u}_1  + \sum_{i=2}^N \mathbf{C}_{1 \, i} \mathbf{u}_i &= \mathbf{f}_1\,, \\
+        \quad\mathbf{K}_2(\mathbf{u}_3, \mathbf{u}_4, \ldots, \mathbf{u}_N)\, \mathbf{u}_2 + \sum_{i=3}^N \mathbf{C}_{2 \, i} \mathbf{u}_i &= \mathbf{f}_2\,, \\
+        \quad\ldots \\
+        \quad\mathbf{K}_{N-1} (\mathbf{u}_N) \, \mathbf{u}_{N-1} + \mathbf{C}_{N-1\, N} \mathbf{u}_i &= \mathbf{f}_{N-1} \,, \\
+        \quad\mathbf{K}_N \, \mathbf{u}_N &= \mathbf{f}_N\,.
+    \end{aligned}
+\right.
+\end{align}
+In this case, we can solve the system of equations sequentially in a seggregated fashion,
+ where problem $i=N$ is solved first, and the solution is used to solve the next problem ($i=N-1$), and so on, until the first problem ($i=1$) is solved
+ (as in the sequence: $\mathbf{u}_N \to \mathbf{u}_{N-1} \to \cdots \to \mathbf{u}_1$).\\
 
-For simplicity, we consider
-only real fields. We also restrict ourselves to coupling through material properties (Sec. XX), but this can be extended to other couplings
-(e.g., source terms, Sec. YY).\\
-
-In the most general case of $N$ coupled physics problems we can rewrite the FOM by adding the residual
-of the state equations, multiplied by the Lagrange multipliers, $\lambda_i$, 
-respectively:
+To do the adjoint sensitivity analysis we start by rewriting the FOM ($\Phi$) by adding the residual
+of the state equations, multiplied by the Lagrange multipliers ($\Lambda_i$):
 \begin{equation}\label{eq:adj_init}
-    \tilde{\Phi} =\Phi + \sum^N_i \lambda_{i}^{\top}\left(\mathbf{S}_i \mathbf{u}_i -\mathbf{f}_i\right)\,.
+    \tilde{\Phi} =\Phi + \sum^N_{i=1} \Lambda_{i}^{\top}\left(\mathbf{K}_i \mathbf{u}_i -\mathbf{f}_i + \sum^N_{j=i} \mathbf{C}_{ij} \mathbf{u}_j \right)\,.
 \end{equation}
-Now we will see how this can be used to calculate the sensitivities when the physics are coupled in a sequential or parallel way.
-
-\subsection{Sequential coupling}
-
-In the sequential case, the solutions of the different physics couple one-to-one in a seggregated fashion (
-$\mathbf{u}_1 \to \mathbf{u}_2 \to \cdots \to \mathbf{u}_N$)
-and there is no other coupling mechanism between the physics. In this case the system of equations can be written as in Eq.~\eqref{eq:multiphysics_weak}.
-
-
-
-In this case, taking the derivative of the FOM with respect to the design variable $\xi$:
-\begin{equation}\label{eq:adj_seq}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \mathcal{D}^{(1)}_\circ \left[\Phi\right] + 
-    \sum^N_i \lambda_{i}^{\top} \left[ \left(\frac{\partial \mathbf{S}_i}{\partial \xi} +  \mathcal{D}^{(i)}_\circ \left[\mathbf{S}_i\right]\right) \mathbf{u}_i
-    + \mathbf{S}_i \mathcal{D}^{(i)}_\circ \left[\mathbf{u}_i\right] - \frac{\partial \mathbf{f}_i}{\partial \xi }\right]
-\end{equation}
-where we have defined $\mathcal{D}^{(i)}_\circ[a]$ as the sequential or composition ($\circ$) differential operator acting on $a$ to compactly write the derivative:
+Now we calculate the sensitivities by taking the derivative of the FOM with respect to the design variables:
+\begin{equation}
+    \frac{\d \tilde{\Phi}}{\d \rho} = \frac{\partial \Phi}{\partial \rho} + \sum^N_{i=1} \mathcal{D}^{(i)}[\Phi] 
+    + \Lambda_i^\top \left( \mathcal{D}^{(i)}[\mathbf{K}_i] + \mathbf{K}_i \mathcal{D}^{(i)}[\rho] -\frac{\partial \mathbf{f}_i}{\partial \rho} + \sum_{j=i}^{N} \mathcal{D}^{(i)}[\mathbf{C}_{ij}] + \mathbf{C}_{ij} \mathcal{D}^{(i)}[\rho] \right)\,,
+\end{equation}\label{eq:sens_init}
+where we have defined $\mathcal{D}^{(i)}[a]$ as the cascaded differential operator acting on $a$ to compactly write the derivative:
 \begin{align}
-    \mathcal{D}^{(i)}_\circ[a] &= \frac{\partial a}{\partial \mathbf{u}_i} \sum_{j=i}^{N} \frac{\partial \mathbf{u}_j}{\partial \xi} 
-        \prod_{k \leq j}^{j} \frac{\partial \mathbf{u}_k}{\partial \mathbf{u}_{k+1}}\,, \\
-        &= \frac{\partial a}{\partial \mathbf{u}_i} \left( \frac{\partial \mathbf{u}_i}{\partial \xi} + 
-            \frac{\partial \mathbf{u}_i}{\partial \mathbf{u}_{i+1}} \left( \frac{\partial \mathbf{u}_{i+1}}{\partial \xi} + 
-                \frac{\partial \mathbf{u}_{i+1}}{\partial \mathbf{u}_{i+2}} \left( \frac{\partial \mathbf{u}_{i+2}}{\partial \xi} + 
-                    \cdots
-                \right)
-            \right)
-        \right) \,.
-    \end{align}
-Using Eq.~\eqref{eq:adj_seq} and grouping the terms:
-\begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} =  \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)
-    + \sum^{N-1}_{i=1}  \frac{\partial \mathbf{u}_{i}}{\partial \xi} \left( \lambda_{i}^{\top} \frac{\partial \mathbf{S}_i}{\partial \mathbf{u}_{i+1}}\mathbf{u}_{i}
-    +  \lambda_{i+1}^{\top} \mathbf{S}_{i+1}\right)\,.
-\end{equation}
-We can by choose the Lagrange multipliers to the last summation term is zero, by solving $N$ adjoint equations:
-\begin{align}
-    \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}} \label{eq:seq_adj_1}\,\\
-    \mathbf{S}^\top_{i+1}\lambda_{i+1} &= - \mathbf{u}^\top_i \left(\frac{\partial \mathbf{S}_i}{\partial \mathbf{u}_{i+1}}\right)^\top \lambda_i \quad \forall i \in [1, N-1] \label{eq:seq_adj_N-1}\,,
+    \hspace*{-0.775cm}\mathcal{D}^{(i)}[a] &= \frac{\partial a}{\partial \mathbf{u}_i} \Bigg[ \frac{\partial \mathbf{u}_i}{\partial \rho} + 
+    \sum_{j=i+1}^{N} \frac{\partial \mathbf{u}_i}{\partial \mathbf{u}_j} \Bigg( \frac{\partial \mathbf{u}_j}{\partial \rho} + 
+    \sum_{k=j+1}^{N} \frac{\partial \mathbf{u}_j}{\partial \mathbf{u}_k} \Bigg( \frac{\partial \mathbf{u}_k}{\partial \rho} + \cdots \Bigg) \Bigg) \Bigg] \,\,\,\, \forall i \in [1, N] \,,
 \end{align}
-where the adjoint equations imply a relationship where the coupling happens backwards. In other words, one needs to solve the first adjoint equation (Eq.~\eqref{eq:seq_adj_1}), 
-and feed the solution the next adjoint equation ($i=2$, Eq.~\eqref{eq:seq_adj_N-1}) (and so on); where the coupling is inverted with respect to the physics. Solving these adjoint equations we can calculate the lagrang
-multipliers which give the final sensitivities:
-\begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
-\end{equation}
+which takes into account all the sequential dependencies of the solutions in the weakly coupled problem.
 
-\subsection{Parallel coupling}
-
-Let's now consider the case of parallel coupling, where the solution of $N-1$ physics are coupled solve the last ($i=1$) physics ($[\mathbf{u}_2, \mathbf{u}_3, \cdots, \mathbf{u}_{N-1}] \to \mathbf{u}_1$). By reusing Eq.~\eqref{eq:adj_seq},
-we can now take the derivative with respect to the design variables:
-\begin{align}\label{eq:adj_parallel}
-    \frac{\d \tilde{\Phi}}{\d \xi} &= \frac{\partial \Phi}{\partial \xi} + \mathcal{D}^{(1)}_\parallel \left[\Phi\right]  
-    +  \lambda_{1}^{\top} \left[\left( \frac{\partial \mathbf{S}_1}{\partial \xi} +  \mathcal{D}^{(1)}_\parallel \left[\mathbf{S}_1\right] \right) \mathbf{u}_1
-    + \mathbf{S}_1  \mathcal{D}^{(1)}_\parallel \left[\mathbf{u}_1\right] \right] + \\
-    &+ \sum_{i=2}^{N} \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi}\mathbf{u}_i + \mathbf{S}_i \frac{\partial \mathbf{u}_i}{\partial \xi} - \frac{\partial \mathbf{f}_i}{\partial \xi}\right)
-\end{align}
-where we have defined $\mathcal{D}^{(i)}_\parallel[a]$ as the parallel ($\parallel$) differential operator acting on $a$ to compactly write the derivative:
-\begin{equation}
-    D^{(i)}_\parallel[a] = \frac{\partial a}{\partial \mathbf{u}_i} \sum_{j=1}^{N} \frac{\partial \mathbf{u}_j}{\partial \mathbf{u}_i} 
-    \frac{\partial \mathbf{u}_j}{\partial \xi}\,.
-\end{equation}
-Using Eq.~\eqref{eq:adj_parallel} and grouping the terms:
-\begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)
-    + \frac{\partial \mathbf{u}_1}{\partial \xi} \left( \lambda_{1}^{\top}  \mathbf{S}_1 + \frac{\partial \Phi}{\partial \mathbf{u}_1} \right) + 
-    \sum^{N}_{i=2} \left( \lambda_{i}^{\top} \mathbf{S}_i + \lambda_{1}^{\top}  \frac{\partial \mathbf{S}_i}{\partial \mathbf{u}_1} \mathbf{u}_i\right)\,.
-\end{equation}
-We can by choose the Lagrange multipliers so that the last two terms are zero, by solving $N$ adjoint equations:
+Using \autoref{eq:sens_init} and grouping the terms we can write the sensitivities as:
 \begin{align}
-    \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}} \label{eq:par_adj_1}\,\\
-    \mathbf{S}^\top_{i}\lambda_{i} &= - \mathbf{u}^\top_1 \left(\frac{\partial \mathbf{S}_1}{\partial \mathbf{u}_i}\right)^\top \lambda_1 \quad \forall i \in [2, N] \label{eq:par_adj_N-1}\,,
+    \frac{\d \tilde{\Phi}}{\d \rho}  &= \frac{\partial \Phi}{\partial \rho} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \rho} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \rho} + \sum_{j=i}^{N} \frac{\partial \mathbf{C}_{ij}}{\partial \rho } \mathbf{u}_j \right) + \\ &+ \frac{\partial \mathbf{u}_1}{\partial \rho} \big( \mathcal{A}_1 \big) + \frac{\partial \mathbf{u}_2}{\partial \rho} \left( \mathcal{A}_1 \frac{\partial \mathbf{u}_2}{\partial \mathbf{u}_1} + \mathcal{A}_2 \right) + \\
+    &+ \frac{\partial \mathbf{u}_3}{\partial \rho} \left[ \mathcal{A}_1 \left( \frac{\partial \mathbf{u}_3}{\partial \mathbf{u}_1} + \frac{\partial \mathbf{u}_3}{\partial \mathbf{u}_2}\frac{\partial \mathbf{u}_2}{\partial \mathbf{u}_1}\right) + \frac{\partial \mathbf{u}_3}{\partial \mathbf{u}_2} \mathcal{A}_2 + \mathcal{A}_3 \right] + \cdots
 \end{align}
-The Lagrange multipliers are a solution to this equation and can be used to simplify the sensitivity expression:
+where $\mathcal{A}_i (\Lambda_i)$ are the adjoint equation terms
 \begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
+    \mathcal{A}_i = \frac{\partial \Phi}{\partial \mathbf{u}_i} + \Lambda_i^\top \left( \mathbf{K}_i + \sum^i_{j=1} \mathbf{C}_{ij} \right) + \sum_{j=1}^{i} \Lambda_j^\top
+    \left( \frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i} + \sum^j_{k=1} \mathbf{C}_{jk} \right) \mathbf{u}_j \quad \quad \forall i \in [1, N] \,.
 \end{equation}
-which is the same result as in the case of sequential coupling, with different Lagrange multipliers.
+which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint problems. The final expression for the sensitivities is then given by
+\begin{empheq}[box=\fbox]{equation}
+    \frac{\d \tilde{\Phi}}{\d \rho}  = \frac{\partial \Phi}{\partial \rho} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \rho} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \rho} + \sum^N_{j=i} \frac{\partial \mathbf{C}_{ij}}{\partial \rho} \mathbf{u}_j \right)\,,
+\end{empheq}
+where the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations:
+\begin{equation}
+    \hspace*{-0.775cm}\left( \mathbf{K}^\top_i + \sum^i_{j=1} \mathbf{C}^\top_{ij} \right) \Lambda_i = -\left(\frac{\partial \Phi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i} \mathbf{u}^\top_j 
+    \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i} + \sum^{j}_{k=1} \frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i} \right)^\top \Lambda_j  \quad \forall i \in [1, N] \,.
+\end{equation}
+the forward solution (e.g. \autoref{eq:multiphysics_weak}). In other words, one needs to solve the first adjoint equation ($i=1$) 
+and feed the solution the next adjoint equation ($i=2$), and so on, to solve the last adjoint problem $i=N$  (as in the sequence: $\Lambda_1 \to \Lambda_{2} \to \cdots \to \Lambda_N$).
 
-\subsection{Generalizing to simultaenous sequential and parallel coupling}
-Based on the result from the previous sections, in the general coupling case, where there might be parallel and sequential couplings simultaneously, the sensitivities can be calculated as:
-\begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
-\end{equation}
-The only difference is solution to the adjoint equations, which depends on the coupling. In the general case, where all couplings feed to a 
-final physics ($i=1$) but may be coupled in any combinations between each other, it can be shown that the adjoint equations are:
-\begin{align}
-    \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}}\,\\
-    \mathbf{S}^\top_{i}\lambda_{i} &= - \sum^{C_i}_j \mathbf{u}^\top_j \left(\frac{\partial \mathbf{S}_j}{\partial \mathbf{u}_{i}}\right)^\top \lambda_j \quad \forall i \in [1, N-1]\, , \quad \forall j \in [1, C_i] \,.
-\end{align}
-where $C_i<N$ is the number of physics that are coupled to the $i$th physics, and where we have used that the problems are linear. 
-Note that the couplings are still unidirectional. To extend this derivations to complex fields one can refer to the adjoint sensitivity
-analysis in \cite{ownpub0}, for a simpler two-physics ($N=2$) problem, where the optical problem uses complex fields.
+% In the sequential case, the solutions of the different physics couple one-to-one in a seggregated fashion (
+% $\mathbf{u}_1 \to \mathbf{u}_2 \to \cdots \to \mathbf{u}_N$)
+% and there is no other coupling mechanism between the physics. In this case the system of equations can be written as in Eq.~\eqref{eq:multiphysics_weak}.
+
+
+
+% In this case, taking the derivative of the FOM with respect to the design variable $\xi$:
+% \begin{equation}\label{eq:adj_seq}
+%     \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \mathcal{D}^{(1)}_\circ \left[\Phi\right] + 
+%     \sum^N_i \lambda_{i}^{\top} \left[ \left(\frac{\partial \mathbf{S}_i}{\partial \xi} +  \mathcal{D}^{(i)}_\circ \left[\mathbf{S}_i\right]\right) \mathbf{u}_i
+%     + \mathbf{S}_i \mathcal{D}^{(i)}_\circ \left[\mathbf{u}_i\right] - \frac{\partial \mathbf{f}_i}{\partial \xi }\right]
+% \end{equation}
+% where we have defined $\mathcal{D}^{(i)}_\circ[a]$ as the sequential or composition ($\circ$) differential operator acting on $a$ to compactly write the derivative:
+% \begin{align}
+%     \mathcal{D}^{(i)}_\circ[a] &= \frac{\partial a}{\partial \mathbf{u}_i} \sum_{j=i}^{N} \frac{\partial \mathbf{u}_j}{\partial \xi} 
+%         \prod_{k \leq j}^{j} \frac{\partial \mathbf{u}_k}{\partial \mathbf{u}_{k+1}}\,, \\
+%         &= \frac{\partial a}{\partial \mathbf{u}_i} \left( \frac{\partial \mathbf{u}_i}{\partial \xi} + 
+%             \frac{\partial \mathbf{u}_i}{\partial \mathbf{u}_{i+1}} \left( \frac{\partial \mathbf{u}_{i+1}}{\partial \xi} + 
+%                 \frac{\partial \mathbf{u}_{i+1}}{\partial \mathbf{u}_{i+2}} \left( \frac{\partial \mathbf{u}_{i+2}}{\partial \xi} + 
+%                     \cdots
+%                 \right)
+%             \right)
+%         \right) \,.
+%     \end{align}
+% Using Eq.~\eqref{eq:adj_seq} and grouping the terms:
+% \begin{equation}
+%     \frac{\d \tilde{\Phi}}{\d \xi} =  \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)
+%     + \sum^{N-1}_{i=1}  \frac{\partial \mathbf{u}_{i}}{\partial \xi} \left( \lambda_{i}^{\top} \frac{\partial \mathbf{S}_i}{\partial \mathbf{u}_{i+1}}\mathbf{u}_{i}
+%     +  \lambda_{i+1}^{\top} \mathbf{S}_{i+1}\right)\,.
+% \end{equation}
+% We can by choose the Lagrange multipliers to the last summation term is zero, by solving $N$ adjoint equations:
+% \begin{align}
+%     \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}} \label{eq:seq_adj_1}\,\\
+%     \mathbf{S}^\top_{i+1}\lambda_{i+1} &= - \mathbf{u}^\top_i \left(\frac{\partial \mathbf{S}_i}{\partial \mathbf{u}_{i+1}}\right)^\top \lambda_i \quad \forall i \in [1, N-1] \label{eq:seq_adj_N-1}\,,
+% \end{align}
+% where the adjoint equations imply a relationship where the coupling happens backwards. In other words, one needs to solve the first adjoint equation (Eq.~\eqref{eq:seq_adj_1}), 
+% and feed the solution the next adjoint equation ($i=2$, Eq.~\eqref{eq:seq_adj_N-1}) (and so on); where the coupling is inverted with respect to the physics. Solving these adjoint equations we can calculate the lagrang
+% multipliers which give the final sensitivities:
+% \begin{equation}
+%     \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
+% \end{equation}
+
+% \subsection{Parallel coupling}
+
+% Let's now consider the case of parallel coupling, where the solution of $N-1$ physics are coupled solve the last ($i=1$) physics ($[\mathbf{u}_2, \mathbf{u}_3, \cdots, \mathbf{u}_{N-1}] \to \mathbf{u}_1$). By reusing Eq.~\eqref{eq:adj_seq},
+% we can now take the derivative with respect to the design variables:
+% \begin{align}\label{eq:adj_parallel}
+%     \frac{\d \tilde{\Phi}}{\d \xi} &= \frac{\partial \Phi}{\partial \xi} + \mathcal{D}^{(1)}_\parallel \left[\Phi\right]  
+%     +  \lambda_{1}^{\top} \left[\left( \frac{\partial \mathbf{S}_1}{\partial \xi} +  \mathcal{D}^{(1)}_\parallel \left[\mathbf{S}_1\right] \right) \mathbf{u}_1
+%     + \mathbf{S}_1  \mathcal{D}^{(1)}_\parallel \left[\mathbf{u}_1\right] \right] + \\
+%     &+ \sum_{i=2}^{N} \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi}\mathbf{u}_i + \mathbf{S}_i \frac{\partial \mathbf{u}_i}{\partial \xi} - \frac{\partial \mathbf{f}_i}{\partial \xi}\right)
+% \end{align}
+% where we have defined $\mathcal{D}^{(i)}_\parallel[a]$ as the parallel ($\parallel$) differential operator acting on $a$ to compactly write the derivative:
+% \begin{equation}
+%     D^{(i)}_\parallel[a] = \frac{\partial a}{\partial \mathbf{u}_i} \sum_{j=1}^{N} \frac{\partial \mathbf{u}_j}{\partial \mathbf{u}_i} 
+%     \frac{\partial \mathbf{u}_j}{\partial \xi}\,.
+% \end{equation}
+% Using Eq.~\eqref{eq:adj_parallel} and grouping the terms:
+% \begin{equation}
+%     \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)
+%     + \frac{\partial \mathbf{u}_1}{\partial \xi} \left( \lambda_{1}^{\top}  \mathbf{S}_1 + \frac{\partial \Phi}{\partial \mathbf{u}_1} \right) + 
+%     \sum^{N}_{i=2} \left( \lambda_{i}^{\top} \mathbf{S}_i + \lambda_{1}^{\top}  \frac{\partial \mathbf{S}_i}{\partial \mathbf{u}_1} \mathbf{u}_i\right)\,.
+% \end{equation}
+% We can by choose the Lagrange multipliers so that the last two terms are zero, by solving $N$ adjoint equations:
+% \begin{align}
+%     \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}} \label{eq:par_adj_1}\,\\
+%     \mathbf{S}^\top_{i}\lambda_{i} &= - \mathbf{u}^\top_1 \left(\frac{\partial \mathbf{S}_1}{\partial \mathbf{u}_i}\right)^\top \lambda_1 \quad \forall i \in [2, N] \label{eq:par_adj_N-1}\,,
+% \end{align}
+% The Lagrange multipliers are a solution to this equation and can be used to simplify the sensitivity expression:
+% \begin{equation}
+%     \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
+% \end{equation}
+% which is the same result as in the case of sequential coupling, with different Lagrange multipliers.
+
+% \subsection{Generalizing to simultaenous sequential and parallel coupling}
+% Based on the result from the previous sections, in the general coupling case, where there might be parallel and sequential couplings simultaneously, the sensitivities can be calculated as:
+% \begin{equation}
+%     \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
+% \end{equation}
+% The only difference is solution to the adjoint equations, which depends on the coupling. In the general case, where all couplings feed to a 
+% final physics ($i=1$) but may be coupled in any combinations between each other, it can be shown that the adjoint equations are:
+% \begin{align}
+%     \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}}\,\\
+%     \mathbf{S}^\top_{i}\lambda_{i} &= - \sum^{C_i}_j \mathbf{u}^\top_j \left(\frac{\partial \mathbf{S}_j}{\partial \mathbf{u}_{i}}\right)^\top \lambda_j \quad \forall i \in [1, N-1]\, , \quad \forall j \in [1, C_i] \,.
+% \end{align}
+% where $C_i<N$ is the number of physics that are coupled to the $i$th physics, and where we have used that the problems are linear. 
+
 

@@ -103,7 +103,10 @@
 \newcommand{\princs}{$SG_P$ }
 \newcommand{\userdefines}{$SG_A$ }
 \renewcommand{\d}{\mathop{}\!\text{d}}
-
+\newcommand{\secref}[1]{Sec.~\ref{#1}}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]{Tab.~\ref{#1}}
+\newcommand{\appref}[1]{App.~\ref{#1}}
 
 \newlength{\imwidth}
 \setlength{\imwidth}{14.cm}
@@ -122,6 +125,8 @@
   }
 }
 \setlength\bibitemsep{1.5\itemsep}
+
+
 
 % \definecolor{mylinkcolor}{rgb}{0.6745098039, 0.4196078431, 0.5921568627}%
 \definecolor{mylinkcolor}{rgb}{0.,0.5019607843,0.6745098039}%
@@ -240,7 +245,7 @@
   \normalfont#2\ifdim#1<\commalabelwd\fi\hfill
 }
 
-
+\setlength{\parskip}{1em}
 
 % \chapterstyle{southall-mod}
 % \chapterstyle{brotherton}
@@ -251,7 +256,7 @@
 \setsecnumdepth{subsection}
 
 
-\title{Topology optimization of coupled optical systems}
+\title{Multiphysics topology optimization in nanophotonics}
 \author{Beñat Martinez de Aguirre Jokisch}
 \date{July 2025}
 

@@ -1,13 +1,17 @@
 \chapter{Theoretical framework}
 
-This chapter covers the theoretical foundations to understand the contents of this thesis, 
-and is divided in four main sections. The first section presents the fundamental physics
-governing optical problems, in the singlek physics picture. The second section provides 
-an introduction to solving optical problems numerically using the finite-element method.
-The third section introduces the concept of coupled optical systems, in the multi-physics
-picture. The fourth section discusses the topology optimization of multi-physics systems.
-With these tools we can understand how to solve the inverse design problems in the following
-chapter.
+This chapter introduces the theoretical foundations used in the remainder of
+the thesis,
+and is divided in four main sections. The first section
+(\secref{sec:nanophotonics}) presents the fundamental physics
+governing nanophotonic problems, in the single physics picture. The second
+section (\secref{sec:nanophotonics}) provides
+an introduction to solving nanophotonic problems numerically using the
+finite-element method.
+The third section (\secref{sec:coupled}) introduces the concept of coupled
+nanophotonic systems, in the multi-physics
+picture. Lastly, the fourth section (\secref{sec:topopt_theory}) introduces a
+framework for topology optimization of multi-physics systems.
 
 %\begin{figure}[tb]
 %    \centering
@@ -16,11 +20,9 @@ chapter.
 %    \label{fig:illustateTopOpt}
 %\end{figure}
 
-
 %\begin{equation}
 %    (EIu'')'' = q
 %\end{equation}
-
 
 %\begin{figure}[tb]
 %    \centering
@@ -29,454 +31,775 @@ chapter.
 %    \label{fig:Rank}
 %\end{figure}
 
-\section{Nano-optics -- Light as an electromagnetic wave}
+\section{Nanophotonics -- Light as an electromagnetic
+  wave}\label{sec:nanophotonics}
 
-In classical optics, light is treated as an electromagnetic (EM) wave, which can be described by 
-solving Maxwell's equations. Solving these partial differential equations can be complicated, and 
-depending on the characteristic size ($s$) of objects compared to the light's wavelength ($\lambda$) 
-simpler limiting cases can be used to describe optical phenomena:
+In classical optics, light is treated as an electromagnetic (EM) wave, and can
+be described by
+solving Maxwell's equations. Nevertheless,
+depending on the characteristic size ($s$) of objects compared to the light's
+wavelength ($\lambda$)
+simpler limiting models can be used to describe optical phenomena:
 \begin{itemize}
-    \item \textbf{Ray Optics ($s \ll \lambda$):} When objects are much larger than the wavelength, light is modeled as straight-line rays.
-    \item \textbf{Quasistatics \& lumped circuit models ($s \gg \lambda$):} When objects are much smaller than the wavelength, the wave natue of light dissapears, 
-    and can be approximated quasistatically (i.e., solving Poisson's equation). For instance, electronic devices can be modeled in this regime using circuit models w
-    ith lumped elements, like resistors or capacitors. 
+    \item \textbf{Geometrical or ray optics ($s \ll \lambda$):} When objects
+          are much larger than the wavelength, light is modeled as straight-line rays,
+          which might refract or reflect in the presence of different media, such as
+          lenses and mirrors.
+    \item \textbf{Quasistatics \& lumped circuit models ($s \gg \lambda$):}
+          When objects are much smaller than the wavelength, the wave natue of light
+          dissapears,
+          and can be approximated quasistatically. For instance, electronic devices
+          can be modeled in this regime using circuit models w
+          ith lumped elements, like resistors or capacitors.
 \end{itemize}
-In the fields of photonics and \emph{nano-optics}, where the visible 
-(\(\lambda \sim 400\)--\(800\) nm) and infrared (\(\lambda \sim 800\)--\(2500\) nm)
- spectral regions are most commonly explored, components often have nano- to
-  microscale dimensions. As a result, we are in the \textbf{wave-optics} regime ($\lambda \sim s$ ),  
-  where we cannot resort to simpler models like ray optics or quasistatic/lumped circuits models,
-  and instead need to solve Maxwell's equations. Given the complexity of Maxwell's
-  equations very few problems (e.g., problems with high symmetry, separability, few parameters) 
-  can be solved analytically and for most problems requires 
-  numerical solutions (e.g., the finite element method).
-
-
-\subsection*{The macroscopic Maxwell's equations}
-
-Light propagation in a \emph{macroscopic} electromagnetic systems can be described by Maxwell's equations. The time-domain Maxwell's 
-equations in a linear, isotropic, and homogeneous medium can be written as:
-
-\begin{align}
-    \nabla \times \bm{\mathcal{E}} (\mathbf{r},t) &= - \frac{\partial \bm{\mathcal{B}}(\mathbf{r},t)}{\partial t}, \quad \quad &\text{(Faraday's law)} \label{eq:faraday}\\
-    \nabla \times \bm{\mathcal{H}} (\mathbf{r},t) &= \frac{\partial \bm{\mathcal{D}}(\mathbf{r},t)}{\partial t} + \bm{\mathcal{J}}(\mathbf{r},t), \quad \quad &\text{(Ampère's law)} \label{eq:ampere}\\
-    \nabla \cdot \bm{\mathcal{D}} (\mathbf{r},t) &= \mathcal{\rho}(\mathbf{r},t), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:gauss_E}\\
-    \nabla \cdot \bm{\mathcal{B}} (\mathbf{r},t) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:Gauss_B}
-\end{align}
-where $\bm{\mathcal{E}}$ and $\bm{\mathcal{H}}$ are the time-dependent electric and magnetic (induction) fields, respectively, 
-$\bm{\mathcal{D}}$ is the time-dependent electric displacement field,  
-$\bm{\mathcal{B}}$ is the time-dependent magnetic (flux-density) field, $\bm{\mathcal{J}}$ is the current density,
-and $\mathcal{\rho}$ is the time-dependent charge density. Maxwell's equations combine previously established
-physical laws, in 4 equations:
-\begin{itemize}
-    \item \textbf{Faraday's law} [Eq.~\eqref{eq:faraday}] describes how a time-varying magnetic field induces an electric field.
-    \item \textbf{Ampère's law} [Eq.~\eqref{eq:ampere}] describes how a time-varying electric field and electric current density induce a magnetic field.
-    \item \textbf{Gauss's law for electricity} [Eq.~\eqref{eq:gauss_E}] describes how electric charges create an electric field. 
-    \item \textbf{Gauss's law for magnetism} [Eq.~\eqref{eq:Gauss_B}] states that there are no magnetic monopoles, and thus the magnetic field lines are closed loops.
-\end{itemize}
-
-Note that the mascroscopic fields in Maxwell's equations 
-are spatial averages of the
-microscopic fields, and the charge and current densities are continous in space and time.
-For an atomic scale description of the electromagnetic fields, one can use the \emph{microscopic}
-Maxwell's equations, which include a quantized description of matter based on discrete charged particles
-(e.g., electrons, protons, etc.), and currents.\\
-
-To understand how materials respond to electromagnetic fields,
-we need to introduce the constitutive equations. These materials can be modeled
-with the presence of a time-dependent polarization $\bm{\mathcal{P}}$ and magnetization $\bm{\mathcal{M}}$, 
-which relate the fields $\bm{\mathcal{D}}$ and $\bm{\mathcal{B}}$ to the fields $\bm{\mathcal{E}}$ and 
-$\bm{\mathcal{H}}$ by the constitutive equations:
-\begin{align}
-    \bm{\mathcal{D}}(\mathbf{r}, t) &= \varepsilon_0 \bm{\mathcal{E}}(\mathbf{r}, t) + \bm{\mathcal{P}}(\mathbf{r}, t), \label{eq:D}\\ 
-    \bm{\mathcal{H}}(\mathbf{r}, t) &= \mu_0^{-1} \bm{\mathcal{B}}(\mathbf{r}, t) - \bm{\mathcal{M}}(\mathbf{r}, t) \label{eq:H},
-\end{align}
-where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the permeability of free space. 
-note that the polarization and magnetization also depend on the electric and magnetic fields; as an example the
-polarization can be written as a series expansion in powers of the electric field: 
-$\bm{\mathcal{P}}=\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(1)} \bm{\mathcal{E}}+\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(2)} \bm{\mathcal{E}} \bm{\mathcal{E}}+\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(3)} \bm{\mathcal{E}} \bm{\mathcal{E}} \bm{\mathcal{E}}+\cdots$,
-where $\bm{\mathcal{\chi}}^{n}$ is the $n^\text{th}$ order component of the electric susceptibility. In this thesis
-we will only consider linear materials, where only the first-order terms in the expansion are considered. \\
-
-
-Using Maxwell's equations and applying the curl operator to Faraday's law [Eq.~\eqref{eq:faraday}] and Ampère's law [Eq.~\eqref{eq:ampere}], 
-together with the constitutive relations for $\mathbf{D}$ and $\mathbf{B}$ in Eq.~\eqref{eq:D} and Eq.~\eqref{eq:H}, one gets two coupled
-wave equations for the electric and magnetic fields:
-\begin{equation}
-\begin{aligned}
-    & \nabla \times \nabla \times \bm{\mathcal{E}}+\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{E}}}{\partial t^2}=-\mu_0 \frac{\partial}{\partial t}\left(\bm{\mathcal{J}}+\frac{\partial \bm{\mathcal{P}}}{\partial t}+\nabla \times \bm{\mathcal{M}}\right), \\
-    & \nabla \times \nabla \times \bm{\mathcal{H}}+\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{H}}}{\partial t^2}=\nabla \times \bm{\mathcal{J}}+\nabla \times \frac{\partial \bm{\mathcal{P}}}{\partial t}-\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{M}}}{\partial t^2}
-\end{aligned}
-\end{equation}
-where $c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum. This equation described the wave nature of electromagnetic fields,
-and is generally valid for any material.
-
-\subsection*{Electromagnetics in the frequency domain}
-
-The time-dependence in Maxwell's equations can be separated by assuming a harmonic time-dependence of the fields:
-\begin{equation}
-    \bm{\mathcal{E}}(\mathbf{r}, t) = \Re \{ \mathbf{E}(\mathbf{r}) e^{-i\omega t} \}= \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{i\omega t} + \mathbf{E}^*(\mathbf{r}) e^{-i\omega t}\right],
-\end{equation}
-where $\mathbf{E}$ is the complex field phasor, $\omega=ck$ is the angular frequency of the light, and $k=2\pi/\lambda$ is the wavenumber.
-Using this complex field, the time-domain Maxwell's equations can be written as
-\begin{align}
-    \nabla \times \mathbf{E}(\mathbf{r}) &= -i\omega \mathbf{B}(\omega, \mathbf{r}), \quad \quad &\text{(Faraday's law)} \label{eq:curlE_freq}\\
-    \nabla \times \mathbf{H}(\mathbf{r}) &= i\omega  \mathbf{D}(\mathbf{r}) + \mathbf{j}(\mathbf{r}), \quad \quad &\text{(Ampère's law)} \label{eq:curlH_freq}\\
-    \nabla \cdot \mathbf{D}(\mathbf{r}) &= \rho(\mathbf{r}), \quad \quad &\text{(Gauss's law for electricity)} \label{eq:divD_freq}\\
-    \nabla \cdot \mathbf{B}(\mathbf{r}) &= 0, \quad \quad &\text{(Gauss's law for magnetism)} \label{eq:divB_freq}
-\end{align}
-
-where all fields now are complex phasors that also depend on the frequency
-(e.g., $\mathbf{E}(\omega, \mathbf{r})$) and only have spatial dependence. In a similar fashion,
-the material parameters are complex functions of space and frequency (e.g., $\varepsilon(\omega, \mathbf{r}$)). 
-Note that the frequency-domain Maxwell's equations are equivalent to applying Fourier transform in time to the time domain
-equations [Eqs.~\eqref{eq:faraday}-\eqref{eq:Gauss_B}].\\
-
-By using the frequency-domain constitutive relations and applying the curl operator to Faraday's law [Eq.~\eqref{eq:curlE_freq}] and Ampère's law [Eq.~\eqref{eq:curlH_freq}],
-we can combine both equations into a single wave equation for the electric field\footnote{A similar procedure one can be applied to derive a wave equation for the magnetic field.
-}:
-
-\begin{equation}
-    \nabla \times \left(\frac{1}{\mu(\mathbf{r})} \nabla \times \mathbf{E}(\mathbf{r})\right) - k^2 \varepsilon(\mathbf{r}) \mathbf{E}(\mathbf{r}) = -i\omega \mu \mathbf{j}(\mathbf{r})\,. 
-\end{equation}
-This is the Helmholtz equation for the electric field RECHECK MAKE SURE IT IS CORRECT. This equation can 
-be further simplified by adopting an operator nomenclature:
-\begin{empheq}[box={\fboxsep=5pt\fboxrule=0.5pt\fbox}]{equation}\label{eq:helmholtz}
-    \mathcal{L}[\mathbf{E}(\mathbf{r})] = \mathbf{f}\,,
-\end{empheq}
-where $\mathcal{L} \triangleq \nabla \times \left[(1/\mu) \nabla \times \mathbf{\square} \right] - k^2 \square $ is a differential operator acting on a vector field $\mathbf{\square}$, 
-and $\mathbf{f} = -i\omega \mu \mathbf{j}(\mathbf{r})$ is the source term. This equation is the cornerstone of the numerical analysis in this thesis.
-
-\subsection*{Boundary conditions at material interfaces}
-
-In many physical systems, and specially in computational optics, the medium can be divided
-into different regions with different material properties. Although a piecewise homogeneous
-medium is an inhomoegeneous medium, the inhomogeneities are confined to the boundaries and 
-the optical problem can be solved in each region separately. The solutions to the optical problems
-are connected by the boundary conditions at the interfaces between the regions; and thus between
-materials. These boundary conditions can be derived from Maxwell's equations, and for a boundary
-$\Gamma_{ij}$ separating domain $i$ from domain $j$ yield the tangential field conditions:
-\begin{align}
-    \mathbf{n} \times (\mathbf{E}_i - \mathbf{E}_j) &= 0 \label{eq:BC_E}\\
-    \mathbf{n} \times (\mathbf{H}_i - \mathbf{H}_j) &= \mathbf{K} , \label{eq:BC_H}
-\end{align} 
-and the normal field conditions:
-\begin{align}
-    \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) &= \rho_s \label{eq:BC_D}\\
-    \mathbf{n} \cdot (\mathbf{B}_i - \mathbf{B}_j) &= 0, \label{eq:BC_B}
-\end{align}
-where $\mathbf{n}$ is the normal vector to the boundary, $\mathbf{K}$ is the surface current density,
- and $\rho_s$ is the surface charge density. Note that In many optical problems there are no 
- sources in the individual domains, and $\mathbf{K}$ and $\rho$ are zero.
-
- LINK THIS TO THE NEDELEC ELEMENTS!
-
-\subsection*{Modeling single emitters: the Green's function formalism}
-
-\subsection*{Some useful properties of Maxwell's equations}
-The following are some key properties of Maxwell's equations and the Helmholtz operator that will be useful throughout this thesis.:
-\begin{itemize}
-    \item \textbf{Linearity and superposition:} The operator introduced in Eq.~\eqref{eq:helmholtz} is linear, meaning the superposition principle holds. If $\mathbf{E}_1$ and $\mathbf{E}_2$ are t
-    wo solutions to the Helmholtz equation, such that $\mathcal{L}[\mathbf{E}_1] = \mathbf{f}_1$ and 
-    $\mathcal{L}[\mathbf{E}_2] = \mathbf{f}_2$, then their linear combination ($\mathbf{E}_3 = \alpha \mathbf{E}_1 + \beta \mathbf{E}_2$) 
-    is also a solution:
-    \begin{equation}
-        \mathcal{L}[\mathbf{E}_3] = \mathcal{L}[\alpha \mathbf{E}_1 + \beta \mathbf{E}_2] = \alpha \mathcal{L}[\mathbf{E}_1] + \beta \mathcal{L}[\mathbf{E}_2] = \alpha \mathbf{f}_1 + \beta \mathbf{f}_2 = \mathbf{f}_3\,.
-    \end{equation}
-    For instance, if the source term is scaled by a proportionality factor, the resulting field solution will also be scaled by the same factor, maintaining the proportional relationship. 
-
-    \item \textbf{Hermiticity:} The operator $\mathcal{L}$ is self-adjoint, meaning that the inner product of two solutions is invariant under the operator:
-    \begin{equation}
-        \int \mathbf{E}_1^* \cdot \mathcal{L}[\mathbf{E}_2] \d \mathbf{r} = \int \mathcal{L}[\mathbf{E}_1]^* \cdot \mathbf{E}_2 \d \mathbf{r}\,,
-    \end{equation}
-    This property ensures that purely real eigenvalues and orthogonal eigenmodes\footnote{Except for degenerate eigenmodes, which will not necessarily be orthogonal.}, as shown in~\cite{phot_crys}. Moreover,
-    one can show that the operator is \textbf{indefinite}, meaning that all eigenvalues ($k^2$) can be zero, positive or negative. Note that, for materials with gain or loss, where $\Im{\varepsilon}\neq 0$, and conservation
-    boundary conditions (e.g., absorbing boundary conditions) the Maxwell operator
-    is not Hermitian, and the eigenvalues can be complex.
-    
-    \item \textbf{Scale-invariance:} The Helmholtz operator $\mathcal{L}(\mathbf{r})$ is invariant under a change of scale. 
-    If $\mathbf{E}(\mathbf{r})$ is a solution to the Helmholtz equation for the frequency $\omega$, then $\mathbf{E}(\alpha \mathbf{r})$ 
-    is also a solution for any scaling factor $\alpha$, given a constant
-     dielectric permittivity $\varepsilon(\omega, \mathbf{r}) = \varepsilon (\omega^\prime, \alpha \mathbf{r})$ at a frequency $\omega^\prime = \alpha \omega$~\cite{phot_crys}. Similarly,
-     if we scale the dielectric permittivity by a value $\alpha$ the electric field distribution is constant when working at a re-scaled version of the 
-     frequency $\omega^\prime=\omega/\alpha $~\cite{phot_crys}.
-    In other words, as long as the permittivity is constant under spatial transformations, there is no fundamental lengthscale or dielectric permittivity  
-    values in mascroscopic electromagnetic systems. Note however, that in general the dielectric permittivity is a function of the frequency $\varepsilon(\omega)\neq \varepsilon(\omega^\prime)$, 
-    breaking scale-invariance.
-    
-    \item \textbf{Conservation laws:} Maxwell's equations inherently satisfy several conservation laws, which are fundamental to physical systems MAKE SURE OF THE SYMBOLS AND EQUATIONS THEY ARE TIME-DOMAIN:
-    \begin{itemize}
-        \item \textbf{Charge conservation:} The continuity equation ensures that charge is conserved in the system:
-        \begin{equation}
-            \nabla \cdot \mathbf{J} + \frac{\partial \rho}{\partial t} = 0.
-        \end{equation}
-        This equation relates the divergence of the current density $\mathbf{J}$ to the time rate of change of the charge density $\rho$.
-
-        \item \textbf{Energy conservation:} The Poynting theorem describes the conservation of electromagnetic energy:
-        \begin{equation}
-            \nabla \cdot \mathbf{S} + \frac{\partial u}{\partial t} = -\mathbf{J} \cdot \mathbf{E},
-        \end{equation}
-        where $\mathbf{S} = \mathbf{E} \times \mathbf{H}$ is the Poynting vector representing the energy flux, and $u = (1/2) (\varepsilon |\mathbf{E}|^2 + \mu |\mathbf{H}|^2)$ is the electromagnetic energy density.
-
-        \item \textbf{Momentum conservation:} The electromagnetic fields carry momentum, and the conservation of momentum is described by the Maxwell stress tensor $\mathbf{T}$:
-        \begin{equation}
-            \nabla \cdot \mathbf{T} + \frac{\partial \mathbf{p}}{\partial t} = \mathbf{f},
-        \end{equation}
-        where $\mathbf{p}$ is the momentum density and $\mathbf{f}$ is the force density acting on the system. The electromagnetic fields also carry \textbf{angular momentum}, and its conservation is described by the angular momentum density $\mathbf{L}$:
-                    \begin{equation}
-                        \frac{\partial \mathbf{L}}{\partial t} + \nabla \cdot \mathbf{M} = \boldsymbol{\tau},
-                    \end{equation}
-                    where $\mathbf{M}$ is the angular momentum flux density tensor, and $\boldsymbol{\tau} = \mathbf{r} \times \mathbf{f}$ represents the torque density acting on the system.
-    \end{itemize}
-    
-    \item \textbf{Time-reversal symmetry:} Maxwell's equations remain valid if we reverse the direction of time ($t\to-t$). It can be shown that under time-reversal symmetry
-                                                the fields transform as $\bm{\mathcal{E}}(\mathbf{r}, t)\to\bm{\mathcal{E}}(\mathbf{r}, -t)$,  $\bm{\mathcal{D}}(\mathbf{r}, t)\to\bm{\mathcal{D}}(\mathbf{r}, -t)$,
-                                                 $\bm{\mathcal{H}}(\mathbf{r}, t)\to-\bm{\mathcal{H}}(\mathbf{r}, -t)$, and $\bm{\mathcal{B}}(\mathbf{r}, t)\to-\bm{\mathcal{B}}(\mathbf{r}, -t)$, while the current density and charge density transform as 
-                                                 $\bm{\mathcal{J}}(\mathbf{r}, t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\bm{\mathcal{\rho}}(\mathbf{r}, t)\to\bm{\mathcal{\rho}}(\mathbf{r}, -t)$, respectively~\cite{reciprocity}.
-                                                 Applying these transformations to Maxwell's equations in Eqs. \eqref{eq:curlE_freq}-\eqref{eq:divB_freq} shows that the equations remain invariant under time-reversal. This 
-                                                 symmetry can be extended by considering \textbf{Parity-time (PT) symmetry}, which combines time-reversal with spatial inversion ($\mathbf{r}\to-\mathbf{r}$) and is satisfied for materials with
-                                                 $\varepsilon(\mathbf{r}) = \varepsilon^*(-\mathbf{r})$ and $\mu(\mathbf{r}) = \mu^*(-\mathbf{r})$. There are however some situations where time-reversal symmetry and/or PT symmetry is broken, 
-                                                 such as in the presence of non-reciprocal materials (e.g., magneto-optical materials) or materials with optical losses~\cite{ownpub0}.VERIFY AND CITE SOME PT SYMMETRY PAPER.
-        
-    \item \textbf{Reciprocity:} In an optical system the source and the detector of electromagnetic fields can be interchanged without changing the physical situation. Let's consider a system where two volumes $\Omega_1$ and $\Omega_2$ 
-    have two current densities $\mathbf{j}_1$ and $\mathbf{j}_2$ that create the fields $\mathbf{E}_1$, $\mathbf{H}_1$ and $\mathbf{E}_2$, $\mathbf{H}_2$ respectively. Using the Lorentz recirpocity theorem one can show that~\cite{novotny}:      
-    \begin{equation}
-        \int_{\Omega_1} \mathbf{E}_1^* \cdot \mathbf{j}_2 = \int_{\Omega_2}  \mathbf{E}_2^* \cdot \mathbf{j}_1 d\mathbf{r} = 0.
-    \end{equation}
-    For losless media this is equivalent to time-reversal symmetry, but for lossy systems reciprocity still remains valid~\cite{Carminati:98}. Reciprocity is a very useful property of Maxwell's equations, as it can be used to 
-    greatly simplify some formulations of inverse design problems [CITE LASER PAPER].
-
-
-\end{itemize}
-
-%\subsection*{Point-like emitters: the Green's function formalism}
-
-%TODO: Add if we do coupled-emitter project.
-
-\section{The finite element method in electromagnetics}
-
-(RECHECK DO DERIVATION BY HAND, COMPARE NIELS AND IANS THESIS)
-
-The weak form of the wave equation can be written as:
-
-    \begin{equation}
-        \int_\Omega \left[ \left( \nabla \times \mathbf{T} \right) \cdot \frac{1}{\mu} \left( \nabla \times \mathbf{E} \right) \right] \d \Omega 
-        - \int_\Gamma \mathbf{T} \cdot \left[ \mathbf{n} \times \left( \frac{1}{\mu} \cdot \nabla \times \mathbf{E} \right) \right] \d \Gamma \\
-        = \int_\Omega \mathbf{T} \cdot \mathbf{f} \d \Omega,
-        \quad \forall \mathbf{E} \in V.
-    \end{equation}
-where $\mathbf{T}$ is a test function, $\Omega$ is the volume of the domain, and $\Gamma$ is the boundary where Neuman boundary conditions
-are prescribed. By using  the standard Galerkin method (where the test and basis functions are the same), one can use the \textbf{Finite Element Method} 
-(FEM) to discretize the weak form 
-into the strong form which is based on a linear system of equations:
-\begin{equation}\label{eq:discretized}
-    \mathbf{K} \mathbf{E} = \mathbf{F},
-\end{equation}
-where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field, and $\mathbf{F}$ is the source term. 
-An example of system discretization via FEM is shown in \autoref{fig:fem},  where we have discretized the two-dimensional 
-domain in \autoref{fig:top_opt} into a set of triangular edge elements. The edge elements, or Nedelec elements (CITE), 
-of first kind [\autoref{fig:fem}] are a natural choice for the electromagnetic 
-wave equation, as they are divergence-free and enforce the continuity of the tangential electric field 
-across the element boundaries, which is a natural boundary condition for Maxwell's equations 
-\footnote{For 2D models where the field discontinuity at the material interfaces 
-is in the out-of-plane direction~\cite{ownpub3}, one can use Lagrange element without 
-exciting spurious modes.}. Using the shape functions of the Nedelec elements, the electric field in the element can be written as:
-\begin{equation}
-    \boldsymbol{E}^e=\sum_i \boldsymbol{N}_i(\mathbf{r}) E_i
-\end{equation}
-where $i$ denotes the element edges, $\boldsymbol{N}_i$ are the shape functions, and $E_i$ are the edge values of the electric field. As an example,
-see the first order triangular element in \autoref{fig:fem}, where the shape function highlights the fact that they enforce tangential field
-continuity over material interfaces. 
+In the fields of nano-optics and nanophotonics, where the visible
+(\(\lambda \sim 400\)--\(800\) nm) and infrared (\(\lambda \sim 800\)--\(2500\)
+nm)
+spectral regions are most commonly explored, components often have nano- to
+microscale dimensions. As a result, the \textbf{wave-optics} regime ($\lambda
+    \sim s$ ) needs to be considered,
+where we cannot resort to simpler models like ray optics or
+quasistatic/lumped circuits models,
+and instead need to solve Maxwell's equations. Given the complexity of
+Maxwell's
+equations very few problems (e.g., problems with high symmetry, separability,
+few parameters)
+can be solved analytically and most problems require
+numerical solutions (e.g., obtained via the finite element method).
 
 \begin{figure}[tb]
     \centering
-    \makebox[\textwidth][c]{\includegraphics{figures/FEM.png}}%%
-    \caption{Geometrical discretization of the physical domain into the finite element mesh, which is composed of Nedelec vector-elements. The element colored in light blue is a triangular element with three nodes and three edges, where we have sketched a quiver plot for the shape function $\mathbf{N}_2$ for Edge 2.}
-    \label{fig:fem}
+
+    \makebox[\textwidth][c]{\includegraphics{figures/EM_regimes.png}}%%
+    \caption{Different modeling regimes in optics based on the
+        relation between the characteristic size of the objects ($s$) and the
+        wavelength of light ($\lambda$).}
+    \label{fig:EM_regime}
 \end{figure}
 
-Note that the stiffness matrix is sparse symmetric indefinite matrix, restricting the use of iterative solvers 
-(e.g., Cholesky factorization, Krylov method) to solve the system of equations. Instead LU factorization is 
-a common choice for direct linear solvers such as UMFPACK (CITE), MUMPS (CITE), or PARDISO (CITE).
+\subsection*{The macroscopic Maxwell's equations}
 
-Symmetry conditions can be applied to reduce the computational
-cost of the solutions by employing perfect electric conductor (PEC) and perfect magnetic 
-conductor (PMC) boundary conditions. The PEC boundary condition
-imposes symmetry for magnetic fields and antisymmetry for electric fields and electric 
-currents, by setting the tangential component of the electric field to zero: $\mathbf{n}\times \mathbf{E} = 0$ .
-The PMC boundary condition imposes symmetry for electric fields and antisymmetry for magnetic fields
-by setting the normal component of the magnetic field to zero: $\mathbf{n}\cdot \mathbf{H} = 0$.
+Light propagation in a \emph{macroscopic} electromagnetic systems can be
+described by Maxwell's equations. The time-domain Maxwell's
+equations in a linear, isotropic, and homogeneous medium can be written as:
+\begin{align}
+    \nabla \times \bm{\mathcal{E}} (\mathbf{r},t)            & = - \frac{\partial
+    \bm{\mathcal{B}}(\mathbf{r},t)}{\partial t}, \quad \quad & \text{(Faraday's
+    law)} \label{eq:faraday}                                                                                         \\
+    \nabla \times \bm{\mathcal{H}} (\mathbf{r},t)            & = \frac{\partial
+        \bm{\mathcal{D}}(\mathbf{r},t)}{\partial t} + \bm{\mathcal{J}}(\mathbf{r},t),
+    \quad \quad                                              & \text{(Ampère's law)} \label{eq:ampere}               \\
+    \nabla \cdot \bm{\mathcal{D}} (\mathbf{r},t)             & =
+    \mathcal{\rho}(\mathbf{r},t), \quad \quad                & \text{(Gauss's law for electricity)}
+    \label{eq:gauss_E}                                                                                               \\
+    \nabla \cdot \bm{\mathcal{B}} (\mathbf{r},t)             & = 0, \quad \quad
+                                                             & \text{(Gauss's law for magnetism)} \label{eq:Gauss_B}
+\end{align}
+where $\bm{\mathcal{E}}$ and $\bm{\mathcal{H}}$ are the time-dependent electric
+and magnetic (induction) fields, respectively,
+$\bm{\mathcal{D}}$ is the time-dependent electric displacement field,
+$\bm{\mathcal{B}}$ is the time-dependent magnetic (flux-density) field,
+$\bm{\mathcal{J}}$ is the current density,
+and $\mathcal{\rho}$ is the time-dependent charge density. Maxwell's equations
+combine previously established
+physical laws, in 4 equations:
+\begin{itemize}
+    \item \textbf{Faraday's law} [Eq.~\eqref{eq:faraday}] describes how a
+          time-varying magnetic field induces an electric field.
+    \item \textbf{Ampère's law} [Eq.~\eqref{eq:ampere}] describes how a
+          time-varying electric field and electric current density induce a magnetic
+          field.
+    \item \textbf{Gauss's law for electricity} [Eq.~\eqref{eq:gauss_E}]
+          describes how electric charges create an electric field.
+    \item \textbf{Gauss's law for magnetism} [Eq.~\eqref{eq:Gauss_B}] states
+          that there are no magnetic monopoles, and thus the magnetic field lines are
+          closed loops.
+\end{itemize}
 
-\section{Beyond single-physics -- coupled optical systems}
+Note that the mascroscopic fields in Maxwell's equations
+are spatial averages of the
+microscopic fields, and the charge and current densities are continous in space
+and time.
+For an atomic scale description of the electromagnetic fields, one can use the
+\emph{microscopic}
+Maxwell's equations, which include a quantized description of matter based on
+discrete charged particles
+(e.g., electrons, protons, etc.), and currents.\\
 
-Coupled multi-physics systems are physical systems where the solution of one of the physical 
-problem depends on the solution of another physical problem. Let's consider that the two
-problems can be described by linear partial differential equations, where the first problem
-is described by the equation $\mathcal{L}_1 [\mathbf{u}_1]= \mathbf{f}_1$ and the second problem is described by the 
-equation $\mathcal{L}_2 [\mathbf{u}_2]= \mathbf{f}_2$. These equations can be discretize into the strong form,
-as $\mathbf{K}_1 \mathbf{u} = \mathbf{a}$ and $\mathbf{K}_2 \mathbf{u}_2 = \mathbf{f}_2$, where $\mathbf{K}_1$ and $\mathbf{K}_2$ are the stiffness matrices of the two problems.
-If the stifness matrices and/or loading terms depend on the the solution of the other problem, we say that the two physics problems are
-coupled. For linear problems\footnote{In nonlinear systems the matrices and loading terms can depend on the field solution $(\mathbf{u_1}, \mathbf{u_2})$
-and one cannot use a linear solver to find the solution to the system of equations.} it is possible to write out the two equations as a system of equations:
-\begin{equation}
-    \begin{bmatrix}
-        \mathbf{K}^*_1 & \mathbf{C}_{12} \\
-        \mathbf{C}_{21} & \mathbf{K}^*_2
-    \end{bmatrix}
-    \begin{bmatrix}
-        \mathbf{u}_1 \\
-        \mathbf{u}_2
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        \mathbf{f}_1^* \\
-        \mathbf{f}_2^*
-    \end{bmatrix}\,.
-\end{equation}
-where $\mathbf{C}_{12}$ is the term that couples physics $2$ to physics $1$, $\mathbf{C}_{21}$ is the term that couples physics $1$ to physics $2$, and the star (*) denotes that when written into the system of equations
-the matrices and loading terms might change, so that the loading terms do not depend on the solution vector $[\mathbf{u}_1 \mathbf{u}_2]$. If the coupling matrices are non-zero ($\mathbf{C}_{12}\neq 0$ and $\mathbf{C}_{21}\neq 0$), we say that physics $1$ and $2$ are 
-\textbf{strongly coupled}, since there is feedback between the two. If the coupling matrices are zero $\mathbf{C}_{12}=\mathbf{C}_{21}=0$, we say that the physics 
-are \textbf{decoupled}, since they can be solved independently. Lastly, in the case where $\mathbf{C}_{12}\neq 0$ but $\mathbf{C}_{21} = 0$ we say that the physics are \textbf{weakly
-coupled} since the solution of physics $1$ depends on the solution of physics $2$, but not the other way around.
+\subsection*{Material responses via the constitutive equations}
 
- In the case of $N$ coupled problems, the system of equations can be written as:
-\begin{equation} \label{eq:multiphysics_strong}
-    \begin{bmatrix}
-        \mathbf{K}_1 & \mathbf{C}_{12} & \cdots & \mathbf{C}_{1N} \\
-        \mathbf{C}_{21} & \mathbf{K}_2 & \cdots & \mathbf{C}_{2N} \\
-        \vdots & \vdots & \ddots & \vdots\\
-        \mathbf{C}_{N1} & \mathbf{C}_{N2} & \cdots & \mathbf{K}_N
-    \end{bmatrix}
-    \begin{bmatrix}
-        \mathbf{u}_1\\
-        \mathbf{u}_2\\
-        \vdots\\
-        \mathbf{u}_N
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        \mathbf{f}_1\\
-        \mathbf{f}_2\\
-        \vdots\\
-        \mathbf{f}_N
-    \end{bmatrix}\,.
-\end{equation}
-where we have dropped the star notation for convenience. In this case the definition of weak and strong coupling
-becomes more complex since two physics might be coupled indirectly though other physics. Nevertheless, following a similar logic as in the two physics case, if the Coupled
-system is defined by a upper or lower triangular matrix, we can say that the system is weakly coupled. For matrices with more non-diagonal
-zero entries the system will be strongly coupled, while if there are more non-diagonal zero entries than non-zero entries, we can say that the system is weakly coupled. Lastly,
-for a diagonal matrix the system will be decoupled, and the equations can be solved independently.
+To understand how materials respond to electromagnetic fields,
+one needs to introduce the constitutive equations. These materials can be
+modeled
+with the presence of a time-dependent polarization $\bm{\mathcal{P}}$ and
+magnetization $\bm{\mathcal{M}}$,
+which relate the fields $\bm{\mathcal{D}}$ and $\bm{\mathcal{B}}$ to the fields
+$\bm{\mathcal{E}}$ and
+$\bm{\mathcal{H}}$ by the constitutive equations:
+\begin{align}
+    \bm{\mathcal{D}}(\mathbf{r}, t) & = \varepsilon_0
+    \bm{\mathcal{E}}(\mathbf{r}, t) + \bm{\mathcal{P}}(\mathbf{r}, t),
+    \label{eq:D}                                                                \\
+    \bm{\mathcal{H}}(\mathbf{r}, t) & = \mu_0^{-1} \bm{\mathcal{B}}(\mathbf{r},
+    t) - \bm{\mathcal{M}}(\mathbf{r}, t) \label{eq:H},
+\end{align}
+where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the
+permeability of free space.
+Moreover, the polarization and magnetization also depend on the electromagnetic
+fields; for instance, the
+polarization can be written as a series expansion in powers of the electric
+field:
+$\bm{\mathcal{P}}=\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(1)}
+    \bm{\mathcal{E}}+\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(2)}
+    \bm{\mathcal{E}} \bm{\mathcal{E}}+\mathcal{\varepsilon}_0
+    \bm{\mathcal{\chi}}^{(3)} \bm{\mathcal{E}} \bm{\mathcal{E}}
+    \bm{\mathcal{E}}+\cdots$,
+where $\bm{\mathcal{\chi}}^{n}$ is the $n^\text{th}$ order component of the
+electric susceptibility. Note that in this thesis
+we only consider linear materials (or approxiamate nonlinearities to linear
+order~\cite{ownpub4}), where only the first-order terms in the expansion are
+considered. \\
 
-In general, there are two possibilities for solving coupled problems. If it is possible to write a system of equations
-as in \eqref{eq:multiphysics_strong}, we can use a \textbf{monolithic} approach, where the system of equations is solved as a single system.
-This is the most efficient way of solving the system of equations, since it allows to use direct solvers (e.g., LU factorization) to solve the system of equations.
-However, this approach is not always possible, and in some cases it is more efficient to solve the system of equations in a \textbf{segregated} manner.
-In this case, the system of equations is solved iteratively, where the solution of one problem is used to update the other problem, until a convergence criterion is satisfied.
-This approach is more flexible, since it allows to use different solvers for each problem, but it is less efficient since it requires more iterations to converge; 
-except for weakly coupled systems, where the solution of one problem is used to update the other problem, and the system of equations can be solved in a single step.
+\subsection*{Wave equations for electromagnetic fields}
 
-\section{Topology optimization of multiphysics systems}
-
-The general constrained optimization problem for multiphysics systems can be expressed as:
-\begin{equation}
-    \begin{array}{clr}
-    \max\limits_{\xi} & \Phi(\xi, \mathbf{u}_i) \quad \quad \quad \quad \,\,\,\, \forall i \in\left[1, N_S\right]& \text { (Objective function) } \\
-    \text { s.t. } & \mathbf{S}_i(\xi, \mathbf{u}_i)-\mathbf{f}_i=0 \quad \forall i \in\left[1, N_S\right] & \text { (State equations) } \\
-    & c_j(\xi, \mathbf{u}) \leq 0 \quad \quad \quad \, \forall j \in\left[1, N_c\right] & \text { (Inequality constraints) } \\
-    & \xi_{\text {min }} \leq \xi \leq \xi_{\text {max }} & \text { (Box constraints) }
-    \end{array}
-\end{equation}
-where $\Phi$ is the FOM to be minimized for a design field $\xi$ with upper bound $\xi_{\text {max }}$ and lower bound $\xi_{\text {min }}$,
- subject to the residual of the state equations of all the different physical problems and constraints. In multiphysics optimization problems 
-there are $N_S$ state equations, $N_c$ inequality constraints, and $\xi$ is the design variable. The optimization problem is solved using
- the gradient-based algorithm of the Method of Moving
-Asymptotes (MMA)~\cite{MMA} and Globally Convergent Method of Moving Asymptotes (GCMMA)~\cite{GCMMA}, by iteratively updating the design field until a termination
-criterion is met.
-
-\subsection{From densities to material properties}
-
-To regularize the optimization and introduce a weak sense of geometric length scale, we filter
-the density field using a \textbf{filter operation}. The filtered density can be calculated using a 
-convolution-based filter operation~\cite{projection}
+Using Maxwell's equations and applying the curl operator to Faraday's law
+    [Eq.~\eqref{eq:faraday}] and Ampère's law [Eq.~\eqref{eq:ampere}],
+together with the constitutive relations in [Eq.~\eqref{eq:D} and
+        Eq.~\eqref{eq:H}], yields two coupled
+wave equations for the electric and magnetic fields:
 \begin{equation}
     \begin{aligned}
-    & \tilde{\xi}(\mathbf{r})=\frac{\sum_{k \in \mathcal{B}_{e, h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k \xi_k}{\sum_{k \in \mathcal{B}_{e, h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k}, \\
-    & w(\mathbf{r})=\left\{r_f-|\mathbf{r}| \quad \forall|\mathbf{r}| \leq r_f, \quad r_f \geq 0, \quad \mathbf{r} \in \Omega\right.\,,
+         & \nabla \times \nabla \times \bm{\mathcal{E}}+\frac{1}{c^2}
+        \frac{\partial^2 \bm{\mathcal{E}}}{\partial t^2}=-\mu_0
+        \frac{\partial}{\partial t}\left(\bm{\mathcal{J}}+\frac{\partial
+        \bm{\mathcal{P}}}{\partial t}+\nabla \times \bm{\mathcal{M}}\right), \\
+         & \nabla \times \nabla \times \bm{\mathcal{H}}+\frac{1}{c^2}
+        \frac{\partial^2 \bm{\mathcal{H}}}{\partial t^2}=\nabla \times
+        \bm{\mathcal{J}}+\nabla \times \frac{\partial \bm{\mathcal{P}}}{\partial
+            t}-\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{M}}}{\partial t^2}
     \end{aligned}
 \end{equation}
+where $c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum. This
+equation encapsulates the wave-like behavior of electromagnetic fields and
+holds true for arbitrary material properties.
 
-where $A_k$ is the area of the kth element, and $\mathcal{B}_{e, h}$ denotes the
-$h^\text{th}$ set of finite elements whose center point is within a filter radius $r_f$ of the
-$h^\text{th}$ element. One can also filter by solving a Helmholtz-type PDE~\cite{PDE_filter}:
+\subsection*{Electromagnetics in the frequency domain}
+
+The time-dependence in Maxwell's equations can be separated by assuming a
+harmonic time-dependence of the fields:
 \begin{equation}
-    -\left(\frac{r_f}{2 \sqrt{3}}\right)^2 \nabla \tilde{\xi}+\tilde{\xi}=\xi
+    \bm{\mathcal{E}}(\mathbf{r}, t) = \Re \{ \mathbf{E}(\mathbf{r}) e^{-i\omega
+            t} \}= \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{i\omega t} +
+        \mathbf{E}^*(\mathbf{r}) e^{-i\omega t}\right],
 \end{equation}
-The filter operation is followed by a \textbf{smoothed Heaviside threshold}~\cite{projection}:
-\begin{equation}
-    \bar{\tilde{\xi}}=\frac{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(\tilde{\xi}-\eta))}{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(1-\eta))}, \quad \beta \in[1, \infty[, \eta \in[0,1],
-\end{equation}
-where $\beta$ and $\eta$ control the threshold sharpness and value, respectively.
-
-The physical field cna be interpolated to the filtered density field using a \textbf{material interpolation}.
-In multi-physics problems, we will have one material interpolation for each different physical problem\footnote{If the problem stem from the same physics (e.g., solving two optical problems), the material interpolation can be re-used.}.
-In general, the material interpolation can be written as:
-\begin{equation}
-    \zeta(\bar{\tilde{\xi}})=\zeta_0+\bar{\tilde{\xi}}^p\left(\zeta_1-\zeta_0\right)
-\end{equation}
-where $\zeta$ is the material property, $\zeta_0$ and $\zeta_1$ are the material properties of the void and solid, respectively, and $p$
-is a penalization factor (usually, $p=3$ for compliance optimization and $p$=1 for other problems). Note that for some
-special cases, like optical optimization problems with metals, it is benefitial to employ a non-linear material interpolation~\cite{nonlinear_interp}.
-
-Do it in such a way that it works for multiphysics.
-Invert order of threshold and filter operations.
-
-\subsection{Adjoint sensitivity analysis}
-
-(CHECK NIELS THESIS)
-
-The adjoint sensitivity analysis is used to efficiently calculate the gradient of the objective function with 
-respect to the design variables. In this thesis, we use the adjoint sensitivity analysis  in the context of 
-multi-physics problems, where multiple complex-valued PDE are solved. For simplicity, in this derivations we only consider
-real fields, but the same procedure can be used to derive the expressions with complex fields (e.g., for optical problems).
-
-We will consider two  general coupling types: $N$ physics are coupled sequentually, where physics 1 feeds into physics 2, and physics 2 
-feeds into physics 3, and so on, until physics $N$; and the case where $N-1$ physics are coupled in parallel to physics 1. The rest of possibilities are just 
-combinations of these two coupling cases and can straightforwardly be derived from them. Moreover, we will consider two different coupling mechanisms,
-coupling through the source terms and coupling to through the material properties; the general case where both are present is just a combination of the two.
-
-SAY THAT WE CONSIDER THAT EVERYTHING ENDS UP IN PHYSICS 1
-
-\subsubsection*{Coupling through material properties: $\mathbf{S}_i = \mathbf{S}_i(\bar{\tilde{\xi}}, \mathbf{u}_j)$}
-
-Let us consider the case where the system is coupled through the material properties encoded in the system
-matrices $\mathbf{S}_i$. As shown in \hyperref[app:appendix1]{Appendix 1}, the adjoint sensitivities for a coupled multiphysics problem can be calculated as:
-\begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
-\end{equation}
-where the Lagrange multipliers $\lambda_i$ for the $i$-th physics, can be found through the adjoint equations:
+where $\mathbf{E}$ is the complex field phasor, $\omega=ck$ is the angular
+frequency of the light, and $k=2\pi/\lambda$ is the wavenumber.
+Using this complex field, the time-domain Maxwell's equations can be written as
 \begin{align}
-    \mathbf{S}^\top_{1}\lambda_{1} &= - \frac{\partial \Phi}{\partial \mathbf{u}_{1}}\,\\
-    \mathbf{S}^\top_{i}\lambda_{i} &= - \sum^{C_i}_j \mathbf{u}^\top_j \left(\frac{\partial \mathbf{S}_j}{\partial \mathbf{u}_{i}}\right)^\top \lambda_j \quad \forall i \in [1, N-1]\, , \quad \forall j \in [1, C_i] \,.
+    \nabla \times \mathbf{E}(\mathbf{r}) & = -i\omega \mathbf{B}(\mathbf{r}),
+    \quad \quad                          & \text{(Faraday's law)} \label{eq:curlE_freq}                                   \\
+    \nabla \times \mathbf{H}(\mathbf{r}) & = i\omega  \mathbf{D}(\mathbf{r}) +
+    \mathbf{j}(\mathbf{r}), \quad \quad  & \text{(Ampère's law)}
+    \label{eq:curlH_freq}                                                                                                 \\
+    \nabla \cdot \mathbf{D}(\mathbf{r})  & = \rho(\mathbf{r}), \quad \quad
+                                         & \text{(Gauss's law for electricity)} \label{eq:divD_freq}                      \\
+    \nabla \cdot \mathbf{B}(\mathbf{r})  & = 0, \quad \quad                                          & \text{(Gauss's law
+        for magnetism)} \label{eq:divB_freq}
 \end{align}
-where $C_i$ is the number of physics coupled to the $i$-th physics.
+where all fields now are complex phasors that also depend on the frequency
+(e.g., $\mathbf{E}(\omega, \mathbf{r})$) and only have spatial dependence. In a
+similar fashion,
+the material parameters are complex functions of space and frequency (e.g.,
+$\varepsilon(\omega, \mathbf{r}$)).
+    Note that the frequency-domain Maxwell's equations are equivalent to applying
+    Fourier transform in time to the time domain
+    equations [Eqs.~\eqref{eq:faraday}-\eqref{eq:Gauss_B}].
 
+    \subsection*{Time-harmonic wave-equation}
 
+    By using the frequency-domain constitutive relations and applying the curl
+    operator to Faraday's law [Eq.~\eqref{eq:curlE_freq}] and Ampère's law
+        [Eq.~\eqref{eq:curlH_freq}],
+    we can combine both equations into a single wave equation for the electric
+    field\footnote{A similar procedure one can be applied to derive a wave equation
+        for the magnetic field.
+    }:
+    \begin{equation}
+        \nabla \times \left(\frac{1}{\mu(\mathbf{r})} \nabla \times
+        \mathbf{E}(\mathbf{r})\right) - \left( \frac{\omega}{c} \right)^2
+        \varepsilon(\mathbf{r}) \mathbf{E}(\mathbf{r}) = -i\omega \mu
+        \mathbf{j}(\mathbf{r})\,.
+    \end{equation}
+    This is the time-harmonic vector wave-equation for the electric field. This
+    equation can
+    be further simplified by adopting an operator nomenclature:
+    \begin{empheq}[box={\fboxsep=5pt\fboxrule=0.5pt\fbox}]{equation}\label{eq:helmholtz}
+        \mathcal{L}[\mathbf{E}(\mathbf{r})] = \mathbf{f}\,,
+    \end{empheq}
+    where $\mathcal{L} \triangleq \nabla \times \left[(1/\mu) \nabla \times
+    \mathbf{\square} \right] - \left(\omega/c \right)^2 \square $ is a differential
+    operator acting on a vector field $\mathbf{\square}$,
+    and $\mathbf{f} = -i\omega \mu \mathbf{j}(\mathbf{r})$ represents the source
+    term. This equation is the starting point for solving nanophotonic problems via
+    numerical methods, as discussed in \secref{sec:fem}.
+    Note that this equation can be reduced to the scalar Helmholtz equation in
+    two-dimensional problems: $\nabla \cdot(A \nabla u) - B \omega^2 u=0$, in which
+$A=1, B=\varepsilon_r c^{-2}$ and $u=E_z$ for
+    transverse magnetic (TM) polarized waves and $A=1 / \varepsilon_r, B=c^2$ and
+$u=H_z$ for the transverse electric (TE) polarized waves~\cite{jensen_review}.
 
+    \subsection*{Boundary conditions at material interfaces}
 
-\subsubsection*{Coupling through the source terms: $\mathbf{f}_i = \mathbf{f}_i(\bar{\tilde{\xi}}, \mathbf{u}_j)$}
+    In many physical systems, and especially in computational nanophotonics
+    (\secref{sec:fem}), the medium is often divided into regions with distinct
+    material properties. While such a medium is inhomogeneous, the inhomogeneities
+    are confined to the interfaces. The electromagnetic problems can be solved
+    independently in each region, with solutions linked by boundary conditions at
+    the interfaces. These boundary conditions, derived from applying Gauss's and
+    Stokes's theorems to Maxwell's equations in integral form, ensure continuity
+    and proper coupling between regions.
+    As shown in \figref{fig:bcs}, for a boundary $\Gamma_{ij}$ separating domain
+$i$ from domain $j$, the tangential field conditions are~\cite{novotny}:
+    \begin{align}
+        \mathbf{n} \times (\mathbf{E}_i - \mathbf{E}_j) & = 0 \label{eq:BC_E} \\
+        \mathbf{n} \times (\mathbf{H}_i - \mathbf{H}_j) & = \mathbf{K} ,
+        \label{eq:BC_H}
+    \end{align}
+    and the normal field conditions:
+    \begin{align}
+        \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) & = \sigma \label{eq:BC_D} \\
+        \mathbf{n} \cdot (\mathbf{B}_i - \mathbf{B}_j) & = 0, \label{eq:BC_B}
+    \end{align}
+    where $\mathbf{n}$ is the normal vector to the boundary, $\mathbf{K}$ is the
+    surface current density,
+    and $\rho_s$ is the surface charge density. Note that in many optical problems
+    there are no
+    sources in the individual domains ($\mathbf{K}=\sigma=0)$ simplifying the
+    equations.
 
+    These boundary conditions are crucial for numerical solutions of Maxwell's
+    equations. In \secref{sec:fem}, we show how discretizing the domain with
+    Nédélec elements,
+    a type of finite element that naturally enforces the tangential conditions in
+    Eqs.~\eqref{eq:BC_E} and \eqref{eq:BC_H}, thus ensuring
+    proper field continuity across material interfaces.
 
-In the case of coupling through the source terms, the adjoint sensitivities can be calculated as:
+    \begin{figure}[tb]
+        \centering
+
+        \makebox[\textwidth][c]{\includegraphics{figures/bcs.png}}%%
+        \caption{Tangential ($\mathbf{n}\times \mathbf{E}$, $\mathbf{n}\times
+                \mathbf{H}$) and normal ($\mathbf{n}\cdot\mathbf{D}$,
+            $\mathbf{n}\cdot\mathbf{B}$) field components at both sides of a boundary
+            $\Gamma_{ij}$ separating two domains $i$ and $j$.}
+        \label{fig:bcs}
+    \end{figure}
+
+    \subsection*{Some useful properties of Maxwell's equations}
+    The following are some key properties of Maxwell's equations that will be
+    useful throughout this thesis:
+    \begin{itemize}
+        \item \textbf{Linearity and superposition:} The operator in
+              Eq.~\eqref{eq:helmholtz} is linear, so any linear combination of solutions is
+              also a solution, in accordance with the superposition principle.
+              For example, given two solutions $\mathbf{E}_1$ and $\mathbf{E}_2$ to the
+              linear systems $\mathcal{L}[\mathbf{E}_1] = \mathbf{f}_1$ and
+              $\mathcal{L}[\mathbf{E}_2] = \mathbf{f}_2$,
+              and two constants $\alpha$ and $\beta$, the combination $\mathbf{E}_3 =
+                  \alpha \mathbf{E}_1 + \beta \mathbf{E}_2$ satisfies:
+              \begin{equation}
+                  \mathcal{L}[\mathbf{E}_3] = \alpha \mathcal{L}[\mathbf{E}_1] + \beta
+                  \mathcal{L}[\mathbf{E}_2] = \alpha \mathbf{f}_1 + \beta \mathbf{f}_2 =
+                  \mathbf{f}_3,
+              \end{equation}
+              Hence, scaling the source term results in a proportionally scaled field
+              solution. Note that this property is not valid when the source term or material
+              properties depend on the field itself, making the operator nonlinear. In such
+              cases~\cite{ownpub4} the problem can be linearized for small nonlinearities
+              using perturbation theory.
+
+        \item \textbf{Hermiticity:} The operator $\mathcal{L}$ is self-adjoint,
+              meaning that the inner product of two solutions is invariant under the
+              operator:
+              \begin{equation}
+                  \int \mathbf{E}_1^* \cdot \mathcal{L}[\mathbf{E}_2] \d \mathbf{r} =
+                  \int \mathcal{L}[\mathbf{E}_1]^* \cdot \mathbf{E}_2 \d \mathbf{r}\,,
+              \end{equation}
+              Thise implies real eigenvalues and orthogonal eigenmodes\footnote{Except in
+                  the case of degeneracy, where orthogonality is not guaranteed.}, as discussed
+              in~\cite{phot_crys}.
+              Moreover, $\mathcal{L}$ is \textbf{positive semi-definite}, so all
+              eigenvalues ($\omega_\lambda^2$) are nonnegative. However, for materials with
+              gain or loss
+              ($\Im{\varepsilon} \neq 0$) or absorbing boundary conditions, $\mathcal{L}$
+              becomes non-Hermitian and eigenvalues can be complex. This occurs in plasmonic
+              systems
+              (e.g., lossy metals~\cite{ownpub0}) and in lossy cavities~\cite{ownpub4},
+              where the imaginary part of the mode frequency $\Im\{\omega_\lambda\}$ is
+              related to the decay rate, and quantifies the energy loss in the system.
+
+            %\item \textbf{Scale-invariance:} The Maxwell operator $\mathcal{L}(\mathbf{r})$ is scale-invariant, which means that if $\mathbf{E}(\mathbf{r})$ solves Maxwell's equations at frequency $\omega$, then $\mathbf{E}(\alpha \mathbf{r})$ is a solution at $\omega' = \alpha \omega$, 
+            %provided the dielectric function satisfies $\varepsilon(\omega, \mathbf{r}) = \varepsilon(\omega', \alpha \mathbf{r})$~\cite{phot_crys}. 
+            %Thus, in systems where $\varepsilon$ is invariant under scaling, there is no fundamental length scale or permittivity value. However, since $\varepsilon(\omega) \neq \varepsilon(\omega')$ in general, this scale-invariance is typically broken. Nevertheless,
+            %this property is interesting from the perspective of inverse design, where for a choice of permittivity when can design a device that can arbitrarily be scaled up or down in dimension.
+
+        % \item \textbf{Conservation laws:} Maxwell's equations inherently satisfy
+        %       several conservation laws, which are fundamental to physical systems MAKE SURE
+        %       OF THE SYMBOLS AND EQUATIONS THEY ARE TIME-DOMAIN:
+        %       \begin{itemize}
+        %           \item \textbf{Charge conservation:} The continuity equation ensures
+        %                 that charge is conserved in the system:
+        %                 \begin{equation}
+        %                     \nabla \cdot \bm{\mathcal{J}} + \frac{\partial
+        %                         \mathcal{\rho}}{\partial t} = 0.
+        %                 \end{equation}
+        %                 This equation relates the divergence of the current density
+        %                 $\mathbf`{J}$ to the time rate of change of the charge density $\mathcal{\rho}$.
+
+        %           \item \textbf{Energy conservation:} The Poynting theorem describes the
+        %                 conservation of electromagnetic energy:
+        %                 \begin{equation}
+        %                     \nabla \cdot \mathbf{S} + \frac{\partial \mathcal{U}}{\partial t} =
+        %                     -\mathbf{J} \cdot \mathbf{E},
+        %                 \end{equation}
+        %                 where $\mathbf{S} = \mathbf{E} \times \mathbf{H}$ is the Poynting
+        %                 vector representing the energy flux, and $\mathcal{U} = (1/2) (\varepsilon
+        %                     |\mathbf{E}|^2 + \mu |\mathbf{H}|^2)$ is the electromagnetic energy density.
+
+        %           \item \textbf{Momentum conservation:} The electromagnetic fields carry
+        %                 momentum, and the conservation of momentum is described by the Maxwell stress
+        %                 tensor $\mathbf{T}$:
+        %                 \begin{equation}
+        %                     \nabla \cdot \mathbf{T} + \frac{\partial \mathbf{p}}{\partial t} =
+        %                     \mathbf{f},
+        %                 \end{equation}
+        %                 where $\mathbf{p}$ is the momentum density and $\mathbf{f}$ is the
+        %                 force density acting on the system. The electromagnetic fields also carry
+        %                 \textbf{angular momentum}, and its conservation is described by the angular
+        %                 momentum density $\mathbf{L}$:
+        %                 \begin{equation}
+        %                     \frac{\partial \mathbf{L}}{\partial t} + \nabla \cdot
+        %                     \mathbf{M} = \boldsymbol{\tau},
+        %                 \end{equation}
+        %                 where $\mathbf{M}$ is the angular momentum flux density
+        %                 tensor, and $\boldsymbol{\tau} = \mathbf{r} \times \mathbf{f}$ represents the
+        %                 torque density acting on the system.
+        %       \end{itemize}
+
+        %       TIE THIS TO PUBLICATION ENGINEERING
+
+        \item \textbf{Time-reversal symmetry:} Maxwell's equations remain valid if
+              we reverse the direction of time ($t\to-t$). It can be shown that under
+              time-reversal symmetry
+              the fields transform as
+              $\bm{\mathcal{E}}(\mathbf{r}, t)\to\bm{\mathcal{E}}(\mathbf{r}, -t)$,
+              $\bm{\mathcal{D}}(\mathbf{r}, t)\to\bm{\mathcal{D}}(\mathbf{r}, -t)$,
+              $\bm{\mathcal{H}}(\mathbf{r},
+                  t)\to-\bm{\mathcal{H}}(\mathbf{r}, -t)$, and $\bm{\mathcal{B}}(\mathbf{r},
+                  t)\to-\bm{\mathcal{B}}(\mathbf{r}, -t)$, while the current density and charge
+              density transform as
+              $\bm{\mathcal{J}}(\mathbf{r},
+                  t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\bm{\mathcal{\rho}}(\mathbf{r},
+                  t)\to\bm{\mathcal{\rho}}(\mathbf{r}, -t)$, respectively~\cite{reciprocity}.
+              Applying these transformations
+              to Maxwell's equations in Eqs. \eqref{eq:curlE_freq}-\eqref{eq:divB_freq} shows
+              that the equations remain invariant under time-reversal. This
+              symmetry can be extended by
+              considering \textbf{Parity-time (PT) symmetry}, which combines time-reversal
+              with spatial inversion ($\mathbf{r}\to-\mathbf{r}$) and is satisfied for
+              materials with $n(\mathbf{r}) = n^*(-\mathbf{r})$~\cite{pt}. There
+              are however some situations where time-reversal symmetry and/or PT symmetry is
+              broken,
+              such as in the presence of
+              non-reciprocal materials (e.g., magneto-optical materials) or materials with
+              optical losses~\cite{ownpub0}.
+
+        \item \textbf{Reciprocity:} In an optical system the source and the
+              detector of electromagnetic fields can be interchanged without changing the
+              physical situation. Let's consider a system where two volumes $\Omega_1$ and
+              $\Omega_2$
+              have two current densities $\mathbf{j}_1$ and $\mathbf{j}_2$ that create
+              the fields $\mathbf{E}_1$, $\mathbf{H}_1$ and $\mathbf{E}_2$, $\mathbf{H}_2$
+              respectively. Using the Lorentz reciprocity theorem one can show
+              that~\cite{novotny}:
+              \begin{equation}
+                  \int_{\Omega_1} \mathbf{E}_1^* \cdot \mathbf{j}_2 = \int_{\Omega_2}
+                  \mathbf{E}_2^* \cdot \mathbf{j}_1 d\mathbf{r} = 0.
+              \end{equation}
+              For losless media this is equivalent to time-reversal symmetry, but for
+              lossy systems reciprocity still remains valid~\cite{Carminati:98}. Reciprocity
+              is a very useful property of Maxwell's equations, as it can be used to
+              greatly simplify some formulations of inverse design problems, used in device design for
+              scintillation~\cite{Roques_Carmes_2022}, incoherent light emission~\cite{LED_opt, Yao_2022}, and nanolasers~\cite{ownpub4} among others.
+    \end{itemize}
+
+    %\subsection*{Point-like emitters: the Green's function formalism}
+
+    %TODO: Add if we do coupled-emitter project.
+
+    \section{The finite element method in electromagnetics}\label{sec:fem}
+
+    (RECHECK DO DERIVATION BY HAND, COMPARE NIELS AND IANS THESIS)
+
+    The weak form of the wave equation can be written as\footnote{Note that the weak form will be different for two-dimensional problems \cite{ownpub0, ownpub2}.}:
+
+    \begin{equation}
+        \int_\Omega \left[ \left( \nabla \times \mathbf{T} \right) \cdot
+            \frac{1}{\mu} \left( \nabla \times \mathbf{E} \right) \right] \d \Omega
+        - \int_\Gamma \mathbf{T} \cdot \left[ \mathbf{n} \times \left(
+            \frac{1}{\mu} \cdot \nabla \times \mathbf{E} \right) \right] \d \Gamma \\
+        = \int_\Omega \mathbf{T} \cdot \mathbf{f} \d \Omega,
+        \quad \forall \mathbf{E} \in V.
+    \end{equation}
+    where $\mathbf{T}$ is a test function, $\Omega$ is the volume of the domain,
+    and $\Gamma$ is the boundary where Neuman boundary conditions
+    are prescribed. SAY THAT FOR 2D THIS MIGHT BE DIFFERENT, CITE PUBS. By using
+    the standard Galerkin method (where the test and basis functions are the same),
+    one can use the \textbf{Finite Element Method}
+    (FEM) to discretize the weak form
+    into the strong form which is based on a linear system of equations:
+    \begin{equation}\label{eq:discretized}
+        \mathbf{K} \mathbf{E} = \mathbf{F},
+    \end{equation}
+    where $\mathbf{K}$ is the stiffness matrix, $\mathbf{E}$ is the electric field,
+    and $\mathbf{F}$ is the source term.
+    An example of system discretization via FEM is shown in \autoref{fig:fem},
+    where we have discretized the two-dimensional
+    domain in \autoref{fig:top_opt} into a set of triangular edge elements. The
+    edge elements, or Nedelec elements (CITE),
+    of first kind [\autoref{fig:fem}] are a natural choice for the electromagnetic
+    wave equation, as they are divergence-free and enforce the continuity of the
+    tangential electric field
+    across the element boundaries, which is a natural boundary condition for
+    Maxwell's equations
+    \footnote{For 2D models where the field discontinuity at the material
+        interfaces
+        is in the out-of-plane direction~\cite{ownpub3}, one can use Lagrange element
+        without
+        exciting spurious modes.}. Using the shape functions of the Nedelec elements,
+    the electric field in the element can be written as:
+    \begin{equation}
+        \boldsymbol{E}^e=\sum_i \boldsymbol{N}_i(\mathbf{r}) E_i
+    \end{equation}
+    where $i$ denotes the element edges, $\boldsymbol{N}_i$ are the shape
+    functions, and $E_i$ are the edge values of the electric field. As an example,
+    see the first order triangular element in \autoref{fig:fem}, where the shape
+    function highlights the fact that they enforce tangential field
+    continuity over material interfaces.
+
+    \begin{figure}[tb]
+        \centering
+
+        \makebox[\textwidth][c]{\includegraphics{figures/FEM.png}}%%
+        \caption{Geometrical discretization of the physical domain into the finite
+            element mesh, which is composed of Nedelec vector-elements. The element colored
+            in light blue is a triangular element with three nodes and three edges, where
+            we have sketched a quiver plot for the shape function $\mathbf{N}_2$ for Edge
+            2.}
+        \label{fig:fem}
+    \end{figure}
+
+    Note that the stiffness matrix is sparse symmetric indefinite matrix,
+    restricting the use of iterative solvers
+    (e.g., Cholesky factorization, Krylov method) to solve the system of equations.
+    Instead LU factorization is
+    a common choice for direct linear solvers such as UMFPACK (CITE), MUMPS (CITE),
+    or PARDISO (CITE).
+
+    Symmetry conditions can be applied to reduce the computational
+    cost of the solutions by employing perfect electric conductor (PEC) and perfect
+    magnetic
+    conductor (PMC) boundary conditions. The PEC boundary condition
+    imposes symmetry for magnetic fields and antisymmetry for electric fields and
+    electric
+    currents, by setting the tangential component of the electric field to zero:
+$\mathbf{n}\times \mathbf{E} = 0$ .
+    The PMC boundary condition imposes symmetry for electric fields and
+    antisymmetry for magnetic fields
+    by setting the normal component of the magnetic field to zero: $\mathbf{n}\cdot
+\mathbf{H} = 0$.
+
+    \section{Beyond single-physics -- coupled photonic systems}\label{sec:coupled}
+
+    Coupled multi-physics systems are physical systems where the solution of one of
+    the physical
+    problem depends on the solution of another physical problem. Let's consider
+    that the two
+    problems can be described by linear partial differential equations, where the
+    first problem
+    is described by the equation $\mathcal{L}_1 [\mathbf{u}_1]= \mathbf{f}_1$ and
+    the second problem is described by the
+    equation $\mathcal{L}_2 [\mathbf{u}_2]= \mathbf{f}_2$. These equations can be
+    discretize into the strong form,
+    as $\mathbf{K}_1 \mathbf{u} = \mathbf{a}$ and $\mathbf{K}_2 \mathbf{u}_2 =
+\mathbf{f}_2$, where $\mathbf{K}_1$ and $\mathbf{K}_2$ are the stiffness
+    matrices of the two problems.
+    If the stifness matrices and/or loading terms depend on the the solution of the
+    other problem, we say that the two physics problems are
+    coupled. For linear coupled problems\footnote{In nonlinear systems the matrices
+        and loading terms can depend on the field solution $(\mathbf{u_1},
+            \mathbf{u_2})$
+        and one cannot use a linear solver to find the solution to the system of
+        equations.} where the loading term can be written as
+$\mathbf{f}_1=\mathbf{C}^{\mathbf{f}}_{12}\mathbf{u}_2 + \mathbf{f}_1^*$ and
+    the system matrix can be written as
+$\mathbf{K}_1=\mathbf{C}^{\mathbf{K}}_{12}\mathbf{u}_2 + \mathbf{K}_1^*$
+    it is possible to write out the two equations as a system of equations:
+    \begin{equation}
+        \begin{bmatrix}
+            \mathbf{K}^*_1  & \mathbf{C}_{12} \\
+            \mathbf{C}_{21} & \mathbf{K}^*_2
+        \end{bmatrix}
+        \begin{bmatrix}
+            \mathbf{u}_1 \\
+            \mathbf{u}_2
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \mathbf{f}_1^* \\
+            \mathbf{f}_2^*
+        \end{bmatrix}\,.
+    \end{equation}
+    where $\mathbf{C}_{12}$ is the term that couples physics $2$ to physics $1$,
+$\mathbf{C}_{21}$ is the term that couples physics $1$ to physics $2$, and the
+    star (*) denotes that when written into the system of equations
+    the matrices and loading terms might change, so that the loading terms do not
+    depend on the solution vector $[\mathbf{u}_1 \mathbf{u}_2]$. If the coupling
+    matrices are non-zero ($\mathbf{C}_{12}\neq 0$ and $\mathbf{C}_{21}\neq 0$), we
+    say that physics $1$ and $2$ are
+    \textbf{strongly coupled}, since there is feedback between the two. If the
+    coupling matrices are zero $\mathbf{C}_{12}=\mathbf{C}_{21}=0$, we say that the
+    physics
+    are \textbf{decoupled}, since they can be solved independently. Lastly, in the
+    case where $\mathbf{C}_{12}\neq 0$ but $\mathbf{C}_{21} = 0$ we say that the
+    physics are \textbf{weakly
+        coupled} since the solution of physics $1$ depends on the solution of physics
+$2$, but not the other way around.
+
+    In the case of $N$ coupled problems, the system of equations can be written
+    as:
+    \begin{equation} \label{eq:multiphysics_strong}
+        \begin{bmatrix}
+            \mathbf{K}_1    & \mathbf{C}_{12} & \cdots & \mathbf{C}_{1N} \\
+            \mathbf{C}_{21} & \mathbf{K}_2    & \cdots & \mathbf{C}_{2N} \\
+            \vdots          & \vdots          & \ddots & \vdots          \\
+            \mathbf{C}_{N1} & \mathbf{C}_{N2} & \cdots & \mathbf{K}_N
+        \end{bmatrix}
+        \begin{bmatrix}
+            \mathbf{u}_1 \\
+            \mathbf{u}_2 \\
+            \vdots       \\
+            \mathbf{u}_N
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            \mathbf{f}_1 \\
+            \mathbf{f}_2 \\
+            \vdots       \\
+            \mathbf{f}_N
+        \end{bmatrix}\,.
+    \end{equation}
+    where we have dropped the star notation for convenience. In this case the
+    definition of weak and strong coupling
+    becomes more complex since two physics might be coupled indirectly though other
+    physics. Nevertheless, following a similar logic as in the two physics case, if
+    the Coupled
+    system is defined by a upper or lower triangular matrix, we can say that the
+    system is weakly coupled. For matrices with more non-diagonal
+    zero entries the system will be strongly coupled, while if there are more
+    non-diagonal zero entries than non-zero entries, we can say that the system is
+    weakly coupled. Lastly,
+    for a diagonal matrix the system will be decoupled, and the equations can be
+    solved independently.
+
+    In general, there are two possibilities for solving coupled problems. If it is
+    possible to write a system of equations
+    as in \eqref{eq:multiphysics_strong}, we can use a \textbf{monolithic}
+    approach, where the system of equations is solved as a single system.
+    This is the most efficient way of solving the system of equations, since it
+    allows to use direct solvers (e.g., LU factorization) to solve the system of
+    equations.
+    However, this approach is not always possible, and in some cases it is more
+    efficient to solve the system of equations in a \textbf{segregated} manner.
+    In this case, the system of equations is solved iteratively, where the solution
+    of one problem is used to update the other problem, until a convergence
+    criterion is satisfied.
+    This approach is more flexible, since it allows to use different solvers for
+    each problem, but it is less efficient since it requires more iterations to
+    converge;
+    except for weakly coupled systems, where the solution of one problem is used to
+    update the other problem, and the system of equations can be solved in a single
+    step.
+
+    \section{Topology optimization of multiphysics
+      systems}\label{sec:topopt_theory}
+    Topology optimization (see \secref{fig:top_opt}) can be used as a systematic design tool to optimize designs in numerically discretized multiphysics problems. 
+    Seminal work~\cite{MEMS_multi} by Sigmund laid the foundation for multiphysics topology optimization, where he optimized micro-electro-mechanical system (MEMS) devices. 
+    Still today this is an active topic of research, where state-of-the-art multiphysics topology optimization is used tackle complex coupled  design problems, optimizing for thermo-mechanical~\cite{third_thermal}, magneto-mechanical~\cite{magneto}, or fluid-structure interactions. 
+    This has enabled highly efficient and integrated designs across engineering disciplines, but remains mainly uncharted territory for nanophotonic device optimization. In the remainder of this section, we will review the theory behind multiphysics topology optimization.
+
+    A general constrained optimization problem for multiphysics systems can be
+    expressed as:
+    \begin{equation}
+        \begin{array}{clr}
+            \max\limits_{\rho}                        & \Phi(\rho, \mathbf{u}_i) \quad \quad \quad \quad
+            \,\,\,\, \forall i \in\left[1, N_S\right] & \text { (Objective function) }                                                         \\
+            \text { s.t. }                            & \mathbf{S}_i(\rho, \mathbf{u}_i)-\mathbf{f}_i=0 \quad
+            \forall i \in\left[1, N_S\right]          & \text { (State equations) }                                                            \\
+                                                      & c_j(\rho, \mathbf{u}) \leq 0 \quad \quad \quad \, \forall j \in\left[1,
+            N_c\right]                                & \text { (Inequality constraints) }                                                     \\
+                                                      & \rho_{\text {min }} \leq \rho \leq \rho_{\text {max }}                  & \text { (Box
+                constraints) }
+        \end{array}
+    \end{equation}
+    where $\Phi$ is the FOM to be minimized for a design field $\xi$ with upper
+    bound $\xi_{\text {max }}$ and lower bound $\xi_{\text {min }}$,
+    subject to the residual of the state equations of all the different physical
+    problems and constraints. In multiphysics optimization problems
+    there are $N_S$ state equations, $N_c$ inequality constraints, and $\xi$ is the
+    design variable. The optimization problem is solved using
+    the gradient-based algorithm of the Method of Moving
+    Asymptotes (MMA)~\cite{MMA} and Globally Convergent Method of Moving Asymptotes
+    (GCMMA)~\cite{GCMMA}, by iteratively updating the design field until a
+    termination criterion (e.g. maximum number of iterations) is met.
+
+    \subsection*{From densities to material properties}
+
+    ADD A PLOT WITH A FILTERED AND THRESHOLDED CIRCLE
+
+    To regularize the optimization and introduce a weak sense of geometric length
+    scale, we filter
+    the density field using a \textbf{filter operation}. The filtered density can
+    be calculated using a
+    convolution-based filter operation~\cite{projection}
+    \begin{equation}
+        \begin{aligned}
+             & \tilde{\rho}(\mathbf{r})=\frac{\sum_{k \in \mathcal{B}_{e, h}}
+                w\left(\mathbf{r}-\mathbf{r}_k\right) A_k \rho_k}{\sum_{k \in \mathcal{B}_{e,
+            h}} w\left(\mathbf{r}-\mathbf{r}_k\right) A_k},                              \\
+             & w(\mathbf{r})=\left\{r_f-|\mathbf{r}| \quad \forall|\mathbf{r}| \leq r_f,
+            \quad r_f \geq 0, \quad \mathbf{r} \in \Omega\right.\,,
+        \end{aligned}
+    \end{equation}
+
+    where $A_k$ is the area of the kth element, and $\mathcal{B}_{e, h}$ denotes
+    the
+$h^\text{th}$ set of finite elements whose center point is within a filter
+    radius $r_f$ of the
+$h^\text{th}$ element. One can also filter by solving a Helmholtz-type
+    PDE~\cite{PDE_filter}:
+    \begin{equation}
+        -\left(\frac{r_f}{2 \sqrt{3}}\right)^2 \nabla
+        \tilde{\rho}+\tilde{\rho}=\rho
+    \end{equation}
+    The filter operation is followed by a \textbf{smoothed Heaviside
+        threshold}~\cite{projection}:
+    \begin{equation}
+        \hat{\rho}=\frac{\tanh (\beta \cdot \eta)+\tanh (\beta
+            \cdot(\hat{\rho}-\eta))}{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(1-\eta))},
+        \quad \beta \in[1, \infty[, \eta \in[0,1],
+    \end{equation}
+    where $\beta$ and $\eta$ control the threshold sharpness and value,
+    respectively.
+
+    \begin{figure}[tb]
+        \centering
+
+        \makebox[\textwidth][c]{\includegraphics{figures/filter_threshold.png}}%%
+        \caption{Effects of filtering and thresholding on the design field for two initial design fields: a circle,
+        and a square. Note that the filtering and thresholding parameters are displayed in the figure, where the filter radius
+        is given in pixel units. ELIMINATE TICKS FROM THE SIDES!}
+        \label{fig:ft}
+    \end{figure}
+
+    The physical field can be interpolated to the filtered density field using a
+    \textbf{material interpolation}.
+    In multi-physics problems, we will have one material interpolation for each
+    different physical problem\footnote{If the problem stem from the same physics
+        (e.g., solving two optical problems), the material interpolation can be
+        re-used.}.
+    In general, the material interpolation can be written as:
+    \begin{equation}
+        \zeta(\hat{\rho})=\zeta_0+\hat{\rho}^p\left(\zeta_1-\zeta_0\right)
+    \end{equation}
+    where $\zeta$ is the material property, $\zeta_0$ and $\zeta_1$ are the
+    material properties of the void and solid, respectively, and $p$
+    is a penalization factor (usually, $p=3$ for compliance optimization and $p$=1
+    for other problems). Note that for some
+    special cases, like optical optimization problems with metals, it is beneficial
+    to employ a non-linear material interpolation~\cite{nonlinear_interp}.
+
+    Do it in such a way that it works for multiphysics.
+    Invert order of threshold and filter operations.
+
+    \subsection*{Adjoint sensitivity analysis}
+
+    (CHECK NIELS THESIS)
+
+    The adjoint sensitivity analysis is used to efficiently calculate the gradient
+    of the objective function with
+    respect to the design variables. In this thesis, we use the adjoint sensitivity
+    analysis  in the context of
+    multi-physics problems, where multiple complex-valued PDE are solved. For
+    simplicity, in this derivations we only consider
+    real fields, but the same procedure can be used to derive the expressions with
+    complex fields (e.g., for optical problems).
+
+    We will consider two  general coupling types: $N$ physics are coupled
+    sequentually, where physics 1 feeds into physics 2, and physics 2
+    feeds into physics 3, and so on, until physics $N$; and the case where $N-1$
+    physics are coupled in parallel to physics 1. The rest of possibilities are
+    just
+    combinations of these two coupling cases and can straightforwardly be derived
+    from them. Moreover, we will consider two different coupling mechanisms,
+    coupling through the source terms and coupling to through the material
+    properties; the general case where both are present is just a combination of
+    the two.
+
+    SAY THAT WE CONSIDER THAT EVERYTHING ENDS UP IN PHYSICS 1
+
+    \subsubsection*{Coupling through material properties: $\mathbf{S}_i =
+            \mathbf{S}_i(\bar{\tilde{\xi}}, \mathbf{u}_j)$}
+
+    Let us consider the case where the system is coupled through the material
+    properties encoded in the system
+    matrices $\mathbf{S}_i$. As shown in \hyperref[app:appendix1]{Appendix 1}, the
+    adjoint sensitivities for a coupled multiphysics problem can be calculated as:
+    \begin{equation}
+        \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} +
+        \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{S}_i}{\partial \xi}
+        \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \xi} \right)\,.
+    \end{equation}
+    where the Lagrange multipliers $\lambda_i$ for the $i$-th physics, can be found
+    through the adjoint equations:
+    \begin{align}
+        \mathbf{S}^\top_{1}\lambda_{1} & = - \frac{\partial \Phi}{\partial
+        \mathbf{u}_{1}}\,                                                   \\
+        \mathbf{S}^\top_{i}\lambda_{i} & = - \sum^{C_i}_j \mathbf{u}^\top_j
+        \left(\frac{\partial \mathbf{S}_j}{\partial \mathbf{u}_{i}}\right)^\top
+        \lambda_j \quad \forall i \in [1, N-1]\, , \quad \forall j \in [1, C_i] \,.
+    \end{align}
+    where $C_i$ is the number of physics coupled to the $i$-th physics.
+
+\subsubsection*{Coupling through the source terms: $\mathbf{f}_i =
+        \mathbf{f}_i(\bar{\tilde{\xi}}, \mathbf{u}_j)$}
+
+In the case of coupling through the source terms, the adjoint sensitivities can
+be calculated as:
 \begin{equation}
-    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} + \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{f}_i}{\partial \xi} - \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i  \right)\,.
+    \frac{\d \tilde{\Phi}}{\d \xi} = \frac{\partial \Phi}{\partial \xi} +
+    \sum_i \lambda_{i}^{\top} \left( \frac{\partial \mathbf{f}_i}{\partial \xi} -
+    \frac{\partial \mathbf{S}_i}{\partial \xi} \mathbf{u}_i  \right)\,.
 \end{equation}
 
 \section{A practical note on computational implementation}
 
-Using first order edge, or nodal, elements a rule of thumb is to include at least 10 elements per wavelength.
+Using first order edge, or nodal, elements a rule of thumb is to include at
+least 10 elements per wavelength.
 
 Discuss direct vs iterative solvers, discuss condition number of the system.
 Sparsity, symmetry, definitiness
-Discuss the practical implementation, with COMSOL and other means (Fenics, gridap, etc).
+Discuss the practical implementation, with COMSOL and other means (Fenics,
+gridap, etc).
 Check Niels, Ian's thesis, and other references.
 Bla bla bla...

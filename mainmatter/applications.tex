@@ -1,7 +1,8 @@
 \chapter{Multiphysics inverse design problems}
 
-Bla bla bla... Brief in formulations (PDEs and couplings), more about uses and applications.
-
+In this chapter we will focus on the effects of multiphysics couplings in nanophotonic devices, reviewing state-of-the-art research, 
+highlighting open inverse design problems, and presenting our contributions to the field.
+We will focus on three main classes of multiphysics couplings: thermo-optical, opto-mechanical, and electro-optical systems.
 %\begin{figure}[tb]
 %    \centering
 %    \makebox[\textwidth][c]{\includegraphics[width=1\imwidth]{figures/simpModel.png}}%
@@ -22,18 +23,34 @@ Bla bla bla... Brief in formulations (PDEs and couplings), more about uses and a
 %    \label{fig:Rank}
 %\end{figure}
 
-\section{Coupled optical systems}
+%\section{Coupled optical systems}
 
-TODO: Include if we end up doing the Green's function study.
+%TODO: Include if we end up doing the Green's function study.
 
- Make a connection to the Green's function formalism and derive system of coupled equations.
+% Make a connection to the Green's function formalism and derive system of coupled equations.
 
-\section{Thermo-optical systems}
+\section{Thermo-optical systems~\cite{ownpub0,ownpub4}}
+
+ADD SOME PLOTS FOR FIRST PUBLICATION AND SOME OTHER COUPLED PROBLEMS.
+SAY ERCAN DEDE PUBLICATION NOT MODELLING MAXWELL, NOR LANGELAAR. % Topology optimization of time-transient heat conduction for, Topology optimization of multicomponent optomechanical systems for improved optical performance
+thermo-optic silicon modulators
+thermo-optical coupling refers to refractive index changes induced by temperature
+
+TALK ABOUT POSSIBLE STRONG COUPLING WITH HIGH POWER OPTICS/PHOTONICS, WHERE THE ENVIRONMENT HEATS UP.
 
 GIVE EXAMPLES OF COUPLED THERMO OPTICAL SYSTEMS: optical swithces, lenses, thermal emitters,
 power limiters, logic gates, optical memories, and sensors.
 High power LED systems
 Thermo-optically induced transparency on a photonic chip
+
+\begin{figure}[tb]
+    \centering
+
+    \makebox[\textwidth][c]{\includegraphics{figures/thermo_optic_review.png}}%%
+    \caption{Thermo-optic review, blablabla.}
+    \label{fig:thermo_opt}
+\end{figure}
+
 
 To solver for heat transfer, one needs to solve for the heat equation (CHECK COMSOL TOO):
 \begin{equation}
@@ -73,7 +90,11 @@ refer to the review in in (CITE VANESSA'S REVIEW PAPER),
 
 Describe the connectivity constraint (CHECK VANESSAS REVIEW PAPER) and the first publication.
 
-\section{Opto-mechanical systems}
+\section{Opto-mechanical systems~\cite{ownpub1,ownpub2,ownpub3}}
+
+ADD SOME PLOTS FOR SECOND PUBLICATION AND SOME OTHER OPTOMECHANIC PROBLEMS.
+
+DO PLOT WITH WOWN cONTRIBUTIONS TO INVERSE DESIGN IN OPTOMECHANICS.
 
 GIVE EXAMPLES OF COUPLED OPTO MECHANICAL SYSTEMS: high-precision metrology and sensing (LIGO, extremely small displacement/force sensors),
 quantum information processing (transducing from optics to microwave), quantum memories, 
@@ -127,7 +148,9 @@ approximation the polarizability is purely real ($\alpha^{\prime \prime} = 0$).
 Write that for larger particles the dipole approximation breaks down
 although we have shown in our work that it is pretty robust (SPIE work).
 
+ADD SOME PLOTS FOR MIT PUBLICATION AND SOME OTHER ELECTRO-OPTICAL PROBLEMS.
 
+MENTION/COMMENT ON THE ELECTROSTRICTIVE FORCES AND PHOTOELASTICITY.
 
 Note that in the dipole approximation we do not account for the particle modifying
 the trapping field, which works well in free-space but not necessarily close to material
@@ -144,7 +167,9 @@ Introduce the dipole approximation and MST formalisms. Potentially the fully cou
 Briefly introduce self-induced back action.
 Add auxiliary mechanical solves for structural integrity (Rockstuhl paper).
 
-\section{Electro-optical systems}
+\section{Electro-optical systems~\cite{ownpub4}}
+
+ADD PLOT FOR OPTIMIZATION RESULTS IN THE DIPOLE APPROXIMATION
 
 Use Laser chaper in Hecht Optics book?
 
@@ -153,6 +178,8 @@ ON COUPLED PROBLEMS? MEMS?
 
 Talk about the laser cavity problem, and other works that include this effects.
 Potentially add Rasmus's Schrödinger equation work.
+
+electro-optical coupling refers to changing a device’s optical properties via an applied electric field (Pockels/Kerr effects). Pockels-effect (lithiumn niobate, galium arsenide), Kerr effect, electro-absorption effects (III-V) semiconductrs.
 
 
 GIVE EXAMPLES OF COUPLED ELECTRO-OPTICAL SYSTEMS: imaging/sensing, telecommunications,
