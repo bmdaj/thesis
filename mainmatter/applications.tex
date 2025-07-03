@@ -1,7 +1,7 @@
-\chapter{Multiphysics inverse design problems}
+\chapter{Multiphysics topology optimization problems}
 
 In this chapter we will focus on the effects of multiphysics couplings in nanophotonic devices, reviewing state-of-the-art research, 
-highlighting open inverse design problems, and presenting our contributions to the field.
+highlighting open topology optimization problems, and presenting our contributions to the field.
 We will focus on three main classes of multiphysics couplings: thermo-optical, opto-mechanical, and electro-optical systems.
 %\begin{figure}[tb]
 %    \centering
@@ -43,16 +43,8 @@ power limiters, logic gates, optical memories, and sensors.
 High power LED systems
 Thermo-optically induced transparency on a photonic chip
 
-\begin{figure}[tb]
-    \centering
 
-    \makebox[\textwidth][c]{\includegraphics{figures/thermo_optic_review.png}}%%
-    \caption{Thermo-optic review, blablabla.}
-    \label{fig:thermo_opt}
-\end{figure}
-
-
-To solver for heat transfer, one needs to solve for the heat equation (CHECK COMSOL TOO):
+To solver for heat transfer in conjuction with Maxwell's equations, one needs to solve for the heat equation (CHECK COMSOL TOO):
 \begin{equation}
     \frac{\partial T}{\partial t} = \nabla \cdot (\kappa \nabla T) + Q\,,
 \end{equation}
@@ -63,6 +55,60 @@ In the steady-state case ($\partial T / \partial t = 0$), this becomes:
 \end{equation}
 which is the Poisson equation, similar to the electrostatic case of Maxwell's equations for a charge.
 
+\subsection*{Weak coupling regime: the thermo-optic coefficient}
+
+In many thermo-optical systems, the optical and thermal fields are weakly coupled: the optical field has negligible influence on the temperature distribution. 
+This allows a sequential modeling approach: one first solves the heat equation to obtain the steady-state temperature field, and then uses this temperature distribution to compute the corresponding change in the refractive index. 
+
+The key material parameter linking temperature and refractive index is the thermo-optic coefficient (TOC), typically approximated with the linear relation\footnote{Large temperature gradients may lead to nonlinear effects, requiring higher order terms.}: $\text{TOC} = dn/dT$. 
+Several materials exhibit large TOCs, such as silicon ($\text{TOC} \approx 1.8 \cdot 10^{-4}\, \text{K}^{-1}$), germanium ($\approx 4.0 \cdot 10^{-4}\, \text{K}^{-1}$), and gallium arsenide ($\approx 2.2 \cdot 10^{-4}\, \text{K}^{-1}$), making them well suited for compact tunable photonic devices such as phase shifters and modulators. CHECK NUMBERS. In contrast, materials like silica exhibit much smaller TOCs ($\sim 1 \cdot 10^{-5}\, \text{K}^{-1}$), making them more thermally stable. 
+Assuming a linear response, the refractive index is modeled as
+\begin{equation}
+n(\mathbf{r}) = n_0 + \text{TOC} \cdot \left[T(\mathbf{r}) - T_0\right],
+\end{equation}
+where $T_0$ is a reference temperature. This spatially varying refractive index can then be inserted into Maxwell’s equations to calculate the optical field. 
+
+This modeling approach is employed in our work~\cite{ownpub0}, where we use topology optimization to design compact and efficient thermo-optical phase shifters. 
+The idea is to optimize a waveguide cross-section with a metallic heater such that the trade-off between optical losses (due to the metal) and efficient thermal tuning is balanced. 
+Specifically, we design the heater, modeled as a heat source:
+\begin{equation}
+    Q(\hat{\rho})=P_{\text{in}} \frac{\hat{\rho}^p}{L a_e \sum_j \hat{\rho}_j}\,,
+\end{equation}
+where $P_\text{in}$ is the input power in the heater, $L$ is the out-of-plane simulation length, and $a_e$ is the area of the element.
+
+This problem is then formulated as an optimization problem
+where the waveguide is optically excited in the unheated and heated configurations and the electric-field intensity is maximized for the worst-case scenario. Moreover,
+several extensions of the topology optimization problem are considered for varying volume constraints, optical power, and including fabrication constraints (e.g. minimum lengthscales, and layered 
+litography processes).
+
+The framework laid out in our work~\cite{ownpub0} opens up the avenue for the study and optimization to weakly coupled topology optimization problems. For example for the design of phase-shifters and thermo-optical modulators, it should be straightforward to extend this
+formalism to three dimensional system, where one could account for insertion/coupling losses of the integrated photonic circuits. Another example could be the to use multi-material to design not-only the heating
+device, but also the optical waveguide. Finally, this formalism could be applied to design completely different devices, such as re-configurable photonic systems that might be modulated by an external heat source, such as a laser beam or an electrical heater, or thermo-optic 
+switches based on optical cavitie, where the change in refractive index shifts the cavity in- or out-of-resonance.
+
+\subsection*{Strong coupling regime: heat dissipation in optics}
+
+In the strong coupling regime, optical absorption leads to significant local heating, which in turn alters the refractive index and modifies the optical field. This mutual dependence requires a coupled treatment of the heat and optical problems, as the temperature distribution depends on the optical intensity, and vice versa.
+
+This regime is especially relevant in plasmonic structures and high-power photonic devices, where strong field confinement and absorption generate heat on subwavelength scales. The local volumetric heat source is given by~\cite{plasm_heat_source}
+\[
+Q(\mathbf{r}) = \frac{1}{2} \omega \varepsilon_0 \operatorname{Im}[\varepsilon(\mathbf{r})] |\mathbf{E}(\mathbf{r})|^2,
+\]
+where $\operatorname{Im}[\varepsilon]$ accounts for material losses and $|\mathbf{E}|^2$ captures the field enhancement. This expression is particularly important in metal nanostructures, where plasmonic resonances can lead to localized temperature increases that shift or distort the optical response.
+
+Such feedback can give rise to nonlinear effects, including resonance shifts, thermal lensing, and optical bistability, which must be accounted for in the design of thermally tunable photonic systems. CHANGE AND CITE SOMETHING HERE. Accouting and modeling
+these effects could open up the avenue for the design of novel photonic devices, such as (nonlinear) thermal switches,  and thermally reconfigurable metasurfaces.
+
+%\begin{figure}[tb]
+%    \centering
+
+%    \makebox[\textwidth][c]{\includegraphics{figures/thermo_optic_review.png}}%%
+%    \caption{Examples of thermo-optic topology optimization. (a) Heat transfer problem as an auxiliary strcutural integrity constraint, adapted from~\cite{structural_integrity}. 
+%    (b) Structural-thermo-optical topology optimization via optical performance metrics, adapted from~\cite{opt_perf}. (c) Design thermo-optic phase-shifters via heat-conduction topology optimization, adapted from~\cite{TOPS_heat}.
+%    (d) Coupled thermo-optical topology optimization for thermo-optical phase-shifters, adapted from~\cite{ownpub0}.}
+%    \label{fig:thermo_opt}
+%\end{figure}
+\subsection*{Heat transfer as an auxiliary structural integrity constraint}
 
 Not only can the heat equation be used in for physically coupled thermo-optical systems,
 but also as an auxiliary equation to enforce the connectivity of the design field in the 
@@ -91,6 +137,17 @@ refer to the review in in (CITE VANESSA'S REVIEW PAPER),
 Describe the connectivity constraint (CHECK VANESSAS REVIEW PAPER) and the first publication.
 
 \section{Opto-mechanical systems~\cite{ownpub1,ownpub2,ownpub3}}
+
+MENTION PAPER OLE 2010 Maximizing opto-mechanical interaction using topologyoptimization.
+
+%\begin{figure}[tb]
+%    \centering
+%    \makebox[\textwidth][c]{\includegraphics{figures/opto_mechanic_review.png}}%%
+%    \caption{Examples of optomechanical topology optimization. (a-b) examples of topology-optimized micro- and nan-mechanical membranes, adapted from~\cite{gao,hoj_nature,hoj_conf}. 
+%    (c) Plasmonic nanotweezer design, adapted from~\cite{nelson_inverse_2024}. (d) Integrated omnidirectional optical trapping chip, adapted from~\cite{ownpub1}. (e) Topology-optimized particle design 
+%    for maximizing vertical force, adapted from~\cite{ownpub3}.}
+%    \label{fig:opto_mech}
+%\end{figure}
 
 ADD SOME PLOTS FOR SECOND PUBLICATION AND SOME OTHER OPTOMECHANIC PROBLEMS.
 
@@ -145,6 +202,14 @@ where $V$ is the volume of the particle, $\varepsilon_p$ and $\varepsilon_m$ are
 dielectric constants of the particle and the medium, respectively. Note that in this 
 approximation the polarizability is purely real ($\alpha^{\prime \prime} = 0$).
 
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/MST_dipole.png}}%%
+    \caption{MST dipole.}
+    \label{fig:MST_dipole}
+\end{figure}
+
+
 Write that for larger particles the dipole approximation breaks down
 although we have shown in our work that it is pretty robust (SPIE work).
 
@@ -172,6 +237,16 @@ Add auxiliary mechanical solves for structural integrity (Rockstuhl paper).
 ADD PLOT FOR OPTIMIZATION RESULTS IN THE DIPOLE APPROXIMATION
 
 Use Laser chaper in Hecht Optics book?
+
+%\begin{figure}[tb]
+%    \centering
+%    \makebox[\textwidth][c]{\includegraphics{figures/electro_optic_review.png}}%%
+%    \caption{Examples of electro-optical topology optimization. (a) Harmonic subtitute for transient topology-optimization of 
+%    a heat conduction- convection problems, with applications in carrier diffusion systems; adapted from~\cite{carrier}. (b) Topology optimization of nanolasers 
+%    accounting for diffusion of the gain media, adapted from~\cite{ownpub4}.}
+%    \label{fig:opto_mech}
+%\end{figure}
+
 
 ADD WORKS ON TOPOLOGY OPTIMIZATION IN ELECTROSTATICS. POSSIBLY SOME WORK
 ON COUPLED PROBLEMS? MEMS?
