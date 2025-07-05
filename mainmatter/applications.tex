@@ -55,7 +55,7 @@ In the steady-state case ($\partial T / \partial t = 0$), this becomes:
 \end{equation}
 which is the Poisson equation, similar to the electrostatic case of Maxwell's equations for a charge.
 
-\subsection*{Weak coupling regime: the thermo-optic coefficient}
+\subsection*{Weak coupling regime: the thermo-optic coefficient \cite{ownpub0}}
 
 In many thermo-optical systems, the optical and thermal fields are weakly coupled: the optical field has negligible influence on the temperature distribution. 
 This allows a sequential modeling approach: one first solves the heat equation to obtain the steady-state temperature field, and then uses this temperature distribution to compute the corresponding change in the refractive index. 
@@ -102,7 +102,7 @@ these effects could open up the avenue for the design of novel photonic devices,
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/TOPS_pt.png}}%%
-    \caption{Parity-time symmetry breaking and interpretation of losses of propagating modes.}
+    \caption{Parity-time symmetry breaking and interpretation of losses of propagating modes. Make this figure look better.}
     \label{fig:thermo_opt}
 \end{figure}
 
@@ -172,6 +172,14 @@ quantum information processing (transducing from optics to microwave), quantum m
 entanglement of optical and mechanical states, laser cooling and mechanical motion control,
 optical switching/modulation.
 
+START WITH THE LORENTZ FORCE ON CHARGES:
+The most basic force of optomechanical systems is the Lorentz force, which describes the force on a charged particle in an electromagnetic field:
+\begin{equation}
+    \mathbf{\mathcal{F}} = q \left( \mathbf{\mathcal{E}} + \mathbf{v} \times \mathbf{\mathcal{B}} \right)\,,
+\end{equation}
+where $q$ is the charge and $\mathbf{v}$ is the velocity of the particle. This force can be used to derive the force between two current-carrying 
+wires (Ampere's force law), and the electromotive force, which is at the core of many techologies, such as induction motors or generators.
+
 Introduce with simples connection of electromagnetic forces, Lorentz force. Electric (electromotive too) and 
 magnetic forces. A lot of work in electrostatics and magnetostatics, but not much in
 electrodynamics.
@@ -180,48 +188,95 @@ MAKE A DISTINCTION BETWEEN STRONGLY AND WEAKLY COUPLED SYSTEMS.
 
 CHECK IF THE FIELDS ARE IN TIME OR FREQUENCY DOMAIN!!!
 
-The time-averaged force is:
-%\begin{equation}
-%    \langle\mathbf{F}\rangle=\int_{\partial V}\langle\stackrel{\leftrightarrow}{\mathbf{T}}(\mathbf{r}, t)\rangle \cdot \mathbf{n}_{\partial V}(\mathbf{r}) \mathrm{d} \mathbf{r}
-%\end{equation}
-where the Maxwell stress tensor is given by:
+MENTION/COMMENT ON THE ELECTROSTRICTIVE FORCES AND PHOTOELASTICITY.
+
+Add auxiliary mechanical solves for structural integrity (Rockstuhl paper).
+
+\subsection*{Optical forces via the Maxwell Stress Tensor formalism \cite{ownpub3}}
+
+In the most-general case, the optical force can be calculated using the Maxwell stress tensor (MST) formalism, which is a generalization of the Lorentz force to electromagnetic fields in continuous media.
+The basic idea is sketched in \figref{fig:eng_res}, where
+a particle scatters an incident electromagnetic field $\mathbf{E}_\text{inc}$ creating the scattered field $\mathbf{E}_\text{scat}$ and the net force $\mathbf{F}$ that acts
+on the particle. In the most general case the time-averaged net force is given by
+\begin{equation}
+    \langle\mathbf{F}\rangle=\int_{\partial V}\langle\mathbf{T}(\mathbf{r}, t)\rangle \cdot \mathbf{n}_{\partial V}(\mathbf{r}) \d \mathbf{r}\,,
+\end{equation}
+where $\partial V$ denotes any boundary enclosing the particle and $n_{\partial V}$ denotes the unitary vector normal to that boundary.
+The stress tensor is given by:
 \begin{equation}
     \begin{aligned}
     \stackrel{\leftrightarrow}{\mathbf{T}}(\mathbf{r}, t)= & {\left[\varepsilon_0 \varepsilon_r \mathcal{E}(\mathbf{r}, t) \otimes \mathcal{E}(\mathbf{r}, t)+\mu_0 \mu_r \mathcal{H}(\mathbf{r}, t) \otimes \mathcal{H}(\mathbf{r}, t)\right.} \\
     & \left.-\frac{1}{2}\left(\varepsilon_0 \varepsilon_r \mathcal{E}^2(\mathbf{r}, t)+\mu_0 \mu_r \mathcal{H}^2(\mathbf{r}, t)\right) \stackrel{\leftrightarrow}{\mathbf{I}}\right],
     \end{aligned}
 \end{equation}
+where $\otimes$ denotes the outer product. Note that the permittivity and permeability correspond to those of the medium surrounding the particle.
 
-In the dipole approximation and in the frequency domain:
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/eng_results.png}}%%
+    \caption{Results. SAY ADAPED FROM OPTICA WITH ALL THE INFO. MAKE FONT LARGER.}
+    \label{fig:eng_res}
+\end{figure}
 
+In \cite{ownpub3} we use this formalism to optimize the geometry of particle-metalens pairs for difference applications, such as attracting, repelling, 
+oscillating and trapping particles. In \figref{fig:eng_res} we depict an example optimization result from our work, where 
+we optimize the geometry of a particle to maximize the vertical component of the optical force by maximizing $\text{FOM} = \langle\mathbf{F}\rangle \cdot \mathbf{n}_y$, where
+in our two-dimensional example $\mathbf{n}_y = (0, 1)$ is the unitary vector in the vertical direction. Our results show that the optimized particle geometry is a Bragg-mirror-like
+structure, which is able to efficiently reflecting the incoming plane-wave, resulting in a efficient exchange of force and momentum. In the remainder of \cite{ownpub3} we extend this example by also designign a metalens to focus the incoming plane-wave onto the particle,
+we design attractive particle geometries, and optical-tweezer like setups to trap the particle in space. All the code developed in this work is available on GitHub
+at \url{https://github.com/bmdaj/MST_TopOpt} with examples on force calculation and topology optimization. This optimization work is the first, to our knowledge, to 
+consider the MST formalism, paving the way for future work in three-dimensional systems and more complex optimization problems, such as optically-driven particle
+trajectory control, many-body particle systems or optically actuated devices, among others. ADD REFS
+
+One interesting aspect of the topology optimization of particles is that the particle cannot feature disconnected members; otherwise
+one would need to integrate around the individual components to calculate the total force. It is possible to get around this by enforcing 
+a connectivity constraint via the VTM (CITE), and then integrate over a fixed region around the design domain of the particle. In our examples
+we enforce particle connectivity to the center of the design domain, and also of the metalens structure to the bottom, as to ensure Structural
+integrity of the structure.
+
+\subsection*{Optical forces in the dipole approximation \cite{ownpub1}}
+
+When particles are much smaller than the wavelength of the electromagnetic field ($s\ll \lambda$), it is possible to model the optical force via the dipole approximation in the
+quasistatic limit. In this approximation, the particle is treated as a point dipole with a polarizability $\alpha$, which describes how the particle responds to the local electric field $\mathbf{E}$.
+In the dipole approximation the freuency-domain optical force on the particle can be expressed as \cite{novotny}:
 \begin{equation}
-    \langle\mathbf{F}\rangle=\frac{\alpha^{\prime}}{4} \nabla\left\{\mathbf{E}^* \cdot \mathbf{E}\right\}
-    +\frac{\alpha^{\prime \prime}}{k \varepsilon_0} \left[\frac{1}{c}\langle \mathbf{S} \rangle + c \left( \nabla \times \langle \mathbf{L} \rangle \right)\right]\,,
+    \langle\mathbf{F}\rangle=\overbrace{\frac{\alpha^{\prime}}{4} \nabla\left\{\mathbf{E}^* \cdot \mathbf{E}\right\}}^{(1)}
+    +\frac{\alpha^{\prime \prime}}{k \varepsilon_0} \Big[\overbrace{\frac{1}{c}\langle \mathbf{S} \rangle}^{(2)} + \overbrace{c \left( \nabla \times \langle \mathbf{L} \rangle \right)}^{(3)}\Big]\,,
 \end{equation}
 where the polarizability can be split up into the real and imaginary parts 
-$\alpha=\alpha^\prime + i \alpha^{\prime \prime}$, and the Poynting vector as introduced in 
-(REFERENCE TO THEORY), and the time-averaged angular momentum is 
+$\alpha=\alpha^\prime + i \alpha^{\prime \prime}$, and the Poynting vector is given by $\mathbf{S} = \mathbf{E} \times \mathbf{H}$, and the time-averaged angular momentum is 
 $\langle \mathbf{L} \rangle = [\varepsilon_0/(4 i \omega)](\mathbf{E} \times \mathbf{E}^*)$. 
-The term associated with the Poynting vector is the radiation pressure, while the term associated 
-with the angular momentum is the spin-curl force.
+The term associated with the Poynting vector is the radiation pressure ($2$), while the term associated 
+with the angular momentum ($3$) is the spin-curl force.
 
-In the abscence of absorption effects, the force is totally described 
-by the gradient force. This is a good approximation for small particles
-when working far of resonance, where the particle polarizability can be 
+In the abscence of absorption effects ($\alpha^{\prime \prime}=0$), the force is totally described 
+by the gradient force ($1$), which is a conservative force that can be described as the gradient 
+of a trapping potential:
+\begin{equation*}
+    U (\mathbf{r}) = -\frac{\alpha^{\prime}}{4} \left|\mathbf{E}(\mathbf{r})\right|^2\,.
+\end{equation*}
+where the force can be calculatedd as $\mathbf{F} = -\nabla U(\mathbf{r})$. 
+This is a good approximation for small particles
+when working far off resonance, where the particle polarizability can be 
 described through the Clausius-Mosotti relation; for a spherical particle:
 \begin{equation}
     \alpha^{\prime}=\frac{3 V}{4 \pi} \frac{\varepsilon_p-\varepsilon_m}{\varepsilon_p+2 \varepsilon_m} \left(\frac{\varepsilon_p}{\varepsilon_m}\right)^{1 / 2} \left(\frac{\varepsilon_p}{\varepsilon_m}-1\right)\,,
 \end{equation}
 where $V$ is the volume of the particle, $\varepsilon_p$ and $\varepsilon_m$ are the
-dielectric constants of the particle and the medium, respectively. Note that in this 
-approximation the polarizability is purely real ($\alpha^{\prime \prime} = 0$).
+dielectric constants of the particle and the medium, respectively.
 
-\begin{figure}[tb]
-    \centering
-    \makebox[\textwidth][c]{\includegraphics{figures/eng_results.png}}%%
-    \caption{Results. SAY ADAPED FROM OPTICA WITH ALL THE INFO.}
-    \label{fig:eng_res}
-\end{figure}
+Using this formalism in \cite{ownpub1} we use topology optimization to design an integrated omnidirectional optical trapping chip, which is able to trap particles in three dimensions,
+which was previously only possible with the use of free-space optical tweezers, or bulky photonic devices (CITE MANKA). This is done by minimizing 
+the difference of the electric-field norm with respect to a reference field $\mathbf{E}_\text{ref}$:
+\begin{equation}
+    \text{FOM} \equiv \Phi=\sqrt{\int_{\Omega}\left[\Theta\left(\frac{\|\mathbf{E}(\mathbf{r})\|}{\left\|\mathbf{E}\left(\mathbf{r}_0\right)\right\|}-\frac{\left\|\mathbf{E}_{\text{ref}}(\mathbf{r})\right\|}{\left\|\mathbf{E}_{\text{ref}}\left(\mathbf{r}_0\right)\right\|}\right)\right]^2} \text{~d} \Omega
+    \end{equation}
+where the fields are normalized with respect to the value at the center of the design domain $\mathbf{r}_0$, and $\Theta$ is the smoothed Heaviside threshold, which ensures
+potentials as steep or steeper than the reference. The reference is chosen as a Gaussian trapping potential, but can be any other potential, such as a harmonic potential ($U\propto\mathbf{r}^2$).
+
+By applying this optimization framework we obtain the topology-optimized cavity design in \figref{fig:MST_dipole}, which is able to trap particles at the center of an optical
+cavity in three dimensions and has an associated trapping potential\footnote{A typical value for the depth of the trapping potential for stable trapping is $U=-10\, k_B T$, where
+ $ k_B$ is the Boltzmann constant and $T=293$ K is the temperature of the system.} as show in \figref{fig:MST_dipole}.
 
 \begin{figure}[tb]
     \centering
@@ -230,28 +285,57 @@ approximation the polarizability is purely real ($\alpha^{\prime \prime} = 0$).
     \label{fig:MST_dipole}
 \end{figure}
 
+To check that 
+
 
 Write that for larger particles the dipole approximation breaks down
 although we have shown in our work that it is pretty robust (SPIE work).
 
-ADD SOME PLOTS FOR MIT PUBLICATION AND SOME OTHER ELECTRO-OPTICAL PROBLEMS.
+Another important contribution of our work is a benchmark optical trapping stifness accross different
+optical platforms:
+\begin{equation}
+    \eta_i=\frac{\kappa_i \varepsilon_0}{\alpha^\prime P_{\text{in}}}
+\end{equation}
+where $P_{\text{in}}$ is the input power fed into the optical system. 
 
-MENTION/COMMENT ON THE ELECTROSTRICTIVE FORCES AND PHOTOELASTICITY.
 
-Note that in the dipole approximation we do not account for the particle modifying
-the trapping field, which works well in free-space but not necessarily close to material
-boundaries (e.g., opticla cavities). This interaction can be accounted for in the dipole
-approximation by considering the self-induced back-action effect by assuming a weak
-perturbation of the field due to the particle and expanding the field in terms of 
+Lastly, in \cite{ownpub2} we also discuss the effects of Casimir Polder effects on particle loading into the trap, and
+also discuss possible applications of our proposed devices in particle optomechanics and
+biophotonics, where the ability to control a trapped particle omnidirectionally in a compact integrated device
+couled lead to novel technologies.
+
+
+Note in our dipole approximation analysis we have not consider the particle modifying
+the optical field, which works well for point-like particles in free-space but not necessarily 
+for either large particles, particles with high refractive contrast, or particles close to material
+boundaries (e.g., optical cavities). This interaction can be accounted for in the dipole
+approximation by considering the self-induced back-action effect, which assumes a weak
+perturbation of the field due to the particle and expands the field in terms of 
 the scattering Green function of the particle, which leads to a self-consistent
 equation for the force inserting it into (CITE). If the series converges this leads 
 to same result as the MST calculation. 
 
+To further verify the the dipole approximation assumption from \cite{ownpub2} in the 
+conference paper \cite{ownpub3} we compare the results of the dipole approximation with the MST
+for varying particle sizes and refractive indices, showing that the dipole approximation is a good approximation
+even for large values of the refractive index (e.g., $n=3$) and particle sizes up to $s\approx 0.05 \lambda$. 
+
+ADD SPIE PLOT HERE AS WELL.
+
 (CITE BENJAMINS WORK)
 
-Introduce the dipole approximation and MST formalisms. Potentially the fully coupled problem too.
-Briefly introduce self-induced back action.
-Add auxiliary mechanical solves for structural integrity (Rockstuhl paper).
+\subsection*{Strongly coupled optomechanical systems}
+
+In strongly coupled optomechanical systems, the optical field can significantly modify the mechanical properties of the system, leading to a significant deformation
+of the device, which in turn modifies the optical response. 
+
+We have studied these systems in terms of topology optimization, as part of some unpublished work. In this work we consider 
+the mechanical deformation of a membrane-like system, which is optically excited by a plane-wave. The optical field is calculated using the MST,
+and the mechanical deformation is calculated using the linear elasticity theory. The mechanical deformation is then used to modify the optical field, 
+leading to a self-consistent problem that can be solved iteratively, similar to other work.
+
+ADD SOME OF THE WORK WITH THE MEMBRANE-LIKE SYSTEM HERE.
+
 
 \section{Electro-optical systems~\cite{ownpub4}}
 
@@ -276,10 +360,12 @@ Talk about the laser cavity problem, and other works that include this effects.
 Potentially add Rasmus's Schrödinger equation work.
 
 electro-optical coupling refers to changing a device’s optical properties via an applied electric field (Pockels/Kerr effects). Pockels-effect (lithiumn niobate, galium arsenide), Kerr effect, electro-absorption effects (III-V) semiconductrs.
-
+See also \url{https://en.wikipedia.org/wiki/Electro%E2%80%93optic_effect}
 
 GIVE EXAMPLES OF COUPLED ELECTRO-OPTICAL SYSTEMS: imaging/sensing, telecommunications,
 medical applications, optical interconnects, optical switches, optical modulators,
 laser applications.
 
-Bla bla bla...
+\subsection*{Topology optimization of nanolasers \cite{ownpub4}}
+
+As an example of topology optimization in electro-optical systems in \cite{ownpub4} we study the design of nanolasers. 
