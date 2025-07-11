@@ -144,17 +144,19 @@ $\bm{\mathcal{H}}$ by the constitutive equations:
     t) = \mu_0 \bm{\mathcal{H}}(\mathbf{r},
     t) + \bm{\mathcal{M}}(\mathbf{r}, t) \label{eq:H},
 \end{align}
-EXPLAIN EPSILON AND MU AND REFRACTIVE INDEx where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the
+EXPLAIN EPSILON AND MU AND REFRACTIVE INDEX. MAY EXPLAIN THAT THE IMAGINARY PART IS ENERGY DISSIPATION FOR BOTH?WRItE RELATION LIKE INTERP AND ALSO REFERENCE IT LATER. where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the
 permeability of free space, and we have considered non-dispersive media.
 Moreover, the polarization and magnetization also depend on the electromagnetic
 fields; for instance, the
 polarization can be written as a series expansion in powers of the electric
 field:
-$\bm{\mathcal{P}}=\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(1)}
+\begin{equation}\label{eq:polarization}
+\bm{\mathcal{P}}=\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(1)}
     \bm{\mathcal{E}}+\mathcal{\varepsilon}_0 \bm{\mathcal{\chi}}^{(2)}
     \bm{\mathcal{E}} \bm{\mathcal{E}}+\mathcal{\varepsilon}_0
     \bm{\mathcal{\chi}}^{(3)} \bm{\mathcal{E}} \bm{\mathcal{E}}
-    \bm{\mathcal{E}}+\cdots$,
+    \bm{\mathcal{E}}+\cdots,
+\end{equation}
 where $\bm{\mathcal{\chi}}^{n}$ is the $n^\text{th}$ order component of the
 electric susceptibility. Note that in this thesis
 we only consider linear materials (or approxiamate nonlinearities to linear
@@ -660,10 +662,11 @@ $2$, but not the other way around.
     \section{Topology optimization framework}\label{sec:topopt_theory}
     Topology optimization (see \secref{fig:top_opt}) can be used as a systematic design tool to optimize designs in numerically discretized multiphysics problems. 
     Seminal work~\cite{MEMS_multi} by Sigmund laid the foundation for multiphysics topology optimization, where he optimized micro-electro-mechanical system (MEMS) devices. 
-    Still today this is an active topic of research, where state-of-the-art multiphysics topology optimization is used tackle complex coupled  design problems; for instance, optimizing for thermo-mechanical~\cite{third_thermal}, magneto-mechanical~\cite{magneto}, or fluid-structure interactions. 
-    This has enabled highly efficient and integrated designs across engineering disciplines, but remains mainly uncharted territory for nanophotonic device optimization. In the remainder of this section, we will review the theory behind multiphysics topology optimization.
+    Still today this is an active topic of research, where state-of-the-art multiphysics topology optimization is used tackle complex coupled  design problems; for instance, optimizing for thermo-mechanical~\cite{third_thermal}, magneto-mechanical~\cite{magneto}, or fluid-structure interaction~\cite{fsint}. 
+    This has enabled highly efficient and integrated designs across engineering disciplines, but remains mainly uncharted territory for nanophotonic device optimization. In the remainder of this section, we will review the theory behind multiphysics topology optimization. For a more detailed overview of some problems in coupled multiphysics
+    topology optimization, we refer the reader to the book chapter by Maute~\cite{coupled_topopt}.
 
-    In the topology optimization of multiphysics systems we consider a general constrained optimization problem 
+    In the multiphysics topology optimization we consider a general constrained optimization problem 
     expressed as:
     \begin{equation}
         \begin{array}{clr}
@@ -746,7 +749,7 @@ $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     different physical problem\footnote{If the problem stem from the same physics
         (e.g., solving two optical problems), the material interpolation can be
         re-used.}.
-    For example, the SIMP material interpolation (CITE) can be used:
+    For example, the SIMP material interpolation~\cite{SIMP} can be used:
     \begin{equation}
         \zeta(\hat{\rho})=\zeta_0+\hat{\rho}^p\left(\zeta_1-\zeta_0\right)
     \end{equation}
