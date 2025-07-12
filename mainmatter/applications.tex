@@ -402,20 +402,18 @@ ADD SOME OF THE WORK WITH THE MEMBRANE-LIKE SYSTEM HERE. TO BE FINISHED!
 
 \section{Electro-optical systems~\cite{ownpub4}}
 
-Electro-optics describes the interaction between external electricity and optics, where the frquency of the electrical fields ($\omega_E$)
+Electro-optics describes the interaction between electricity and optics, where the frquency of the electrical fields ($\omega_E$)
 have much lower frequencies than the optical fields ($\omega_E \ll \omega $), so that they can be considered as static fields.
-This coupling is used in a variety of technologies such as high-speed modulators for optical communications, 
-tunable filters and switches, adaptive optics, electrically pumped lasers, and integrated photonic circuits. 
-These systems exploit mechanisms ranging from direct electro-optic modulation to carrier-induced refractive index
- changes and electro-optic control inside laser cavities for pulse shaping and frequency tuning. ADD CITATION USE POCKELS AND CHANGE
- APPLICATIONS.
+The interaction between electricity and optics is used in a variety of technologies such as high-speed modulators for optical communications~\cite{modu, modu1, modu2, pockels}, switches\cite{eo_switch}, electrically pumped lasers\cite{laser,laser_pic}, and integrated photonic circuits\cite{laser_pic}. 
+These systems exploit mechanisms ranging from the electro-optic effect~\cite{eo_effect} to carrier-induced refractive index
+ changes \cite{c_i_n} to achieve efficient light manipulation and generation.
 
-As an example of electro-optic coupling one can consider the electro-optic effect (analogous to the thermo-optic effect),
-where the refractive index of a material can be modified by applying an external electric field, where the linear term is known as the
+As a basic example of electro-optic coupling one can consider the electro-optic effect~\cite{eo_effect} (analogous to the thermo-optic effect),
+where the refractive index of a material can be modified by applying an external (static) electric field. The linear term is known as the
 Pockels effect~\cite{pockels} $
     \Delta n = -(1/2) n^3 r E\,,$
 where $r$ is the electro-optic coefficient, and $E$ is the applied electric field. The quadratic term 
-is known as the electro-optic Kerr effect where $\Delta n = n_2 E^2$, where $n_2$ is the Kerr-coefficient~\cite{phot_crys}. Note that by considering an external
+is known as the electro-optic Kerr effect $\Delta n = n_2 E^2$, where $n_2$ is the Kerr-coefficient~\cite{phot_crys}. Note based on the applied external
 quasistatic electric field, one can model the nonlinearities by accounting for higher order terms in the expansion of the polarizability
 in terms of the electric field (\eqref{eq:polarization}), where the Pockels effect corrresponds to the $\chi^{(2)}$ term, and the Kerr effect to the $\chi^{(3)}$ term.
 
@@ -424,15 +422,16 @@ such as, MEMS devices~\cite{MEMS_multi}, electrochemical systems~\cite{electrode
 still relatively unexplored with few works, such as \cite{g_heat}, which studies the design of diffusion-based systems with applications on
 carrier dynamics in semiconductor devices.
 
-In the remainder of the section we focus on our work~\cite{ownpub4} , which harness electro-optics 
-to achieve efficient light emission through electrical pumping.
+In the remainder of the section we focus on our work~\cite{ownpub4} , where we apply topology 
+optimization to design a nanolaser device, which can be based on an electro-optical system, where
+ efficient light emission is achieved through electrical pumping.
 
 \subsection*{Topology optimization of nanolasers~\cite{ownpub4}}
 
 A nanolaser is a nanoscale laser device that emits light by stimulating the emission of photons in a gain medium, typically a semiconductor material. This is illustrated
-in \figref{fig:laser2d}, where a pump laser excites the emitters (e.g. carriers) in a gain medium $D_0$, which then emits light into an output channel (e.g. waveguide). This physical
-mechanism can be described by using thre Maxwell-Bloch equations~\cite{haken_laser_dynamics, PhysRev.134.A1429, SALT_original}, which are a set of nonlinear time-dependent 
-partial differential equations that relate the electric field, the polarization and the population inversion ($D$). Nevertheless, when aligned to high-$Q$ ($Q\gtrapprox 100$~\cite{cerjan_2016}) single-mode semiconductor laser
+in \figref{fig:laser2d}, where a pump laser excites the emitters (e.g. electrical carriers: electrons and holes) in a gain medium $D_0$, which then emits light into an output channel (e.g. waveguide). This physical
+mechanism can be described by using the Maxwell-Bloch equations~\cite{haken_laser_dynamics, PhysRev.134.A1429, SALT_original}, which are a set of nonlinear time-dependent 
+partial differential equations. Nevertheless, when aligned to high-$Q$ ($Q\gtrapprox 100$~\cite{cerjan_2016}) single-mode semiconductor laser
 mode, the system can be described via the single-pole approximation (SPA-) steady-state ab-initio laser theory (SALT)~\cite{Ge_2010}
 \begin{equation}\label{eq:SPA_SALT}
     {\left[(\nabla \times 

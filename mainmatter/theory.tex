@@ -137,16 +137,28 @@ which relate the fields $\bm{\mathcal{D}}$ and $\bm{\mathcal{B}}$ to the fields
 $\bm{\mathcal{E}}$ and
 $\bm{\mathcal{H}}$ by the constitutive equations:
 \begin{align}
-    \bm{\mathcal{D}}(\mathbf{r}, t) & = \varepsilon_0 \varepsilon \bm{\mathcal{E}}(\mathbf{r}, t) =
-    \bm{\mathcal{E}}(\mathbf{r}, t) + \bm{\mathcal{P}}(\mathbf{r}, t),
+    \bm{\mathcal{D}}(\mathbf{r}, t) & = \varepsilon(\mathbf{r}) \bm{\mathcal{E}}(\mathbf{r}, t) =
+    \varepsilon_0 \bm{\mathcal{E}}(\mathbf{r}, t) + \bm{\mathcal{P}}(\mathbf{r}, t),
     \label{eq:D}                                                                \\
-    \bm{\mathcal{B}}(\mathbf{r}, t) & =  \mu \bm{\mathcal{H}}(\mathbf{r},
-    t) = \mu_0 \bm{\mathcal{H}}(\mathbf{r},
-    t) + \bm{\mathcal{M}}(\mathbf{r}, t) \label{eq:H},
+    \bm{\mathcal{B}}(\mathbf{r}, t) & =  \mu(\mathbf{r}) \bm{\mathcal{H}}(\mathbf{r},
+    t) = \mu_0 \left( \bm{\mathcal{M}}(\mathbf{r},
+    t) - \bm{\mathcal{H}}(\mathbf{r}, t)\right) \label{eq:H},
 \end{align}
-EXPLAIN EPSILON AND MU AND REFRACTIVE INDEX. MAY EXPLAIN THAT THE IMAGINARY PART IS ENERGY DISSIPATION FOR BOTH?WRItE RELATION LIKE INTERP AND ALSO REFERENCE IT LATER. where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the
-permeability of free space, and we have considered non-dispersive media.
-Moreover, the polarization and magnetization also depend on the electromagnetic
+where $\varepsilon_0$ is the permittivity of free space and $\mu_0$ is the
+permeability of free space, $\varepsilon$ is the material permittivity, 
+$\mu$ is the material permeability, and we have considered non-dispersive media. It is common to describe a medium
+using the relative relative permittivity $\varepsilon_r=\varepsilon/\varepsilon_0$, which can be related to the refractive index of a material~\cite{wooten}
+\begin{equation}
+    \varepsilon_r = \varepsilon^\prime +
+i\varepsilon^{\prime\prime} = \underbar{n}^2 = (n+\text{i}\kappa)^2\,,
+\end{equation}
+where $\varepsilon^\prime$ is the real part of the permittivity, $\varepsilon^{\prime\prime}$ is the imaginary part of the permittivity, $\underbar{n}$ is the complex refractive index, 
+$n$ is the real refractive index and $\kappa$ is the exctinction coefficient. 
+The refractive index is a measure of how fast light propagates in a medium: $n=v/c$, where $v$ is the phase velocity of light in the medium and 
+$c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum; while the exctinction
+coefficient ($\kappa$) and the imaginary part of the permittivity ($\varepsilon^{\prime\prime}=2n\kappa$) are related to the absorption of light in the medium.
+
+The polarization and magnetization also depend on the electromagnetic
 fields; for instance, the
 polarization can be written as a series expansion in powers of the electric
 field:
@@ -159,8 +171,8 @@ field:
 \end{equation}
 where $\bm{\mathcal{\chi}}^{n}$ is the $n^\text{th}$ order component of the
 electric susceptibility. Note that in this thesis
-we only consider linear materials (or approxiamate nonlinearities to linear
-order~\cite{ownpub4}), where only the first-order terms in the expansion are
+we only consider linear materials\footnote{In some cases we approxiamate nonlinearities perturbatively to linear
+order~\cite{ownpub4}.}, where only the first-order terms in the expansion are
 considered. \\
 
 \subsection*{Wave equations for electromagnetic fields}
@@ -179,10 +191,10 @@ wave equations for the electric and magnetic fields:
          & \nabla \times \nabla \times \bm{\mathcal{H}}+\frac{1}{c^2}
         \frac{\partial^2 \bm{\mathcal{H}}}{\partial t^2}=\nabla \times
         \bm{\mathcal{J}}+\nabla \times \frac{\partial \bm{\mathcal{P}}}{\partial
-            t}-\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{M}}}{\partial t^2}
+            t}-\frac{1}{c^2} \frac{\partial^2 \bm{\mathcal{M}}}{\partial t^2}\,.
     \end{aligned}
 \end{equation}
-where $c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum. This
+This
 equation encapsulates the wave-like behavior of electromagnetic fields and
 holds true for arbitrary material properties.
 
