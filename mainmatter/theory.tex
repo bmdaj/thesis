@@ -36,7 +36,7 @@ framework for topology optimization of multi-physics systems.
 
 In classical optics, light is treated as an electromagnetic (EM) wave, and can
 be described by
-solving Maxwell's equations. Nevertheless,
+solving Maxwell's equations. Nevertheless, as shown in \figref{fig:EM_regime},
 depending on the characteristic size ($s$) of objects compared to the light's
 wavelength ($\lambda$)
 simpler limiting models can be used to describe optical phenomena:
@@ -46,14 +46,14 @@ simpler limiting models can be used to describe optical phenomena:
           which might refract or reflect in the presence of different media, such as
           lenses and mirrors.
     \item \textbf{Quasistatics \& lumped circuit models ($s \gg \lambda$):}
-          When objects are much smaller than the wavelength, the wave natue of light
-          dissapears,
+          When objects are much smaller than the wavelength, the wave nature of light
+          fades out,
           and can be approximated quasistatically. For instance, electronic devices
-          can be modeled in this regime using circuit models w
-          ith lumped elements, like resistors or capacitors.
+          can be modeled in this regime using circuit models with sources ($V$) and lumped elements, 
+          like resistors ($R$) or capacitors ($C$) and coils ($L$).
 \end{itemize}
 In the fields of nano-optics and nanophotonics, where the visible
-(\(\lambda \sim 400\)--\(800\) nm) and infrared (\(\lambda \sim 800\)--\(2500\)
+(\(\lambda \approx 400\)--\(800\) nm) and infrared (\(\lambda \approx 800\)--\(2500\)
 nm)
 spectral regions are most commonly explored, components often have nano- to
 microscale dimensions. As a result, the \textbf{wave-optics} regime ($\lambda
@@ -65,15 +65,16 @@ Maxwell's
 equations very few problems (e.g., problems with high symmetry, separability,
 few parameters)
 can be solved analytically and most problems require
-numerical solutions (e.g., obtained via the finite element method).
+numerical solutions [e.g., obtained via the finite element method (\secref{sec:fem})].
 
 \begin{figure}[tb]
     \centering
 
     \makebox[\textwidth][c]{\includegraphics{figures/EM_regimes.png}}%%
-    \caption{Different modeling regimes in optics based on the
+    \caption{Different modeling regimes in electromagnetics based on the
         relation between the characteristic size of the objects ($s$) and the
-        wavelength of light ($\lambda$).}
+        wavelength of light ($\lambda$). In wave optics, $E$ and $B$ refer to
+        the electric and magnetic fields.}
     \label{fig:EM_regime}
 \end{figure}
 
@@ -100,23 +101,22 @@ and magnetic (induction) fields, respectively,
 $\bm{\mathcal{D}}$ is the time-dependent electric displacement field,
 $\bm{\mathcal{B}}$ is the time-dependent magnetic (flux-density) field,
 $\bm{\mathcal{J}}$ is the current density,
-and $\mathcal{\rho}$ is the time-dependent charge density. Maxwell's equations
-combine previously established
-physical laws, in 4 equations:
-\begin{itemize}
-    \item \textbf{Faraday's law} [Eq.~\eqref{eq:faraday}] describes how a
-          time-varying magnetic field induces an electric field.
-    \item \textbf{Ampère's law} [Eq.~\eqref{eq:ampere}] describes how a
-          time-varying electric field and electric current density induce a magnetic
-          field.
-    \item \textbf{Gauss's law for electricity} [Eq.~\eqref{eq:gauss_E}]
-          describes how electric charges create an electric field.
-    \item \textbf{Gauss's law for magnetism} [Eq.~\eqref{eq:Gauss_B}] states
-          that there are no magnetic monopoles, and thus the magnetic field lines are
-          closed loops.
-\end{itemize}
-
-Note that the mascroscopic fields in Maxwell's equations
+and $\mathcal{\rho}$ is the time-dependent charge density.% Maxwell's equations
+%combine previously established
+%physical laws, in 4 equations:
+%\begin{itemize}
+%    \item \textbf{Faraday's law} [Eq.~\eqref{eq:faraday}] describes how a
+%          time-varying magnetic field induces an electric field.
+%    \item \textbf{Ampère's law} [Eq.~\eqref{eq:ampere}] describes how a
+%         time-varying electric field and electric current density induce a magnetic
+%          field.
+%    \item \textbf{Gauss's law for electricity} [Eq.~\eqref{eq:gauss_E}]
+%          describes how electric charges create an electric field.
+%    \item \textbf{Gauss's law for magnetism} [Eq.~\eqref{eq:Gauss_B}] states
+%          that there are no magnetic monopoles, and thus the magnetic field lines are
+%          closed loops.
+%\end{itemize}
+ Note that the mascroscopic fields in Maxwell's equations
 are spatial averages of the
 microscopic fields, and the charge and current densities are continous in space
 and time.
@@ -678,6 +678,16 @@ $2$, but not the other way around.
     This has enabled highly efficient and integrated designs across engineering disciplines, but remains mainly uncharted territory for nanophotonic device optimization. In the remainder of this section, we will review the theory behind multiphysics topology optimization. For a more detailed overview of some problems in coupled multiphysics
     topology optimization, we refer the reader to the book chapter by Maute~\cite{coupled_topopt}.
 
+    \begin{figure}[tb]
+        \centering
+        \makebox[\textwidth][c]{\includegraphics{figures/top_opt_multi.png}}%%
+        \caption{Write.}
+            \label{fig:top_opt_multi}
+    \end{figure}
+    
+
+    \subsection*{Optimization problem formulation}
+
     In the multiphysics topology optimization we consider a general constrained optimization problem 
     expressed as:
     \begin{equation}
@@ -701,7 +711,7 @@ $2$, but not the other way around.
     the gradient-based algorithm of the Method of Moving
     Asymptotes (MMA)~\cite{MMA} and Globally Convergent Method of Moving Asymptotes
     (GCMMA)~\cite{GCMMA}, by iteratively updating the design field until a
-    termination criterion (e.g. maximum number of iterations) is met.
+    termination criterion (e.g., maximum number of iterations) is met.
 
     \subsection*{From densities to material properties}
     To regularize the optimization and introduce a weak sense of geometric length
