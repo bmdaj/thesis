@@ -29,7 +29,7 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="2.3786088"
-     inkscape:cx="150.08773"
+     inkscape:cx="150.29794"
      inkscape:cy="144.41215"
      inkscape:window-width="1920"
      inkscape:window-height="1027"
@@ -464,7 +464,7 @@
        inkscape:original-d="m 24.509519,25.258567 c -1.3784,0.137469 -13.11036,10.059294 -19.6657422,15.088783 -6.555382,5.029478 2.2265537,8.05092 3.3396277,12.076223 1.113075,4.025302 10.9874715,-0.673538 16.4810045,-1.010483 5.493534,-0.336922 6.772534,1.72635 10.158598,2.58936 3.386058,0.863003 5.144099,5.922488 7.715954,8.88357 2.571847,2.961083 13.074153,-6.291645 19.611021,-9.437617 6.536865,-3.14598 2.097405,-6.527325 3.145912,-9.791145 1.0485,-3.263828 2.175165,-2.125665 3.262553,-3.18864 1.08738,-1.06299 -1.471245,-9.853753 -2.20707,-14.780787 -0.735825,-4.927034 -7.687932,-6.360194 -11.532103,-9.540452 -3.844172,-3.180259 -7.871912,0.322258 -11.808075,0.483225 -3.936155,0.160969 -3.233763,2.888699 -4.850839,4.332886 -1.617082,1.44419 -6.343897,2.588342 -9.516049,3.88235 -3.17215,1.294011 -2.756394,0.275259 -4.134792,0.412727 z" />
     <g
        id="g6583"
-       transform="matrix(0.405,0,0,0.405,-4.0931866,-6.230309)">
+       transform="matrix(0.405,0,0,0.405,-4.3314744,-6.3631128)">
       <path
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
          d="m 123.74834,141.85074 13.60723,-2.44013"
@@ -512,51 +512,51 @@
        id="path5929-2" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.374999;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke;text-anchor:middle;text-align:center"
-       x="50.076744"
-       y="56.370335"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.374999;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       x="49.334404"
+       y="55.872021"
        id="text6659"><tspan
          sodipodi:role="line"
          id="tspan6657"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375;text-anchor:middle;text-align:center"
-         x="44.402325"
-         y="56.370335">Optical </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375"
+         x="49.334404"
+         y="55.872021">Optical </tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375;text-anchor:middle;text-align:center"
-         x="44.402325"
-         y="60.78006"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375"
+         x="49.334404"
+         y="60.281746"
          id="tspan2824">source</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.374999;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       x="15.478723"
-       y="64.647514"
+       x="14.937633"
+       y="63.828114"
        id="text6659-93"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375"
-         x="15.478723"
-         y="64.647514"
+         x="14.937633"
+         y="63.828114"
          id="tspan2824-4">Mechanical</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375"
-         x="15.478723"
-         y="69.057236"
+         x="14.937633"
+         y="68.237839"
          id="tspan17107">force</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.374999;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
-       x="9.2099276"
-       y="11.896974"
+       x="7.2907286"
+       y="12.108057"
        id="text6659-9"><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375"
-         x="9.2099276"
-         y="11.896974"
+         x="7.2907286"
+         y="12.108057"
          id="tspan2824-1">Heat</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'TeX Gyre Pagella Math';-inkscape-font-specification:'TeX Gyre Pagella Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.375"
-         x="9.2099276"
-         y="16.306698"
+         x="7.2907286"
+         y="16.517782"
          id="tspan14839">source</tspan></text>
     <text
        xml:space="preserve"
