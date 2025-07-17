@@ -679,8 +679,8 @@ $2$ ($1$), but not the other way around.
     expressed as:
     \begin{equation}
         \begin{array}{clr}
-            \max\limits_{\rho}                        & \Phi(\rho, \mathbf{u}_i) \quad \quad \quad \quad
-            \,\,\,\, \forall i \in\left[1, N_S\right] & \text { (Objective function) }                                                         \\
+            \max\limits_{\rho}                        & \text{FOM}(\rho, \mathbf{u}_i) \quad \quad \quad 
+             \forall i \in\left[1, N_S\right] & \text { (Objective function) }                                                         \\
             \text { s.t. }                            & \mathbf{S}_i(\rho, \mathbf{u}_i)-\mathbf{f}_i=0 \quad
             \forall i \in\left[1, N_S\right]          & \text { (State equations) }                                                            \\
                                                       & c_j(\rho, \mathbf{u}) \leq 0 \quad \quad \quad \, \forall j \in\left[1,
@@ -689,7 +689,7 @@ $2$ ($1$), but not the other way around.
                 constraints) }
         \end{array}
     \end{equation}
-    where $\Phi$ is the FOM to be minimized for a design field $\rho$ with upper
+    where the FOM is minimized for a design field $\rho$ with upper
     bound $\rho_{\text {max }}$ and lower bound $\rho_{\text {min }}$,
     subject to the residual of the state equations of all the different physical
     problems and constraints. In multiphysics optimization problems
@@ -728,7 +728,7 @@ $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     \end{equation}
     The filter operation is followed by a \textbf{smoothed Heaviside
         threshold}~\cite{projection}
-    \begin{equation}
+    \begin{equation}\label{eq:threshold}
         \hat{\rho} \equiv \Theta_{\beta,\eta}(\hat{\rho}) =\frac{\tanh (\beta \cdot \eta)+\tanh (\beta
             \cdot(\hat{\rho}-\eta))}{\tanh (\beta \cdot \eta)+\tanh (\beta \cdot(1-\eta))},
         \quad \beta \in[1, \infty),\, \eta \in[0,1],

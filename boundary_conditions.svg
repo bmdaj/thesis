@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.1893044"
-     inkscape:cx="260.23615"
-     inkscape:cy="151.76939"
+     inkscape:zoom="2.3786088"
+     inkscape:cx="203.27008"
+     inkscape:cy="69.998901"
      inkscape:window-width="1920"
      inkscape:window-height="1147"
      inkscape:window-x="1920"
@@ -750,7 +750,7 @@
          inkscape:path-effect="#path-effect18730-6-8-3-69-7-8-2" />
       <g
          inkscape:label=""
-         transform="translate(56.30902,264.21304)"
+         transform="translate(56.30902,263.68387)"
          id="g58074">
         <g
            id="surface1"
@@ -775,28 +775,28 @@
         </g>
       </g>
       <rect
-         style="fill:none;stroke:#000000;stroke-width:0.36500983;stroke-miterlimit:1;stroke-dasharray:none;paint-order:fill markers stroke"
+         style="fill:none;stroke:#000000;stroke-width:0.36501;stroke-miterlimit:1;stroke-dasharray:none;paint-order:fill markers stroke"
          id="rect2909"
          width="25.729551"
          height="13.491692"
-         x="32.126369"
-         y="262.14136"
+         x="32.111267"
+         y="261.61224"
          transform="matrix(0.99983506,0.01816191,-0.02854039,0.99959264,0,0)" />
       <path
          style="fill:none;stroke:#000000;stroke-width:0.365;stroke-miterlimit:1;stroke-dasharray:none;marker-end:url(#TriangleStart);paint-order:fill markers stroke"
-         d="m 24.644478,262.61937 13.163248,0.21952"
+         d="m 24.644478,262.0902 13.163248,0.21952"
          id="path2911" />
       <path
          style="fill:none;stroke:#000000;stroke-width:0.365;stroke-miterlimit:1;stroke-dasharray:none;marker-end:url(#TriangleStart-3);paint-order:fill markers stroke"
-         d="M 49.946471,276.59743 36.783221,276.3779"
+         d="m 49.946471,276.06826 -13.16325,-0.21953"
          id="path2911-7" />
       <path
          style="fill:none;stroke:#000000;stroke-width:0.365;stroke-miterlimit:1;stroke-dasharray:none;marker-end:url(#TriangleStart-3-5);paint-order:fill markers stroke"
-         d="m 24.29278,275.13388 0.197792,-7.1545"
+         d="m 24.29278,274.60471 0.197792,-7.1545"
          id="path2911-7-5" />
       <path
          style="fill:none;stroke:#000000;stroke-width:0.365;stroke-miterlimit:1;stroke-dasharray:none;marker-end:url(#TriangleStart-3-5-6);paint-order:fill markers stroke"
-         d="m 50.29709,264.77093 -0.197793,7.15452"
+         d="m 50.29709,264.24176 -0.197793,7.15452"
          id="path2911-7-5-9" />
       <path
          style="fill:none;stroke:#000000;stroke-width:0.365001;stroke-miterlimit:1;stroke-dasharray:none;paint-order:fill markers stroke"

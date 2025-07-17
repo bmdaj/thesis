@@ -1,72 +1,72 @@
-\chapter{Electro-optical topology optimization problems}
+\chapter{Electro-optical topology optimization problems}\label{chap:eo}
 %\section{Electro-optical systems~\cite{ownpub4}}\label{sec:electro_optical}
-Electro-optics describes the interaction between electricity and optics, where the frquency of the electrical fields ($\omega_E$)
-have much lower frequencies than the optical fields ($\omega_E \ll \omega $), so that they can be considered as static fields.
+Electro-optics describes the interaction between electricity and optics. Electricity involves the presence and flow of electric charges, which can generate electromagnetic fields.
+However, the main difference is that the frequency of the electrical fields ($\omega_E$)
+is much lower than for optical fields ($\omega_E \ll \omega $), so that they can be considered as static fields\footnote{Similarly, as discussed in \secref{sec:nanophotonics}, the size ($s$) of optical devices
+is usually much smaller than the wavelength of the electrical fields ($s\ll \lambda_E $), so that the field is effectively quasistatic.}.
 The interaction between electricity and optics is used in a variety of technologies such as high-speed modulators for optical communications~\cite{modu, modu1, modu2, pockels}, switches\cite{eo_switch}, electrically pumped lasers\cite{laser,laser_pic}, and integrated photonic circuits\cite{laser_pic}. 
 These systems exploit mechanisms ranging from the electro-optic effect~\cite{eo_effect} to carrier-induced refractive index
  changes \cite{c_i_n} to achieve efficient light manipulation and generation.
 
-As a basic example of electro-optic coupling one can consider the electro-optic effect~\cite{eo_effect} (analogous to the thermo-optic effect),
-where the refractive index of a material can be modified by applying an external (static) electric field. The linear term is known as the
+As a basic example of electro-optic coupling one can consider the \textbf{electro-optic effect}~\cite{eo_effect} (analogous to the thermo-optic effect),
+where the refractive index of a material can be modified under the influence of an external (static) electric field. The linear term in the electro-optic effect is known as the
 Pockels effect~\cite{pockels} $
     \Delta n = -(1/2) n^3 r E\,,$
 where $r$ is the electro-optic coefficient, and $E$ is the applied electric field. The quadratic term 
 is known as the electro-optic Kerr effect $\Delta n = n_2 E^2$, where $n_2$ is the Kerr-coefficient~\cite{phot_crys}. Note based on the applied external
-quasistatic electric field, one can model the nonlinearities by accounting for higher order terms in the expansion of the polarizability
+quasistatic electric field, one can model the refractive index change by accounting for higher order terms in the expansion of the polarizability
 in terms of the electric field (\eqref{eq:polarization}), where the Pockels effect corrresponds to the $\chi^{(2)}$ term, and the Kerr effect to the $\chi^{(3)}$ term.
 
-Topology optimization has been used been extensively used to study coupled electrical systems
-such as, MEMS devices~\cite{MEMS_multi}, electrochemical systems~\cite{electrode}, and electrostatic actuators~\cite{electrostatic_act}. However, the field of electro-optics is
+Building on this understanding of electro-optic phenomena, topology optimization has been extensively applied to design coupled electrical systems such as MEMS devices~\cite{MEMS_multi}, electrochemical systems~\cite{electrode}, and electrostatic actuators~\cite{electrostatic_act}. However, the field of electro-optics is
 still relatively unexplored with few works, such as \cite{g_heat}, which studies the design of diffusion-based systems with applications on
 carrier dynamics in semiconductor devices.
 
 In the remainder of the section we focus on our work~\cite{ownpub4} , where we apply topology 
-optimization to design a nanolaser device, which can be based on an electro-optical system, where
- efficient light emission is achieved through electrical pumping.
+optimization to design a nanolaser device, where electrical pumping can be used to achieve efficient light emission.
 
 \section{Topology optimization of nanolasers~\cite{ownpub4}}\label{sec:laser}
 
 \subsection*{A Figure of Merit for nanolaser performance}
 
 A nanolaser is a nanoscale laser device that emits light by stimulating the emission of photons in a gain medium, typically a semiconductor material. This is illustrated
-in \figref{fig:laser2d}, where a pump laser excites the emitters (e.g., electrical carriers: electrons and holes) in a gain medium $D_0$, which then emits light into an output channel (e.g., waveguide). This physical
+in \figref{fig:laser2d}, where a pump laser excites the emitters/carriers (e.g., electrons and holes) in a gain medium $D_0$, which then emits light into an output channel (e.g., waveguide) via
+stimulated emission. This physical
 mechanism can be described by using the Maxwell-Bloch equations~\cite{haken_laser_dynamics, PhysRev.134.A1429, SALT_original}, which are a set of nonlinear time-dependent 
-partial differential equations. When aligned to high-$Q$ ($Q\gtrapprox 100$~\cite{cerjan_2016}) single-mode semiconductor laser
+partial differential equations. When aligned to high-$Q$ ($Q\gtrapprox 100$~\cite{cerjan_2016}) lasing
 mode, the system can be described via the single-pole approximation (SPA-) steady-state ab-initio laser theory (SALT)~\cite{Ge_2010}
 \begin{equation}\label{eq:SPA_SALT}
     {\left[(\nabla \times 
-     \nabla \times ) -\left(\varepsilon_c(\mathbf{r})-i \Delta \varepsilon_\Im (\mathbf{r})\right) \left(\frac{\omega_L}{c}\right)^2\right] \mathbf{E}_L(\mathbf{r})=0}\,.
+     \nabla \times ) -\left(\varepsilon_c(\mathbf{r})-i \Delta \varepsilon^{\prime \prime} (\mathbf{r})\right) \left(\frac{\omega_L}{c}\right)^2\right] \mathbf{E}_L(\mathbf{r})=0}\,.
 \end{equation}
 where $\mathbf{E}_L$ is the lasing mode, $\omega_L$ is the lasing frequency, $\varepsilon_c$ is the dielectric permittivity of the passive (without gain) cavity, and the change in the 
-imaginary part of the permittivity ($\Delta \varepsilon_\Im$) is given by
+imaginary part of the permittivity is given by
 \begin{equation}\label{eq:gain_SALT}
-        \Delta \varepsilon_\Im (\mathbf{r}) =  \frac{D_0(\mathbf{r}) d}{1+ e_c^{-2}\left|\mathbf{E}_L(\mathbf{r})\right|^2}\,.
+        \Delta \varepsilon^{\prime \prime} (\mathbf{r}) =  \frac{D_0(\mathbf{r}) d}{1+ e_c^{-2}\left|\mathbf{E}_L(\mathbf{r})\right|^2}\,.
 \end{equation}
-where $D_0(\mathbf{r})$ is the gain profile, $d$ is a scalar pumping strength, $e_c$ is a non-dimensionalization parameter~\cite{Ge_2010}. Although much simpler than the Maxwell-Bloch equations, \eqref{eq:SPA_SALT} still
-requires one to solve a nonlinear eigenproblem, which is more complex an more computationally expensive than solving a linear system of equations.
+where $D_0(\mathbf{r})$ is the gain profile, $d$ is a scalar pumping strength, and $e_c$ is a non-dimensionalization parameter~\cite{Ge_2010}. Although much simpler than the Maxwell-Bloch equations, \eqref{eq:SPA_SALT} still
+requires one to solve a nonlinear eigenproblem, which can be computationally expensive, especially in inverse design problems where one needs to solve hundreds or thousands of these problems to optimize the device.
 
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/laser.png}}%%
     \caption{Topology optimization of nanolasers. (a) Working principle of a nanolaser. A pump power ($P_\text{pump}$) excites a a gain medium with profile
-    $D_0$ that emits a single lasing mode into an output channel with power $P_\text{out}$. (b) The optimization FOM considers the linear relation between the pump and output power ($P_\text{out}/P_\text{pump}$),
-    just above the lasing threshold ($P \gtrapprox P_\text{thres}$). (c) Topology optimization with carrier diffusion effects, where the gain profile $D_0$ is diffused ($\mathbb{S}[D_0]$)
-    in the semiconductor-like material. Adapted from~\cite{ownpub4}. MAKE RIGHT PLOT LARGER AND ADJUST THE REST, B SHOULD BE TALLER AND A SHOULD BE SCALED DOWN. FOM SHOULD NOT BE EQUAL.}
+    $D_0$ that emits a single lasing mode into an output channel with power $P_\text{out}$. (b) The optimization FOM is proportional to the linear relation between the pump and output power ($P_\text{out}/P_\text{pump}$),
+    just above the lasing threshold ($P \gtrapprox P_\text{thres}$).  Adapted from~\cite{ownpub4}.}
     \label{fig:laser2d}
 \end{figure}
 
-To circumvent this, in~\cite{ownpub4} we use a synthesis of SPA-SALT, perturbation theory, and coupled mode theory to simplify the problem. 
+To circumvent this, in~\cite{ownpub4} we propose a synthesis of SPA-SALT, perturbation theory, and coupled mode theory to simplify the problem. 
 The two key results of this derivation are the expression of the lasing threshold and the FOM for the optimization that can be evaluated by solving a linear system of equations.
-The lasing threshold is given by~\cite{ownpub4} CHANGE GAMMA FACTOR THING
+One of the two key results derived from this framework is the expression for the \textbf{lasing threshold}~\cite{ownpub4} CHANGE GAMMA FACTOR THING
 \begin{equation}\label{eq:pump_thresh}
     d_\text{thresh} = \frac{1}{\Gamma Q} = \frac{1}{Q} \frac{\int_{\Omega} \varepsilon_c(\mathbf{r})|\mathbf{E}_{\text{m}}(\mathbf{r})|^2\,  \d \Omega}{\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{m}}(\mathbf{r})|^2\,  \d \Omega}\,.
 \end{equation}
 where $\mathbf{E}_\text{m}$ is the passive cavity mode, $Q$ is the quality factor of the cavity resonance, and $\Gamma$ is a measure 
-of energy confinement in the gain region. From this expression we see that one can reduce the lasing threshold (for more energy-efficient lasers) by increasing $Q$ and decreasing $\Gamma$ by enhancing the energy confinement in the
-active medium. Note that in the limit of a single-emitter limit, where $D_0(\mathbf{r})\propto \delta (\mathbf{r}-\mathbf{r^\prime})$ for an emitter located at $\mathbf{r}^\prime$, this expression becomes $d_\text{thresh}=V/Q$, where $V$ is a measure
-of the modal volume.
+of energy confinement in the gain region. From this expression we see that one can reduce the lasing threshold (for more energy-efficient lasers) by increasing $Q$ and by enhancing the energy confinement in the
+active medium ($\Gamma$). Note that in the single-emitter limit, where $D_0(\mathbf{r})\propto \delta (\mathbf{r}-\mathbf{r^\prime})$ for an emitter located at $\mathbf{r}^\prime$, this expression becomes $d_\text{thresh}=V/Q$, where $V$ is a measure
+of the modal volume, a common figure of merit in other non-laser related inverse design works (e.g.,~\cite{LDOS_opt_wang}).
 
-The main result of the work is a FOM that can be evaluated by solving a reciprocal problem where the system is excited from then output port~\cite{ownpub4}
+The second key result of the work is \textbf{a FOM that can be evaluated by solving a single reciprocal problem} (\secref{sec:nanophotonics}) where the system is excited from then output port~\cite{ownpub4}
 \begin{equation}\label{eq:eff_nl}
     \frac{P_\text{out}}{P_\text{pump}} \propto \frac{\left( \int_{\Omega} D_0(\mathbf{r})|\mathbf{E}_{\text{r}}(\mathbf{r})|^2 \,  \d \Omega \right)^3} {\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^4 \,  \d \Omega} = \text{FOM}.
 \end{equation}
@@ -81,7 +81,23 @@ whose location is randomly distributed in the cavity with a probability density 
 
 \subsection*{Optimization results for extended gain media}
 
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/laser_size.png}}%%
+    \caption{Performance of the topology-optimized devices for different Gaussian gain distributions with standard deviations $\sigma_g$. (a) Device optimize for a point-like gain region ($\sigma_g=25$ nm).
+    (b) Device optimized for $\sigma_g=250$ nm. (c) Device optimized for $\sigma_g=500$ nm. Adapted from~\cite{ownpub4}.}
+    \label{fig:laser_size}
+\end{figure}
+
 \subsection*{Accounting for gain diffusion}
+
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/laser_carriers.png}}%%
+    \caption{Topology-optimized devices with gain diffusion effects. The device optimized without accounting for gain diffusion ("Nonlinear FOM") and the device optimized accounting for gain diffusion ("Diffusion FOM") have the gain profile $D_0$ that is diffused ($\mathbb{S}[D_0]$)
+    in the semiconductor-like material, generating the optical field given by the electric-field norm $\vert \mathbf{E} \vert$. Adapted from~\cite{ownpub4}.}
+    \label{fig:laser2d}
+\end{figure}
 
 In semiconductors with extended gain media, it is essential to model the electrical proccess of carrier diffusion. This effect can be introduced by modeling the semiconductor gain medium in the free-carrier approximation\footnote{Neglecting carrier-carrier Coulomb interactions.}, using a difussion 
 equation~\cite{csalt}. Using this formalism we derive the same expressions when accounting for carrier diffusion~\cite{ownpub4}, where the lasing threshold is
