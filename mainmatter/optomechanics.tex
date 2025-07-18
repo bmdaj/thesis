@@ -170,14 +170,14 @@ even for large values of the refractive index (e.g., $n_\text{sph}=3$) and parti
 
 \subsection*{A metric for trapping performance~\cite{ownpub1}}
 
-When designing optical trapping platforms it is important to be able to compare performance across platforms. To this end, in~\cite{ownpub3} we introduce a normalized
-trapping stiffness metric, which normalizes trapping stiffness to particle  polarizability and input power ($P_\text{in}$)
+When designing optical trapping platforms it is important to be able to compare performance across platforms. To this end, in~\cite{ownpub3} we introduce a \textbf{normalized
+trapping stiffness} metric, which normalizes trapping stiffness to particle  polarizability and input power ($P_\text{in}$)
 \begin{equation}
     \eta_i=\frac{\kappa_i \varepsilon_0}{\alpha^\prime P_{\text{in}}}
 \end{equation}
 enabling one-to-one comparison across trapping devices\footnote{As noted in~\cite{ownpub3} this metrics breaks down for lightless platforms (e.g., Casimir force-based traps), and the metric could be redefined
 without including the input power.}. The normalized trapping stiffness allows us to show that (Tab. 1 in~\cite{ownpub3}), although plasmonic devices can reach higher normalized 
-stiffnesses, they suffer from optical losses to heating and lack omnidirectional stable trapping. In contrast, the inverse-designed dielectric platform in \figref{MST_dipole}
+stiffnesses, they suffer from optical losses to heating and lack omnidirectional stable trapping. In contrast, the inverse-designed dielectric platform in \figref{fig:MST_dipole}
  achieves comparable normalized stiffnesses to other dielectric traps while uniquely offering fully stable, omnidirectional trapping
   without relying on SIBA effects. Notably, SIBA-based devices are particle-specific and their performance can break down
    for different particle geometries or materials. Compared to conventional optical tweezers, our device maintains similar trapping
@@ -198,31 +198,32 @@ traps for lossy or resonant particles, and devices with multiple trapping sites.
   in quantum optics and many-body physics~\cite{chang_colloquium_2018}. We anticipate that experimental demonstrations
    will validate these predictions and push the limits of integrated omnidirectional trapping.
 
-\section{Strongly coupled optomechanical systems}\label{sec:mech_strongly_coupled}
+\section{Strongly coupled optomechanical systems (cite)}\label{sec:mech_strongly_coupled}
 
 In strongly coupled optomechanical systems, the optical field can significantly modify the mechanical properties of the system, leading to a significant deformation
 of the device, which in turn modifies the optical response. In most optomechanical systems the optical response is much faster than the mechanical response, since the 
 mechanical frequencies ($\omega_\text{mech}$) are orders of magnitude lower than the optical frequency ($\omega_\text{mech}\ll\omega$) or optical resonance decay rates ($\omega_\text{mech}\ll\kappa$, so one 
 can neglect sideband cooling or amplification)\cite{opto_crys, photo_topopt}(cite). Due to the slower mechanical dynamics, it is possible to analyze the mechanical response of the structure in the quasistatic approximation, by only considering the mechanical steady-state response of the structure. 
-This can be accounted for by considering the time-averaged force in the MST formalism (\eqref{eq:f_MST}) the local steady-state
-force balance equation:
-\begin{equation}
+This can be accounted for by considering the time-averaged force in the MST formalism (\eqref{eq:f_MST}) in the continuum mechanics \textbf{momentum equation}:
+\begin{equation}\label{eq:mech}
     \nabla \cdot \overleftrightarrow{\boldsymbol{\sigma}} = \mathbf{f}_\text{MST}  \,,
 \end{equation}
 where the volumetric force from the MST is given by $ \mathbf{f}_\text{MST} = \nabla \cdot \langle \stackrel{\leftrightarrow}{\bm{\mathcal{T}}} \rangle$ and $\overleftrightarrow{\boldsymbol{\sigma}}$ is the stress tensor of the mechanical system. Solving for the mechanical
-displacement $\mathbf{u}$ [e.g., via the finite element method (\secref{sec:fem})], one can then calculate the mechanical deformation of the system, which together with the solution to the optical problem
-(\eqref{eq:wave_eq}) consitutes the basics to solve a strongly coupled optomechanical probelm. In the next section, we highlight some key results of our unpublished work, where we apply this formalism to the 
+displacement $\mathbf{u}$ [e.g., via the finite element method (\secref{sec:fem})], one can find the deformed configuration of a structure. Thus, the solutions to the mechanical (\eqref{eq:mech}) and optical problem
+(\eqref{eq:wave_eq}) consitutes the basics to solve a strongly coupled optomechanical problem. Another possibility of including further optomechanical coupling would be to consider
+photoelastic effects, where the in-material strain modifies the material refractive index~\cite{photoelasticity}.  In the next section, we highlight some key results of our unpublished work, where we apply strong optoemechanical coupling
+via optical forces to the 
 topology optimization of an optomechanical membrane-like device.
 
 \subsection*{Topology optimization of strongly coupled optomechanical membranes}
 
 To exemplify the use of topology optimization in the context of strongly coupled optomechanical problems we consider the example of the two-dimensional representation of an optomechanical membrane-like device, which
 is based on a clamped-clamped beam attached to a central design domain (see Fig. 1 in ). The device is excited by an incoming plane-wave from the bottom, which will generate a mechanical volumetric load on the structure ($\mathbf{f}_\text{MST}$)
-which will deform the structure upwards. The goal of the optimization problem is to maximize the vertical component of the displacement at a point ($\mathbf{r}_0$)
-in the structure.
+which will deform the structure upwards. The goal of the optimization problem is to target the system's optoemchanical coupling by maximizing the vertical component of the displacement ($u_y$) at a point ($\mathbf{r}_0$)
+in the structure, so that $\text{FOM}=u_y(\mathbf{r}_0)$.
 
-We solve the strongly coupled optomechanical by considering an optical frequency-domain problem coupled to a geometrically nonlinear mechanical problem. Discretizing the system via the finite element
-method gives the coupled system of equations
+We solve the strongly coupled optomechanical by considering an optical frequency-domain problem (\eqref{eq:wave_eq}) coupled to a geometrically nonlinear mechanical problem. Discretizing the system via the finite element
+method (\secref{sec:fem}) yields the coupled system of equations
 \begin{equation}\label{eq:coupled}
     \begin{aligned}
         \mathbf{S}\left(\alpha\mathbf{U}\right) \mathbf{E} &= \mathbf{E}_\text{in} , \\
@@ -240,49 +241,52 @@ field and the forcing term respectively; $\mathbf{R}$ is the residual of the
   the strongly coupled problem ($\alpha=1$), where the optical field deforms the structure, 
   or the weakly coupled problem ($\alpha=0$), which is a good approximation in the small deformation 
   limit ($\alpha\mathbf{U} \ll 1$). To solve the strongly coupled problem in 
-  \eqref{eq:coupled} we use a seggregated scheme (see Fig. 2 in ), where the
-   mehcanical solution is applied to the geometry via a mesh deformation, and
-    both problems are solved until a convergence criteorion is fullfilled.
+  \eqref{eq:coupled} we use a seggregated scheme (see \secref{sec:coupled} and Fig. 2 in ), where the displacement ($\mathbf{U}$) obtained
+   by solving the mechanical problem is used to the deform the geometry via a mesh deformation. The mechanical and
+    optical problems are then iteratively solved until a convergence criterion is fullfilled.
 
-    For the topology optimization we consider a linear material interpolation for the Young's modulus\footnote{We did not experience any problems with grayscale in this problem, so we did not use the standard power-law penalization~\cite{SIMP}.} and the 
-    refractive index. More importantly, to introduce the optical force loads in our mechanical problem, one would need to identify the boundaries of the design according to \eqref{eq:f_MST}. However, in density-based topology optimization problems boundaries
+    For the topology optimization formulation we consider a linear material interpolation for the Young's modulus\footnote{We did not experience any problems with grayscale in this problem, so we did not use the standard power-law penalization~\cite{SIMP}.} and the 
+    refractive index. More importantly, to introduce the optical force loads in our mechanical problem, one would need in theory to identify the boundaries of the design according to \eqref{eq:f_MST}. However, in density-based topology optimization problems, boundaries
      are not well defined in the design process and it can sometimes be cumbersome to find and detect boundaries when having intermediate density values while solving the optimization problem~\cite{jdara}. To circumvent this issue, we apply Gauss' theorem to
       redefine a volumetric mechanical load on the structure that is linearly proportional to the physical design field
     \begin{equation}
-    \langle\mathbf{f}_\text{MST}\rangle= \hat{\rho} \int_{\Omega} \nabla \cdot \langle\overleftrightarrow{\mathbf{T}}(\mathbf{r}, t)\rangle \d \Omega\,,
+    \langle\mathbf{f}_\text{MST}\rangle= \hat{\rho} \int_{\Omega} \nabla \cdot \langle\overleftrightarrow{\mathbf{T}}(\mathbf{r}, t)\rangle \d \Omega\,.
     \end{equation}
-    where $V$ is the volume where the force is acting upon. Lastly, to ensure structural integrity we applu a connectivity constraint via the VTM~\cite{li_structural_2016} (see \secref{sec:aux}), which ensures that the design is connected to nanobeams. 
+    Lastly, to ensure structural integrity we apply a connectivity constraint via the VTM~\cite{li_structural_2016} (see \secref{sec:aux}), which ensures that the design is connected to nanobeams. 
 
 
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/fields_panels_SC.png}}%%
-    \caption{Device evaluation in the deformed material configuration. (a) Electric-field norm ($\vert\mathbf{E}\vert$) for the SCTO device. (b) Vertical ($y$) component of the MST force ($\langle f^\text{MST}_y\rangle$) for the SCTO device. (c) Vertical ($y$) component of the MST force ($\langle f^\text{MST}_y\rangle$) for the WCTO device. (d) Vertical displacement ($u_y$) for the SCTO device.}
+    \caption{Device evaluation in the deformed material configuration. (a) Electric-field norm ($\vert\mathbf{E}\vert$) for the SCTO device.
+     (b) Vertical ($y$) component of the MST force ($\langle f^\text{MST}_y\rangle$) for the SCTO device. (c) Vertical ($y$) component of
+      the MST force ($\langle f^\text{MST}_y\rangle$) for the WCTO device. (d) Vertical displacement ($u_y$) for the SCTO device. Adapted from .}
     \label{fig:SC}
 \end{figure}
 
 
-    Using this formalism we solve the topology optimization for a membrane-like device that has a hole in the center of the design region (FORMULATE BETTER) and find
-    the results in \figref{fig:SC}, for the SCTO (optimized for strong coupling, $\alpha = 1$) and WCTO (optimized for weak coupling, $\alpha = 0$) devices.
-    When evaluated with the fully coupled model, the SCTO device achieves a figure of merit (FOM) of about 110\,nm, while the WCTO reaches only about
-     43\,nm, demonstrating a $\sim$3$\times$ improvement when the full coupling
+Using this formalism, we optimize a membrane-like device with a central hole that spans its full height and separates it along the $x$-axis and find
+    the results displayed in \figref{fig:SC}, for a device optimized accounting solving the strongy coupled problem ($\alpha = 1$, SCTO) and a device optimized solving the weakly coupled problem ($\alpha = 0$, WCTO).
+    When evaluated with the fully coupled model, the SCTO device achieves a FOM of $\approx 110$\,nm, while the WCTO achieves only
+     $\approx 43$\,nm, demonstrating a $\approx$3$\times$ improvement when the full coupling
       is included during optimization. Evaluating the WCTO under the
-       weakly coupled model gives an FOM of $\sim$69\,nm, highlighting
-        a significant drop due to neglecting coupling effects in the design. 
-        The improved performance of the SCTO stems from its asymmetric structure, which breaks symmetry,
-         induces rotation, and produces heterogeneous vertical displacements that more strongly modulate 
-         the optical force distribution, resulting in tilted, Bragg-mirror-like features that more effectively reflect the incoming field.
+       weakly coupled model gives an FOM of $\approx$69\,nm, highlighting
+        a significant performance drop due to neglecting coupling effects in the design process. 
+        Based on the results in \figref{fig:SC}, we interpret that the improved performance of the SCTO stems from the fact that the sides of the device are disconnected,
+         thus inducing rotation, and producing heterogeneous vertical displacements that strongly modulate 
+         the optical force distribution. This results in optimized Bragg-mirror-like features that are slightly tilted compared to the WCTO design, thus being able to more effectively reflect the incoming field. For another
+         optimization example refer to, where we also consider the optimization of connected optomechanical membrane-like devices.
 
 \subsection*{Outlook and future work}
 
-This topology optimization framework can be readily applied to a wide
+This topology optimization framework can be applied to a wide
  range of optomechanical devices and paves the way for future developments. 
  For example, extending the method to include clamping losses and three-dimensional designs
-  would improve accuracy for high aspect-ratio membranes, while adding
-   photoelastic effects would capture strain-induced refractive index changes.
-    The framework also holds promise for cavity optomechanics beyond the quasistatic
-     regime by replacing steady-state models with frequency-domain solvers. 
-     Moreover, incorporating models like third-medium contact could enable the design of
+  would improve accuracy for high aspect-ratio membranes~\cite{aspect_ratio}, while including
+   photoelastic effects would capture strain-induced refractive index changes~\cite{photoelasticity}.
+    The framework also holds promise for cavity optomechanics~\cite{cav_opt} beyond the quasistatic
+     regime by replacing the mechanical steady-state model with a frequency-domain solver. 
+     Moreover, incorporating models like third-medium regularization~\cite{HuHu0} could enable the design of
       flexible or reconfigurable systems where large deformations and mechanical nonlinearities
-       strongly affect optical performance. ADD CITATIONS
+       strongly affect optical performance.
 

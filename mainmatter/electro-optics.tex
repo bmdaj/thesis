@@ -59,70 +59,77 @@ To circumvent this, in~\cite{ownpub4} we propose a synthesis of SPA-SALT, pertur
 The two key results of this derivation are the expression of the lasing threshold and the FOM for the optimization that can be evaluated by solving a linear system of equations.
 One of the two key results derived from this framework is the expression for the \textbf{lasing threshold}~\cite{ownpub4} CHANGE GAMMA FACTOR THING
 \begin{equation}\label{eq:pump_thresh}
-    d_\text{thresh} = \frac{1}{\Gamma Q} = \frac{1}{Q} \frac{\int_{\Omega} \varepsilon_c(\mathbf{r})|\mathbf{E}_{\text{m}}(\mathbf{r})|^2\,  \d \Omega}{\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{m}}(\mathbf{r})|^2\,  \d \Omega}\,.
+    d_\text{thresh} = \frac{1}{\Gamma Q} = \frac{1}{Q} \frac{\int_{\Omega} \varepsilon_c(\mathbf{r})|\mathbf{E}_{\text{r}}(\mathbf{r})|^2\,  \d \Omega}{\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^2\,  \d \Omega}\,.
 \end{equation}
-where $\mathbf{E}_\text{m}$ is the passive cavity mode, $Q$ is the quality factor of the cavity resonance, and $\Gamma$ is a measure 
+where $\mathbf{E}_\text{r}$ is the field in a reciprocal problem (\secref{sec:nanophotonics}) where the system is excited from an output port\footnote{In a high-$Q$ system, the field from the reciprocal solve $\mathbf{E}_r$ is almost exactly equal to the cavity mode plus a $\mathcal{O}(1/\sqrt{Q})$ error~\cite{phot_crys}.} (e.g. the waveguide in \figref{fig:laser2d}), $Q$ is the quality factor of the cavity resonance, and $\Gamma$ is a measure 
 of energy confinement in the gain region. From this expression we see that one can reduce the lasing threshold (for more energy-efficient lasers) by increasing $Q$ and by enhancing the energy confinement in the
 active medium ($\Gamma$). Note that in the single-emitter limit, where $D_0(\mathbf{r})\propto \delta (\mathbf{r}-\mathbf{r^\prime})$ for an emitter located at $\mathbf{r}^\prime$, this expression becomes $d_\text{thresh}=V/Q$, where $V$ is a measure
-of the modal volume, a common figure of merit in other non-laser related inverse design works (e.g.,~\cite{LDOS_opt_wang}).
+of the modal volume, a common FOM in other non-laser related inverse design works (e.g.,~\cite{LDOS_opt_wang}).
 
-The second key result of the work is \textbf{a FOM that can be evaluated by solving a single reciprocal problem} (\secref{sec:nanophotonics}) where the system is excited from then output port~\cite{ownpub4}
+The second key result of the work is \textbf{a FOM for nanolaser design} (\secref{sec:nanophotonics}) that can also be evaluated through a single linear reciprocal solve~\cite{ownpub4}
 \begin{equation}\label{eq:eff_nl}
     \frac{P_\text{out}}{P_\text{pump}} \propto \frac{\left( \int_{\Omega} D_0(\mathbf{r})|\mathbf{E}_{\text{r}}(\mathbf{r})|^2 \,  \d \Omega \right)^3} {\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^4 \,  \d \Omega} = \text{FOM}.
 \end{equation}
-where $\mathbf{E}_{\text{r}}$ is the field distribution in the reciprocal problem. The FOM is a metric proportional to the laser efficiency ($P_\text{out}/P_\text{pump}$), and is roughly proportional 
+We will refer to this FOM as the \emph{nonlinear} FOM, since it accounts for the nanolaser nonlinearities perturbatively. The FOM is proportional to the laser efficiency ($P_\text{out}/P_\text{pump}$), and is roughly proportional 
 to the energy in the cavity ($\sim |\mathbf{E}_{\text{r}}|^6 / |\mathbf{E}_{\text{r}}|^4 \sim |\mathbf{E}_{\text{r}}|^2$), and thus to the $Q$ factor, also contributing to a low
-laser threshold (\eqref{eq:pump_thresh}). Thefore, as the optimization progresses the high-$Q$ assumption will become more and more accurate. In the single emitter limit the FOM becomes\footnote{In \cite{ownpub4} we refer to this as the \emph{naive} FOM for nanolaser optimization.}
+laser threshold (\eqref{eq:pump_thresh}). Thefore, as the optimization progresses the high-$Q$ assumption will become more and more accurate. In the single emitter limit the FOM becomes
+$\text{FOM}=\vert \mathbf{E}_{r}(\mathbf{r}^\prime) \vert$, an
+and LDOS-like FOM which via reciprocity is proportional to the total power emitted into an output channel~\cite[App.~C]{reci}. Note that this FOM also describes the case of a single-point gain region (e.g., a quantum dot),
+whose location is randomly distributed in the cavity with a probability density $\mathcal{P} \sim D_0$. 
+
+To show how the nonlinear FOM compares to more conventional cavity-optimization approaches, we introduce a “naive” generalization of the LDOS, which heuristically modifies the definition
+of the LDOS to account for out-coupling efficiency (through a reciprocal solve $\mathbf{E}_r$) and a distributed gain
+medium $D_0$
 \begin{equation}\label{eq:SEL}
-    \text{FOM}_\text{SEL}=\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^2 \d \Omega\,,
+    \text{FOM}_{\text {naive }}=\int_{\Omega} D_0(\mathbf{r})\left|\mathbf{E}_{\text{r}}(\mathbf{r})\right|^2 \d \Omega
 \end{equation}
-and LDOS-like FOM, which via reciprocity is proportional to the total power emitted into an output channel~\cite[App.~C]{reci}. Note that this FOM is also accurate for a single-point gain region (e.g., a quantum dot),
-whose location is randomly distributed in the cavity with a probability density $\sim D_0$. 
+which we refer to as the \emph{naive} FOM, defined by the overlap of the electric-field intensity of the reciprocal field with the gain distribution.
+Note that this naive FOM is also proportional to the intensity of the reciprocal field ($\sim |\mathbf{E}_{\text{r}}|^2$), and thus roughly proportional to $Q$, thus ensuring 
+high-$Q$ optimized cavities.
 
 \subsection*{Optimization results for extended gain media}
 
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/laser_size.png}}%%
-    \caption{Performance of the topology-optimized devices for different Gaussian gain distributions with standard deviations $\sigma_g$. (a) Device optimize for a point-like gain region ($\sigma_g=25$ nm).
+    \caption{Performance of the topology-optimized devices for the nonlinear and naive FOMs for different Gaussian gain distributions with standard deviations $\sigma_g$. (a) Device optimize for a point-like gain region ($\sigma_g=25$ nm).
     (b) Device optimized for $\sigma_g=250$ nm. (c) Device optimized for $\sigma_g=500$ nm. Adapted from~\cite{ownpub4}.}
     \label{fig:laser_size}
 \end{figure}
 
+Appplying this formalism we optimize two-dimensional nanolasers, where we study the effect of the gain region size in 
+nanolaser design (\figref{fig:laser_size}), and verify that for point-like gain regions the devices optimized for the FOM and the naive FOM (\eqref{eq:SEL})
+achieve similar performance (limited by the finite size of the tiny gain region), favoring bowtie-like cavity designs
+where the in-plane electric field can be concentrated at a bowtie sharpness-limited field singularity~\cite{sing}. Moreover, we show that for
+larger distributed gain media the derived FOM discourages field localization due to the denominator in \eqref{eq:eff_nl} (since $\int \vert \mathbf{E} \vert^2$ is finite), in contrast to the naive FOM, 
+resulting in a $\approx 3\times$ enhancement when targeting the correct nanolaser FOM (\eqref{eq:eff_nl}). 
 \subsection*{Accounting for gain diffusion}
 
-\begin{figure}[tb]
-    \centering
-    \makebox[\textwidth][c]{\includegraphics{figures/laser_carriers.png}}%%
-    \caption{Topology-optimized devices with gain diffusion effects. The device optimized without accounting for gain diffusion ("Nonlinear FOM") and the device optimized accounting for gain diffusion ("Diffusion FOM") have the gain profile $D_0$ that is diffused ($\mathbb{S}[D_0]$)
-    in the semiconductor-like material, generating the optical field given by the electric-field norm $\vert \mathbf{E} \vert$. Adapted from~\cite{ownpub4}.}
-    \label{fig:laser2d}
-\end{figure}
-
-In semiconductors with extended gain media, it is essential to model the electrical proccess of carrier diffusion. This effect can be introduced by modeling the semiconductor gain medium in the free-carrier approximation\footnote{Neglecting carrier-carrier Coulomb interactions.}, using a difussion 
-equation~\cite{csalt}. Using this formalism we derive the same expressions when accounting for carrier diffusion~\cite{ownpub4}, where the lasing threshold is
+In semiconductors with extended gain media, it is essential to model the electrical effect of \textbf{carrier diffusion}. This effect can be introduced by modeling the semiconductor gain medium in the free-carrier approximation\footnote{Neglecting carrier-carrier Coulomb interactions.}, using a difussion 
+equation~\cite{csalt}. Using this formalism we re-derive the expressionin for the lasing threshold (\eqref{eq:pump_thresh}) when accounting for carrier diffusion~\cite{ownpub4}, where the lasing threshold is
 \begin{equation}\label{eq:pump_thresh_diff}
     d_\text{thresh} = \frac{1}{Q} \frac{\int_{\Omega} \varepsilon_c(\mathbf{r})|\mathbf{E}_{\text{m}}(\mathbf{r})|^2\,  \d \Omega}{\int_{\Omega} \mathbb{S} [D_0] (\mathbf{r}) |\mathbf{E}_{\text{m}}(\mathbf{r})|^2\,  \d \Omega}\,,
 \end{equation}
-and the FOM is given by
+and the nanolaser FOM (\eqref{eq:eff_nl}) with carrier diffusion effects
 \begin{equation}\label{eq:eff_diff}
     \text{FOM} =  \frac{\left(\int_{\Omega} \mathbb{S} [D_0](\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^2 \,  \d \Omega\right)^3} {\int_{\Omega} \mathbb{S}\left[ |\mathbf{E}_{\text{r}}|^2\, \mathbb{S} [D_0] \right] (\mathbf{r})|\mathbf{E}_{\text{r}}(\mathbf{r})|^2 \,  \d \Omega}\,.
 \end{equation}
-These expressions use the diffusion operator $\mathbb{S}^{-1}= \mathbb{I}+\nabla \cdot (R_\nabla^2(\mathbf{r}) \nabla)$, where $\mathbb{I}$ is the identity operator, and $R_\nabla (\mathbf{r})$ is a diffusion lengthscale determined by the spatially- and design-dependent diffusion coefficient combined with the damping/recombination rate. 
+These expressons use the diffusion operator $\mathbb{S}^{-1}= \mathbb{I}+\nabla \cdot (R_\nabla^2(\mathbf{r}) \nabla)$, where $\mathbb{I}$ is the identity operator, and $R_\nabla (\mathbf{r})$ is a diffusion lengthscale determined by the spatially- and design-dependent diffusion coefficient combined with the damping/recombination rate. 
 In this notation computing $u = \mathbb{S}[b]$ corresponds to solving for the scalar field $u$ in the diffusion problem $\mathbb{S}^{-1}u=b$, where $b$ is a scalar field. 
 The difference when accounting for difussion is that now one needs to consider the profile of diffused carriers $\mathbb{S} [D_0]$ in the lasing threshold, and the diffusion of the gain depletion
 in the FOM denominator. Note that in the small diffusion limit ($R_\nabla \ll \lambda, \mathbb{S} \approx \mathbb{I}$)
 we recover the original expressions in \eqref{eq:pump_thresh} and \eqref{eq:eff_nl}.
 
-Using this new formulation for nanolaser optimization we optimize nanolaser devices in two and three dimensions. In two dimensions we study the effect of the gain region size in 
-nanolaser design (Fig. 3 in \cite{ownpub4}), and verify that for point-like gain regions the devices optimizefd for the FOM and an single-emitter limit FOM (\eqref{eq:SEL})
-achieve similar performance (limited by the finite size of the tiny gain region), favoring bowtie-like cavity designs
-where the in-plane electric field can be concentrated at a bowtie sharpness-limited field singularity. Moreover, we show that for
-larger distributed gain media the derived FOM discourages field localization (since $\int \vert \mathbf{E} \vert^2$ is finite), in contrast to the single-emitter limit FOM, 
-resulting in a $\approx 3\times$ enhancement when targeting the correct FOM. 
+\begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/laser_carriers.png}}%%
+    \caption{Topology-optimized devices with gain diffusion effects for a gain region with size $\sigma_g=250$ nm and a diffusion length of $R_\nabla=5$ \textmu m. The device optimized without accounting for gain diffusion ("Nonlinear FOM") and the device optimized accounting for gain diffusion ("Diffusion FOM") have the gain profile $D_0$ that is diffused ($\mathbb{S}[D_0]$)
+    in the semiconductor-like material, generating the optical field given by the electric-field norm $\vert \mathbf{E} \vert$. Adapted from~\cite{ownpub4}.}
+    \label{fig:laser_diff}
+\end{figure}
 
-We also see study how accounting for diffusion effects
-affects nanolaser designs and performance. As shown in \figref{fig:laser2d}, the device that accounts for diffusion disconnects the cavity from the waveguide while also removing
+By using the expression in \eqref{eq:eff_diff} as an optimization FOM, we study how accounting for diffusion effects
+affects nanolaser designs and performance. As shown in \figref{fig:laser_diff}, the device that accounts for diffusion disconnects the cavity from the waveguide while also removing
 material from areas of weak electric field, to 
 enhance the coupling between the carriers and the optical field, and results in a $\approx 2\times$ enhancement when considering the diffusion-corrected FOM. 
 
@@ -136,17 +143,17 @@ is attributed to the fact that localizing a high-$Q$ resonance is more difficult
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/laser_2.png}}%%
-    \caption{Topology-optimized nanolasers in three dimensions. The devices las into the cavity mode (inset plot) and out-couple to the
-    mostly-$H_z$ waveguide mode. (a) Device optimized for the naive FOM. (b) Device optimized for the nonlinear FOM.}
+    \caption{Topology-optimized nanolasers in three dimensions. The devices las into the cavity mode (inset plot) and out-couple to the waveguide mode. (a) Device optimized for the naive FOM. (b) Device optimized for the nonlinear FOM.
+    Adapted from~\cite{ownpub4}.}
     \label{fig:laser3d}
 \end{figure}
 
 \subsection*{Outlook and future work}
 
 In conclusion, in \cite{ownpub4} we show that by exploiting perturbative analysis valid in high-$Q$ cavities, one can derive  
-an efficient figure of merit (FOM) for laser efficiency that captures resonant enhancement,  
+an efficient FOM for laser performance ($\propto P_\text{out}/P_\text{pump}$) that captures resonant enhancement,  
 spatial hole-burning, and gain diffusion at little extra computational cost. The FOM evaluation requires only a  
 single linear reciprocal Maxwell solve (plus potentially two scalar solves for gain diffusion), making it 
-an efficient formulation for laser optimization. This first-principles approach supports inverse nanolaser design and  
-future refinements, including accounting for the laser linewidth~\cite{pick}, or (more) accurate pumping models, where optical or electrical pumping could be explicitly
+an efficient formulation for laser optimization. This efficient first-principles approach allows for inverse nanolaser design in two and three dimensions, while  
+also allowing for future refinements, including accounting for the laser linewidth~\cite{pick}, or accurate pumping models, where optical or electrical pumping could be explicitly
 modeled.
