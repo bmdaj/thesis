@@ -676,10 +676,10 @@ $2$ ($1$), but not the other way around.
     
     \subsection*{Optimization problem formulation}
     In the multiphysics topology optimization we consider a general constrained optimization problem 
-    expressed as:
+    expressed as
     \begin{equation}
         \begin{array}{clr}
-            \max\limits_{\rho}                        & \text{FOM}(\rho, \mathbf{u}_i) \quad \quad \quad 
+            \max\limits_{\rho}                        & \Psi(\rho, \mathbf{u}_i) \quad \quad \quad \quad \,\,\, 
              \forall i \in\left[1, N_S\right] & \text { (Objective function) }                                                         \\
             \text { s.t. }                            & \mathbf{S}_i(\rho, \mathbf{u}_i)-\mathbf{f}_i=0 \quad
             \forall i \in\left[1, N_S\right]          & \text { (State equations) }                                                            \\
@@ -689,7 +689,7 @@ $2$ ($1$), but not the other way around.
                 constraints) }
         \end{array}
     \end{equation}
-    where the FOM is minimized for a design field $\rho$ with upper
+    where the FOM ($\Psi$) is minimized for a design field $\rho$ with upper
     bound $\rho_{\text {max }}$ and lower bound $\rho_{\text {min }}$,
     subject to the residual of the state equations of all the different physical
     problems and constraints. In multiphysics optimization problems
@@ -780,28 +780,36 @@ $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     In this thesis, we use the adjoint sensitivity
     analysis  in the context of
     multi-physics problems, where we consider the general case of weakly coupled problems with
-    nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}), with the detailed derivations in 
+    nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}) solved using a seggregated approach, with the detailed derivations in 
     \hyperref[app:appendix1]{Appendix 1}. Note that for problems 
     solved using a monolithic approach, the adjoint sensitivities can be calculated using the
     ordinary adjoint sensitivity analysis for the full problem (as described in~\cite{jensen_review} for optical problems), and no special derivation is needed.
 
-    Following the derivations in \hyperref[app:appendix1]{Appendix 1}, the sensitivities can be computed as
+    Following the derivations in \hyperref[app:appendix1]{Appendix 1}, the sensitivities for a weakly coupled problem with nonlinear coupling solved using the seggregated
+    approach can be computed as
     \begin{equation}
-        \frac{\d \tilde{\Phi}}{\d \hat{\rho}}  = \frac{\partial \Phi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,,
+        \frac{\d \Psi^\prime}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,,
     \end{equation}
     where $N$ is the number of coupled problems and the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations
     \begin{equation}
-        \hspace*{-0.775cm}\left( \mathbf{K}^\top_i + \sum^i_{j=1} \mathbf{C}^\top_{ij} \right) \Lambda_i = -\left(\frac{\partial \Phi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i} \mathbf{u}^\top_j 
-        \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i} + \sum^{j}_{k=1} \frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i} \right)^\top \Lambda_j  \quad \forall i \in [1, N] \,.
-    \end{equation}
+        \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i} \left[ 
+        \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top  + \mathbf{u}^\top_i \left(\frac{\partial \mathbf{C}_{ji}}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} \right]\Lambda_j  \quad \forall i \in [1, N] \,.
+   \end{equation}
     Following these adjoint systems, one needs to solve the first adjoint equation ($i=1$) 
     and feed the solution the next adjoint equation ($i=2$), and so on, to solve the last adjoint problem $i=N$; backwards compared to the forward problem (\eqref{eq:multiphysics_weak_nonlinear}).
-
+    Note that by using this derivation we can recover the sensitivities derived in~\cite{ownpub0}, where we study a thermo-optical coupled problem ($N=2$), with weak nonlinear coupling
+    via the stiffness matrix of the optical problem [$\mathbf{K}_1(\mathbf{u}_2)$ and $\mathbf{C}_{12}=\mathbf{C}_{21}=0$, where ''$1$'' refers to the optical problem and ''$2$'' to the 
+    heat transfer problem].
+    
     To recover the final sensitivities, one applies the chain rule with respect to the filtering and thresholdin operations:
     \begin{equation}
         \frac{\d \Phi}{\d \rho} = \frac{\partial \tilde{\Phi}}{\partial \hat{\rho}} \cdot \frac{\partial \hat{\rho}}{\partial \tilde{\rho}} \cdot \frac{\partial \tilde{\rho}}{\partial \rho}\,,
     \end{equation}
     where the final sensitivity $\d \Phi/\d \rho$ is fed into the optimizer.
+
+
+
+
 
 
 
