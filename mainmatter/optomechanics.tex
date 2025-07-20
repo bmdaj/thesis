@@ -1,4 +1,4 @@
-\chapter{Optomechanical topology optimization problems}
+\chapter{Optomechanical topology optimization problems}\label{chap:om}
 %\section{Opto-mechanical systems~\cite{ownpub1,ownpub2,ownpub3}}\label{sec:optomechanics}
 Optomechanics, the study of the interaction between light and mechanical motion, is at the heart of state-of-the-art technologies, such as 
 optical trapping~\cite{ashkin_acceleration_1970, moffitt_recent_2008} and cooling~\cite{cooling}, quantum information processing~\cite{Andrews_2014, Xi_2025}
@@ -23,7 +23,7 @@ and structural integrity constraint formulations~\cite{structural_integrity}
 
  In the following subsections, we highlight our contributions to the field and review how to model optomechanical interactions in three distinct regimes: a general treatment based on the Maxwell stress tensor~\cite{ownpub2}; 
  the dipole approximation in the small particle limit~\cite{ownpub1, ownpub3}; and strongly coupled systems where optical forces can induce significant mechanical deformations.
-\section{The Maxwell Stress Tensor formalism~\cite{ownpub2}}
+\section{The Maxwell Stress Tensor formalism~\cite{ownpub2}}\label{sec:engi}
 
 In the most-general case, the optical force can be calculated using the \textbf{Maxwell stress tensor} (MST) formalism, which is a generalization of the Lorentz force (\eqref{eq:lorentz_f}) in continuous media~\cite{novotny}.
 The basic idea is sketched in \figref{fig:eng_res}, where
@@ -79,7 +79,7 @@ This topology optimization work is the first, to our knowledge, to
 target optical forces via the MST formalism, paving the way for future work in three-dimensional systems and more complex optimization problems, such as optically-driven particle
 trajectory control~\cite{zemanek_perspective_2019, macdonald_microfluidic_2003, shilkin_directional_2017}, many-body particle systems~\cite{bechinger_active_2016, chang_colloquium_2018} or optically actuated devices~\cite{ivanyi_optically_2024}, among others.
 Finally, it is worth noting that a particularly interesting and straightforward extension of the framework would be to use the MST formalism to calculate the time-averaged torque acting on a particle, defined as~\cite{novotny}
-\begin{equation}
+\begin{equation}\label{eq:torque}
     \langle \bm{\tau} \rangle = \langle \mathbf{r} \times \mathbf{F} \rangle = \int_{\partial V} \langle \mathbf{r}
      \times \stackrel{\leftrightarrow}{\bm{\mathcal{T}}} \rangle \cdot \mathbf{n}_{\partial V} \d\mathbf{r} 
 \end{equation}
@@ -89,7 +89,7 @@ and \textit{orbiting} ($\langle \bm{\tau}_O \rangle$), where the particle rotate
 of both the spin and orbital torque $\langle \bm{\tau} \rangle = \langle \bm{\tau}_S \rangle + \langle \bm{\tau}_O \rangle$~\cite{torque}.  Defining
 and optical torque-based FOM could open the door for the design of efficient optical and biological micro- and nanomachines~\cite{rotating, gluck}.
 
-\section{The dipole approximation~\cite{ownpub1, ownpub3}}
+\section{The dipole approximation~\cite{ownpub1, ownpub3}}\label{sec:dip}
 
 When particles are much smaller than the wavelength of the electromagnetic field ($s\ll \lambda$), it is possible to model the optical force via the dipole approximation in the
 quasistatic limit (see \secref{sec:nanophotonics}). In this approximation, the particle is treated as a point dipole with a polarizability $\alpha$, which describes how the particle responds to the local electric field frequency-domain $\mathbf{E}$.

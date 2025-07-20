@@ -2,7 +2,7 @@
 In this appendix we derive the expressions for the adjoint sensitivity analysis of a general weakly coupled linear multiphysics problem involving $N$ physics, represented as $\mathbf{S}\mathbf{u}=\mathbf{f}$, where $\mathbf{S}$ is the system matrix of the coupled problem, $\mathbf{u}$ is the solution, and $\mathbf{f}$ is the forcing/excitation term. For simplicity, in this adjoint sensitivity analysis we consider
 only real-valued problems, but this approach can be extended to consider complex-valued problems
 as shown in \cite{ownpub0} for a simpler two-physics ($N=2$) problem.
-As shown in \secref{sec:topopt_theory} for $N$ with \textbf{weak nonlinear coupling} (\eqref{eq:multiphysics_weak_nonlinear}) the total system of equations will be upper or lower triangular
+As shown in \secref{sec:topopt_theory} for $N$ physics with \textbf{weak nonlinear coupling} (\eqref{eq:multiphysics_weak_nonlinear}) the total system of equations will be upper or lower triangular
 \begin{equation} \label{eq:app_multiphysics_weak}
     \begin{bmatrix}
         \mathbf{K}_1(\mathbf{u}_2, \cdots \mathbf{u}_N)    & \mathbf{C}_{12} (\mathbf{u}_2, \cdots \mathbf{u}_N)& \cdots & \mathbf{C}_{1N}(\mathbf{u}_2, \cdots \mathbf{u}_N) \\
@@ -30,36 +30,36 @@ on the solution vector $\mathbf{u}=[\mathbf{u}_1, \cdots, \mathbf{u}_N]$. This n
 \begin{align}
 \left\{
     \begin{aligned}
-        \quad \mathbf{K}_1(\mathbf{u}_2, \ldots, \mathbf{u}_N)\, \mathbf{u}_1  + \sum_{j=2}^N \mathbf{C}_{1 \, j} (\mathbf{u}_2, \cdots \mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_1\,, \\
-        \quad\mathbf{K}_2(\mathbf{u}_3, \ldots, \mathbf{u}_N)\, \mathbf{u}_2 + \sum_{j=3}^N \mathbf{C}_{2 \, j} (\mathbf{u}_3, \cdots \mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_2\,, \\
+        \quad \mathbf{K}_1(\mathbf{u}_2, \ldots, \mathbf{u}_N)\, \mathbf{u}_1  + \sum_{j=2}^N \mathbf{C}_{1j} (\mathbf{u}_2, \cdots \mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_1\,, \\
+        \quad\mathbf{K}_2(\mathbf{u}_3, \ldots, \mathbf{u}_N)\, \mathbf{u}_2 + \sum_{j=3}^N \mathbf{C}_{2j} (\mathbf{u}_3, \cdots \mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_2\,, \\
         \quad\ldots \\
         \quad\mathbf{K}_{N-1} (\mathbf{u}_N) \, \mathbf{u}_{N-1} + \mathbf{C}_{N-1\, N}(\mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_{N-1} \,, \\
         \quad\mathbf{K}_N \, \mathbf{u}_N &= \mathbf{f}_N\,.
     \end{aligned}
 \right.
 \end{align}
-In this case, we can solve the system of equations sequentially in a seggregated fashion,
+In this case, we can solve the system of equations sequentially in a \textbf{seggregated} fashion,
  where problem $i=N$ is solved first, and the solution is used to solve the next problem ($i=N-1$), and so on, until the first problem ($i=1$) is solved
  (as in the sequence: $\mathbf{u}_N \to \mathbf{u}_{N-1} \to \cdots \to \mathbf{u}_1$).\\
 
-To do the adjoint sensitivity analysis we start by rewriting the FOM by adding the residual
+To calculate the sensitivites using the adjoint method we start by rewriting the FOM ($\Psi$) by adding the residual
 of the state equations, multiplied by a set of Lagrange multipliers ($\Lambda_i$)
 \begin{equation}\label{eq:adj_init}
     \Psi^\prime =\Psi + \sum^N_{i=1} \Lambda_{i}^{\top}\left(\mathbf{K}_i \mathbf{u}_i -\mathbf{f}_i + \sum^N_{j=i+1} \mathbf{C}_{ij} \mathbf{u}_j \right)\,.
 \end{equation}
-Now we calculate the sensitivities by taking the derivative of the FOM ($\Psi$) with respect to the physical field ($\hat{\rho}$)
+Now we calculate the sensitivities by taking the derivative of the FOM with respect to the physical field ($\hat{\rho}$)
 \begin{align}\label{eq:sens_init}
     \frac{d \Psi^\prime}{d \hat{\rho}} 
-    &= \frac{\partial \Psi}{\partial \hat{\rho}} 
-    + \sum_{i=1}^N \mathcal{D}^{(i)}[\Psi]
+    = \frac{\partial \Psi}{\partial \hat{\rho}} 
+    &+ \sum_{i=1}^N \mathcal{D}^{(i)}[\Psi]
     + \sum_{i=1}^N \Lambda_i^\top \Bigg\{\Bigg(
         \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} 
         + \mathcal{D}^{(i+1)}[\mathbf{K}_i]\Bigg) \mathbf{u}_i 
-        + \mathbf{K}_i \mathcal{D}^{(i+1)}[\mathbf{u}_i] 
-        - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} +\nonumber \\
-        &\quad + \sum_{j=i+1}^{N} \Bigg[ \Bigg(
-            \frac{\partial C_{ij}}{\partial \hat{\rho}} + 
-            \mathcal{D}^{(i+1)}[\mathbf{C}_{ij}] \Bigg) \mathbf{u}_j 
+        + \mathbf{K}_i \mathcal{D}^{(i+1)}[\mathbf{u}_i] \nonumber \\
+        - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} 
+        &+ \sum_{j=i+1}^{N} \Bigg[ \Bigg(
+            \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} + 
+            \mathcal{D}^{(i+1)}[\mathbf{C}_{ij}] \Bigg)\, \mathbf{u}_j 
             + \mathbf{C}_{ij} \mathcal{D}^{(j)}[\mathbf{u}_j] 
         \Bigg]
     \Bigg\}. 
@@ -70,9 +70,9 @@ where we have defined $\mathcal{D}^{(i)}[a]$ as the cascaded differential operat
     \sum_{j=i+1}^{N} \frac{\partial \mathbf{u}_i}{\partial \mathbf{u}_j} \Bigg( \frac{\partial \mathbf{u}_j}{\partial \hat{\rho}} + 
     \sum_{k=j+1}^{N} \frac{\partial \mathbf{u}_j}{\partial \mathbf{u}_k} \Bigg( \frac{\partial \mathbf{u}_k}{\partial \hat{\rho}} + \cdots \Bigg) \Bigg) \Bigg] \,\,\,\, \forall i \in [1, N] \,.
 \end{align}
-This chain-rule-based derivative expression takes into account all the dependencies of the solutions in the weakly coupled problem.
+The chain-rule-based derivative expression in \eqref{eq:sens_init} takes into account all the dependencies of the solutions in the weakly coupled problem (\eqref{eq:app_multiphysics_weak}).
 
-Using \autoref{eq:sens_init} and grouping the terms we can write the sensitivities as:
+Taking \autoref{eq:sens_init} and grouping the terms it is possible to rewrite the sensitivities as
 \begin{align}
     \frac{\d \Psi^\prime}{\d \hat{\rho}}  &= \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum_{j=i+1}^{N} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho} } \mathbf{u}_j \right) + \\ &+ \frac{\partial \mathbf{u}_1}{\partial \hat{\rho}} \big( \mathcal{A}_1 \big) + \frac{\partial \mathbf{u}_2}{\partial \hat{\rho}} \left( \mathcal{A}_1 \frac{\partial \mathbf{u}_2}{\partial \mathbf{u}_1} + \mathcal{A}_2 \right) + \\
     &+ \frac{\partial \mathbf{u}_3}{\partial \hat{\rho}} \left[ \mathcal{A}_1 \left( \frac{\partial \mathbf{u}_3}{\partial \mathbf{u}_1} + \frac{\partial \mathbf{u}_3}{\partial \mathbf{u}_2}\frac{\partial \mathbf{u}_2}{\partial \mathbf{u}_1}\right) + \frac{\partial \mathbf{u}_3}{\partial \mathbf{u}_2} \mathcal{A}_2 + \mathcal{A}_3 \right] + \cdots
@@ -82,16 +82,17 @@ where $\mathcal{A}_i (\Lambda_i)$ are the adjoint equation terms
     \mathcal{A}_i = \frac{\partial \Psi}{\partial \mathbf{u}_i} + \Lambda_i^\top \mathbf{K}_i + \sum_{j=1}^{i} \Lambda_j^\top\left(
      \frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\mathbf{u}_j + \frac{\partial \mathbf{C}_{ji}}{\partial \mathbf{u}_i} \mathbf{u}_i + \mathbf{C}_{ji}\right) \quad \quad \forall i \in [1, N] \,.
 \end{equation}
-which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint problems. The final expression for the sensitivities is then given by
-\begin{empheq}[box=\fbox]{equation}
-    \frac{\d \Psi^\prime}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,,
-\end{empheq}
-where the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations
-\begin{equation}
+which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint problems. 
+To solve the adjoint equations one needs to find the Lagrange multipliers $\Lambda_i$ as the solution to the adjoint equations
+\begin{equation}\label{eq:app_adj_eqs}
      \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i} \left[ 
-     \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top  + \mathbf{u}^\top_i \left(\frac{\partial \mathbf{C}_{ji}}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} \right]\Lambda_j  \quad \forall i \in [1, N] \,.
+     \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top  + \mathbf{u}^\top_i \left(\frac{\partial \mathbf{C}_{ji}}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} \right]\Lambda_j  \quad \forall i \in [1, N] \,,
 \end{equation}
-This means that the adjoint equations are solved in recevere order with respect to the forward solution (\eqref{eq:app_multiphysics_weak}). In other words, one needs to solve the first adjoint equation ($i=1$) 
+thus yielding the final expression for the sensitivities
+\begin{empheq}[box=\fbox]{equation}
+    \frac{\d \Psi^\prime}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,.
+\end{empheq}
+This means that the adjoint equations in \eqref{eq:app_adj_eqs} are solved in recevere order with respect to the forward solution (\eqref{eq:app_multiphysics_weak}). In other words, one needs to solve the first adjoint equation ($i=1$) 
 and feed the solution the next adjoint equation ($i=2$), and so on, to solve the last adjoint problem $i=N$  (as in the sequence: $\Lambda_1 \to \Lambda_{2} \to \cdots \to \Lambda_N$).
 
 % In the sequential case, the solutions of the different physics couple one-to-one in a seggregated fashion (
