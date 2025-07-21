@@ -491,7 +491,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
 
     \begin{align}
         \int_\Omega \left[ \left( \nabla \times \mathbf{v} \right) \cdot
-            \frac{1}{\mu} \left( \nabla \times \mathbf{E} \right)- \left(\frac{\omega}{c}\right)^2 \mathbf{v}\cdot(\varepsilon\mathbf{E})\right]& \d \Omega \\
+            \frac{1}{\mu} \left( \nabla \times \mathbf{E} \right)- \left(\frac{\omega}{c}\right)^2 \mathbf{v}\cdot(\varepsilon\mathbf{E})\right]& \d \Omega \nonumber \\ 
         - \int_\Gamma \mathbf{v} \cdot \left[ \mathbf{n} \times \left(
             \frac{1}{\mu} \cdot \nabla \times \mathbf{E} \right) \right]& \d \Gamma 
         = \int_\Omega \mathbf{v} \cdot \mathbf{f} \d \Omega,
@@ -541,8 +541,8 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
     \begin{equation}\label{eq:c_N_2}
         \mathbf{K} \mathbf{u} = \mathbf{f} \quad \longleftrightarrow \quad 
         \begin{bmatrix}
-            \mathbf{K}^*_1  & \mathbf{C}_{12} \\
-            \mathbf{C}_{21} & \mathbf{K}^*_2
+            \mathbf{K}^\prime_1  & \mathbf{C}_{12} \\
+            \mathbf{C}_{21} & \mathbf{K}^\prime_2
         \end{bmatrix}
         \begin{bmatrix}
             \mathbf{u}_1 \\
@@ -550,13 +550,13 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
         \end{bmatrix}
         =
         \begin{bmatrix}
-            \mathbf{f}_1^* \\
-            \mathbf{f}_2^*
+            \mathbf{f}_1^\prime \\
+            \mathbf{f}_2^\prime
         \end{bmatrix}\,.
     \end{equation}
     where $\mathbf{C}_{12}$ is the linear term that couples physics $2$ to physics $1$,
 $\mathbf{C}_{21}$ is the linear term that couples physics $1$ to physics $2$, and the
-    star (*) denotes that we have rewritten the loading terms so that they do not
+    prime ($\prime$) denotes that we have rewritten the loading terms so that they do not
     depend on the solution vector and all nonlinear couplings are
     accounted for in the stiffness matrices ($\mathbf{K}_1$, $\mathbf{K}_2$). If the coupling
     matrices are non-zero ($\mathbf{C}_{12}\neq 0$ and $\mathbf{C}_{21}\neq 0$), we

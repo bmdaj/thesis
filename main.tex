@@ -35,6 +35,7 @@
 \usepackage{enumitem}
 %\includeonly{mainmatter/uasstop.tex}
 \usepackage[final]{pdfpages}
+\usepackage{breakurl}
 
 \usepackage{nomencl}
 \makenomenclature
@@ -118,7 +119,7 @@
 \setlength{\imwidthmax}{15.cm}
 
 %style=numeric-comp
-\usepackage[natbib=true, style=numeric-comp, backend=biber, defernumbers, maxbibnames=99, maxcitenames=2, sorting=none, eprint=false, giveninits=true]{biblatex}
+\usepackage[natbib=true, style=numeric-comp, backend=biber, defernumbers, maxbibnames=99, maxcitenames=2, sorting=none, eprint=false, giveninits=true, url=false, doi=true]{biblatex}
 \addbibresource{ownPub/myownpubs.bib}
 \addbibresource{bib.bib} 
 \AtEveryBibitem{%
@@ -293,6 +294,7 @@
 \include{mainmatter/conclusion.tex}
 
 \newrefcontext[labelprefix=]
+\sloppy
 \printbibliography[notkeyword=myPub,notkeyword=myMan]
 
 
