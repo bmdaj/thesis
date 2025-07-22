@@ -1,15 +1,17 @@
 \chapter{Theoretical framework}
 
+STILL NEEDS TO BE CORRECTED AND GRAMMARLY
+
 This chapter introduces the theoretical foundations used in the remainder of
-the thesis,
-and is divided in four main sections. The first section
+the thesis
+and is divided into four main sections. The first section
 (\secref{sec:nanophotonics}) presents the fundamental physics
 governing nanophotonic problems, in the single physics picture. The second
 section (\secref{sec:nanophotonics}) provides
 an introduction to solving nanophotonic problems numerically using the
 finite-element method.
 The third section (\secref{sec:coupled}) introduces the concept of coupled
-nanophotonic systems, in the multi-physics
+nanophotonic systems in the multi-physics
 picture. Lastly, the fourth section (\secref{sec:topopt_theory}) introduces a
 framework for topology optimization of multi-physics systems.
 
@@ -31,7 +33,7 @@ framework for topology optimization of multi-physics systems.
 %    \label{fig:Rank}
 %\end{figure}
 
-\section{Nanophotonics -- Light as an electromagnetic
+\section{Nanophotonics -- light as an electromagnetic
   wave}\label{sec:nanophotonics}
 
 In classical optics, light is treated as an electromagnetic (EM) wave, and can
@@ -153,9 +155,9 @@ using the relative relative permittivity $\varepsilon_r=\varepsilon/\varepsilon_
 i\varepsilon^{\prime\prime} = \underbar{n}^2 = (n+\text{i}\kappa)^2\,,
 \end{equation}
 where $\varepsilon^\prime$ is the real part of the permittivity, $\varepsilon^{\prime\prime}$ is the imaginary part of the permittivity, $\underbar{n}$ is the complex refractive index, 
-$n$ is the real refractive index and $\kappa$ is the exctinction coefficient. 
+$n$ is the real refractive index and $\kappa$ is the extinction coefficient. 
 The refractive index is a measure of how fast light propagates in a medium: $n=v/c$, where $v$ is the phase velocity of light in the medium, and 
-$c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum; while the exctinction
+$c=(\varepsilon_0 \mu_0)^{-1/2}$ is the speed of light in vacuum; while the extinction
 coefficient ($\kappa$) and the imaginary part of the permittivity ($\varepsilon^{\prime\prime}=2n\kappa$) are related to the absorption of light in the medium.
 
 The polarization and magnetization also depend on the electromagnetic
@@ -768,7 +770,7 @@ $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     where $\zeta$ is the material property, $\zeta_0$ and $\zeta_1$ are the
     material properties of the void ($\hat{\rho}=0$) and solid ($\hat{\rho}=1$), respectively, and $p$
     is a penalization factor\footnote{Usually, $p=3$ for compliance optimization and $p$=1
-    for other problems where a linear interpolation suffices (see the use of it in \cite{ownpub3,ownpub4}).}. Note that for some
+    for other problems where a linear interpolation suffices. As an example, see the use of it in \cite{ownpub3,ownpub4}.}. Note that for some
     special cases, like optical optimization problems with metals, it is beneficial
     to employ a non-linear material interpolation~\cite{nonlinear_interp,ownpub0}.
 
@@ -781,11 +783,11 @@ $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     analysis  in the context of
     multi-physics problems, where we consider the general case of weakly coupled problems with
     nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}) solved using a seggregated approach, with the detailed derivations in 
-    \hyperref[app:appendix1]{Appendix 1}. Note that for problems 
+    \appref{app:appendix1}. Note that for problems 
     solved using a monolithic approach, the adjoint sensitivities can be calculated using the
     ordinary adjoint sensitivity analysis for the full problem (as described in~\cite{jensen_review} for optical problems), and no special derivation is needed.
 
-    Following the derivations in \hyperref[app:appendix1]{Appendix 1}, the sensitivities for a weakly coupled problem with nonlinear coupling solved using the seggregated
+    Following the derivations in \appref{app:appendix1}, the sensitivities for a weakly coupled problem with nonlinear coupling solved using the seggregated
     approach can be computed as
     \begin{equation}
         \frac{\d \Psi^\prime}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,,
@@ -803,7 +805,7 @@ $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     
     To recover the final sensitivities, one applies the chain rule with respect to the filtering and thresholdin operations:
     \begin{equation}
-        \frac{\d \Phi}{\d \rho} = \frac{\partial \tilde{\Phi}}{\partial \hat{\rho}} \cdot \frac{\partial \hat{\rho}}{\partial \tilde{\rho}} \cdot \frac{\partial \tilde{\rho}}{\partial \rho}\,,
+        \frac{\d \Psi}{\d \rho} = \frac{\partial \Psi}{\partial \hat{\rho}} \cdot \frac{\partial \hat{\rho}}{\partial \tilde{\rho}} \cdot \frac{\partial \tilde{\rho}}{\partial \rho}\,,
     \end{equation}
     where the final sensitivity $\d \Phi/\d \rho$ is fed into the optimizer.
 

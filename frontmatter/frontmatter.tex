@@ -38,15 +38,14 @@ the PhD degree at the Technical University of Denmark
 (DTU). The Danish National Research Foundation funded the project as a part of
 the NanoPhoton -- Center for Nanophotonics. The work has been carried out at the
 Section for Solid Mechanics at the Department of Civil and Mechanical Engineering
-at DTU. The project was carried out between the 1$^\text{st}$ of August 2022 and the 31$^\text{st}$
+at DTU. The project has been carried out between the 1$^\text{st}$ of August 2022 and the 31$^\text{st}$
 of July 2025. The main supervisor has been Professor Ole Sigmund with cosupervisors Associate Professor Rasmus Ellebæk Christiansen and Professor Jesper
 Mørk.
 
 First and foremost, I would like to thank my supervisors. Ole, thank you for teaching me the \emph{art} of topology optimization, for your guidance, and for always
-finding some time to discuss research ideas. Rasmus, thank you for all your help and for always having office door open when I needed to discuss.
-Jesper, thank you for always supporting my endeavors and for discussing 
-laser physics with me. I also want to thank Steven G. Johnson for welcoming me to his group at MIT and teaching me so many things about photonics,
-mathematics, music and US culture. A special thanks to my friend Rodrigo for all the fun activities outside of MIT and the fun chess games 
+finding some time to explore research ideas. Rasmus, thank you for all your help and for always having office door open when I needed to discuss.
+Jesper, thank you for always supporting my endeavors and for your insights on laser physics. I also want to thank Steven G. Johnson for welcoming me to his group at MIT and teaching me so many things about photonics,
+mathematics, music and US culture. A special thanks to my friend Rodrigo for all the good times outside of MIT and the fun chess sessions 
 during the breaks.
 
 I would also like to thank my colleagues. Benjamin, thank you
@@ -63,23 +62,22 @@ And to my parents, Berni and Katja, and my sister Nahia, thank you for always be
 
 \chapter*{Abstract}
 
-This Ph.D. thesis focuses on the development of multiphysics topology optimization methods and their application to nanophotonic device design. The work focuses on three multiphysics systems: thermo-optical, optomechanical, and electro-optical systems.
+This Ph.D. thesis addresses the development of multiphysics topology optimization methods and their application to nanophotonic device design. The work covers three multiphysics systems: thermo-optical, optomechanical, and electro-optical systems.
 
-In thermo-optical domain, we focus on the design of phase shifters for integrated photonic circuits. Using topology optimization, we engineer the distribution of a resistive metallic heater around an optical waveguide to achieve a low optical loss phase shift between heated and unheated states. This approach reduces optical losses by $33\%$ compared to state-of-the-art designs.
+In thermo-optical domain, we investigate the design of phase shifters for integrated photonic circuits. Using topology optimization, we engineer the distribution of a resistive metallic heater around an optical waveguide to achieve a low optical loss phase shift between heated and unheated states. This approach reduces optical losses by $\approx 33\%$ compared to state-of-the-art designs.
 
 In the optomechanical domain we explore several design problems. First, we optimize particle and environment geometries to enhance optical forces, achieving up to a $\approx 13 \times$ improvement over a reference design. We then design compact on-chip optical cavities capable of omnidirectional trapping of sub-wavelength particles, improving trapping stiffness by an order of magnitude compared to conventional optical tweezers. Finally, we optimize the design of an optomechanical membrane device, showing that incorporating optical-force-induced deformation into the model yields a $\approx 3 \times$ performance increase over designs that neglect this strong coupling effect.
 
 In the electro-optical domain, we address nanolaser design. We derive an efficient figure of merit that incorporates the underlying laser physics, including carrier diffusion. This formulation leads to a $\approx 3\times$ performance improvement over traditional optimization approaches that do not account for these effects.
 
 \chapter*{Resumé}
+Denne Ph.d.-afhandling omhandler udviklingen af multifysiske topologioptimeringsmetoder og deres anvendelse til design af nanofotoniske komponenter. Arbejdet dækker tre multifysiske systemer: termo-optiske, opto\-mekaniske og elektro-optiske systemer.
 
-Denne Ph.d.-afhandling omhandler udviklingen af multiphysik topologioptimeringsmetoder og deres anvendelse til design af nanofotoniske komponenter. Arbejdet fokuserer på tre centrale multiphysiksystemer: termo-optiske, optomekaniske og elektro-optiske systemer.
+Inden for det termo-optiske område fokuseres der på designet af fase\-skiftere til integrerede fotoniske kredsløb. Ved hjælp af topologioptimering designer vi fordelingen af et elektrisk varmelegeme omkring en optisk bølgeleder, hvil\-ket muliggør et faseskift med lavt optisk tab mellem den opvarmede og den ikke-opvarmede tilstand. Denne tilgang reducerer de optiske tab med $\approx 33\%$ sammenlignet med nogle af de bedste ekisterende løsninger.
 
-Inden for det termo-optiske område fokuseres der på design af faseskiftere til integrerede fotoniske kredsløb. Ved hjælp af topologioptimering designes fordelingen af en resistiv metallisk varmelegeme omkring en optisk bølgeleder, hvilket muliggør et faseskift med lavt optisk tab mellem opvarmede og ikke-opvarmede tilstande. Denne metode reducerer de optiske tab med cirka $33\%$ sammenlignet med nogle af de bedste eksisterende løsninger.
+Inden for det optomekaniske område undersøger vi flere designproblemer. Først optimerer vi partikel- og omgivelsesgeometrier for at forstærke optiske kræfter, hvilket giver op til en $\approx 13 \times$ forbedring i forhold til et referencestruktur. Dernæst designer vi kompakte on-chip optiske kaviteter, der kan indfange sub-bølgelængde partikler i alle retninger, hvilket giver en væsentligt stærkere fastholdelse af partiklerne sammenlignet med konventionelle optiske pincetter. Endelig optimerer vi designet af en optomekanisk membran\-struktur og viser, at inklusion af optisk kraft-induceret deformation i modellen giver en $\approx 3 \times$ bedre ydeevne sammenlignet med design, der ikke inkluderer denne stærke koblingseffekt.
 
-Inden for det optomekaniske område undersøges flere designproblemer. Først optimeres partikler og deres omgivelser for at forstærke optiske kræfter, hvilket giver op til $\approx 13 \times$ forbedring i forhold til en referencestruktur. Dernæst designes kompakte optiske hulrum på chippen, som kan fange sub-bølgelængde partikler i alle retninger, og forbedrer fangststivheden med en størrelsesorden i forhold til konventionelle optiske pincetter. Endelig optimeres en optomekanisk membranstruktur, hvor modellering af deformation forårsaget af optiske kræfter giver en $\approx 3 \times$ forbedring i ydeevne sammenlignet med modeller, der ikke inkluderer denne stærke kobling.
-
-Inden for det elektro-optiske område behandles design af nanolasere. Her udvikles en effektiv målfunktion, som inkluderer den underliggende laserfysik, herunder ladningsbærer-diffusion. Denne formulering giver en $\approx 3\times$ forbedring i ydeevne sammenlignet med traditionelle optimeringsmetoder, der ikke tager højde for disse fysiske effekter.
+Inden for det elektro-optiske område behandler vi designet af nanolasere. Vi udvikler en effektiv godhedstal, der inkluderer den underliggende laser\-fy\-sik, herunder ladningsbærerdiffusion. Denne formulering medfører en \mbox{$\approx 3 \times$} forbe\-dring af ydeevnen i forhold til traditionelle optimeringsmetoder, der ikke tager højde for disse effekter.
 
 \cleardoublepage
 \chapter*{Declaration of generative-AI assistance}

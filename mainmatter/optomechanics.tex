@@ -1,5 +1,7 @@
 \chapter{Optomechanical topology optimization problems}\label{chap:om}
 %\section{Opto-mechanical systems~\cite{ownpub1,ownpub2,ownpub3}}\label{sec:optomechanics}
+TO BE DONE YET
+
 Optomechanics, the study of the interaction between light and mechanical motion, is at the heart of state-of-the-art technologies, such as 
 optical trapping~\cite{ashkin_acceleration_1970, moffitt_recent_2008} and cooling~\cite{cooling}, quantum information processing~\cite{Andrews_2014, Xi_2025}
 , light sails~\cite{lightsail, lightsail1}, and high-precision metrology and sensing~\cite{sensing, weakforce, Li:18, Mason_2019}. The most basic description of this interaction is given by the \textbf{Lorentz force}, which governs how moving charges respond to electric and magnetic fields:
@@ -23,7 +25,7 @@ and structural integrity constraint formulations~\cite{structural_integrity}
 
  In the following subsections, we highlight our contributions to the field and review how to model optomechanical interactions in three distinct regimes: a general treatment based on the Maxwell stress tensor~\cite{ownpub2}; 
  the dipole approximation in the small particle limit~\cite{ownpub1, ownpub3}; and strongly coupled systems where optical forces can induce significant mechanical deformations.
-\section{The Maxwell Stress Tensor formalism~\cite{ownpub2}}\label{sec:engi}
+\section{The Maxwell stress tensor formalism~\cite{ownpub2}}\label{sec:engi}
 
 In the most-general case, the optical force can be calculated using the \textbf{Maxwell stress tensor} (MST) formalism, which is a generalization of the Lorentz force (\eqref{eq:lorentz_f}) in continuous media~\cite{novotny}.
 The basic idea is sketched in \figref{fig:eng_res}, where
@@ -198,13 +200,13 @@ traps for lossy or resonant particles, and devices with multiple trapping sites.
   in quantum optics and many-body physics~\cite{chang_colloquium_2018}. We anticipate that experimental demonstrations
    will validate these predictions and push the limits of integrated omnidirectional trapping.
 
-\section{Strongly coupled optomechanical systems (cite)}\label{sec:mech_strongly_coupled}
+\section{Strongly coupled optomechanical systems~\cite{ownpub5}}\label{sec:mech_strongly_coupled}
 
 In strongly coupled optomechanical systems, the optical field can significantly modify the mechanical properties of the system, leading to a significant deformation
 of the device, which in turn modifies the optical response. In most optomechanical systems the optical response is much faster than the mechanical response, since the 
 mechanical frequencies ($\omega_\text{mech}$) are orders of magnitude lower than the optical frequency ($\omega_\text{mech}\ll\omega$) or optical resonance decay rates ($\omega_\text{mech}\ll\kappa$, so one 
 can neglect sideband cooling or amplification)\cite{opto_crys, photo_topopt}(cite). Due to the slower mechanical dynamics, it is possible to analyze the mechanical response of the structure in the quasistatic approximation, by only considering the mechanical steady-state response of the structure. 
-This can be accounted for by considering the time-averaged force in the MST formalism (\eqref{eq:f_MST}) in the continuum mechanics \textbf{momentum equation}:
+This can be accounted for by considering the time-averaged force in the MST formalism (\eqref{eq:f_MST}) in the continuum mechanics momentum equation:
 \begin{equation}\label{eq:mech}
     \nabla \cdot \overleftrightarrow{\boldsymbol{\sigma}} = \mathbf{f}_\text{MST}  \,,
 \end{equation}
@@ -215,7 +217,7 @@ photoelastic effects, where the in-material strain modifies the material refract
 via optical forces to the 
 topology optimization of an optomechanical membrane-like device.
 
-\subsection*{Topology optimization of strongly coupled optomechanical membranes~\cite{ownpub5}}
+\subsection*{Topology optimization of strongly coupled optomechanical membranes}
 
 To exemplify the use of topology optimization in the context of strongly coupled optomechanical problems we consider the example of the two-dimensional representation of an optomechanical membrane-like device, which
 is based on a clamped-clamped beam attached to a central design domain (see Fig. 1 in ). The device is excited by an incoming plane-wave from the bottom, which will generate a mechanical volumetric load on the structure ($\mathbf{f}_\text{MST}$)
@@ -231,7 +233,7 @@ method (\secref{sec:fem}) yields the coupled system of equations
     \end{aligned}
     \end{equation}
 where $\mathbf{S}$ is the discretized system matrix which encodes the operators
- in the optical problem, $\mathbf{E}$ and 
+ in the linear optical problem, $\mathbf{E}$ and 
  $\mathbf{E}_\text{in}$ are the vectors containing the nodal degrees-of-freedom for the electric 
 field and the forcing term respectively; $\mathbf{R}$ is the residual of the
  geometrically nonlinear mechanical problem~\cite{cook_concepts_2001}, and 
@@ -278,6 +280,8 @@ Using this formalism, we optimize a membrane-like device with a central hole tha
          optimization example refer to, where we also consider the optimization of connected optomechanical membrane-like devices.
 
 \subsection*{Outlook and future work}
+
+MORE CHALLENGES LIKE IN PAPER?
 
 This topology optimization framework can be applied to a wide
  range of optomechanical devices and paves the way for future developments. 
