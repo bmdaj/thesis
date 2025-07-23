@@ -28,8 +28,8 @@ in which the refractive index of a material changes as a function of temperature
 This effect plays a central role in many integrated photonics applications, such as
  optical phase shifters~\cite{TOPS_1, TOPS_2, TOPS_3}, reconfigurable photonic circuits~\cite{program, PIC}, and thermally tunable switches~\cite{switch, switch_2} and filters~\cite{filter}.
 
- Despite its wide usage, optimizing thermo-optical devices remains challenging due to the intricate coupling 
- between thermal and optical physics. Topology optimization offers a systematic design optimization solution, with application examples in
+ Despite their broad application, thermo-optical devices are still difficult to optimize due to the intricate interplay between thermal and optical physics.
+  Topology optimization offers a systematic design optimization solution, with application examples in
  thermo-optical phase shifters~\cite{TOPS_heat, ownpub0}, optical mirror-like thermo-mechanical structures~\cite{opt_perf}, and
 structural integrity constraints~\cite{structural_heat}, among others.
 
@@ -41,19 +41,19 @@ optimization methods by incorporating the full coupling between heat transfer an
 
 To model the coupled thermo-optical topology optimization problem, we combine the governing equation of the optical model (\eqref{eq:wave_eq})
 with a heat transfer model. The simplest heat transfer model is the steady-state heat equation, which describes the
-heat transfer in a medium due to conduction and heat sources. The \textbf{heat equation} is given by
+heat transfer in a medium due to conduction and heat sources. The steadys-state \textbf{heat equation} is given by
 \begin{equation}\label{eq:heat}
- -\nabla \cdot \left[ \kappa(\mathbf{r})\cdot \nabla T(\mathbf{r}) \right] = Q(\mathbf{r})
+ -\nabla \cdot \left[ G(\mathbf{r})\cdot \nabla T(\mathbf{r}) \right] = Q(\mathbf{r})
 \end{equation}
-where $T$ is the temperature, $\kappa$ is the thermal conductivity, and $Q$ is a volumetric heat source. This equation can be
+where $T$ is the temperature, $G$ is the thermal conductivity, and $Q$ is a volumetric heat source. This equation can be
 extended by considering convection and radiation effects, which may be important in some thermo-optical systems.
 
-Temperature can be coupled to the optical response via the \textbf{thermo-optic coefficient} (TOC), which links the temperature field
-with the refractive index of the material, typically approximated with the linear relation\footnote{Large temperature gradients may lead to nonlinear effects, requiring higher order terms.}
+Temperature can be coupled to the optical response via the \textbf{thermo-optic coefficient} (TOC), which relates the local temperature field
+to changes in the material's refractive index. This is typically approximated by the linear relation\footnote{Large temperature gradients may lead to nonlinear effects, requiring higher order terms.}
 \begin{equation}
 n(\mathbf{r}) = n_0 + \text{TOC} \cdot \left[T(\mathbf{r}) - T_0\right],
 \end{equation}
-where $n_0$ and $T_0$ are the reference (unheated) refractive index and reference temperature, respectively. Thus, to solve a problem coupled through the TOC, one first solves the heat equation
+where $n_0$ and $T_0$ are the reference (unheated) refractive index and reference temperature, respectively. Thus, to solve a problem that is weakly coupled via the TOC, one first solves the heat equation
 in \eqref{eq:heat}
 to determine the temperature profile, which can be used to determine
 the spatially varying refractive index. The temperature-dependent refractive index is then used in \eqref{eq:wave_eq} to find the optical field.
@@ -86,7 +86,7 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
 
 \subsection*{The effective index via waveguide finite-element analysis}
 
-To calculate the phase shift (\eqref{eq:phase_sift}), one thus needs to find the effective index of an optical mode. This can be done by 
+To calculate the phase shift (\eqref{eq:phase_shift}), one needs to find the effective index of an optical mode. This can be done by 
 using the finite-element formulation for two-dimensional waveguide cross-sections~\cite{jin}
 \begin{equation}\label{eq:wg_eq}
  \left[\begin{array}{cc}
@@ -108,17 +108,17 @@ using the finite-element formulation for two-dimensional waveguide cross-section
     \end{array}\right\},
     \end{equation}
 where $E_{\text{t}}$ and $E_z$ are the transverse and longitudinal electric field components, $k_z$ is the propagation constant of the optical mode, and $A_{tt}, B_{tt},
-B_{zt}$ and $B_{tz}$ are matrices that can be assembled using the interpolation functions. Following~\cite{jin}, we use first-order Nédélec elements for in-plane components of the electric field and 
-second-order Lagrange elements for out-of-plane components\footnote{Lagrange elements must be one order higher than edge elements to properly represent gradients or curls~\cite{jin}.}. 
+B_{zt}$, $B_{tz}$, and $B_{zz}$ are matrices that can be assembled using the shape functions (\eqref{eq:ned_shape})~\cite{jin}. Following~\cite{jin}, we use Nédélec elements (\secref{sec:fem}) for the in-plane components of the electric field and 
+Lagrange elements for out-of-plane components. 
 Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide modes ($E_t$, $E_z$) and propagation constants ($k_z$). The propagation constant can be rewritten into the \textbf{effective index} $n_\text{eff} = k_z / k$,
- where the real part is a measure of the mode overlap with the refractive index distribution, and the imaginary part ($\Im\{n_\text{eff}\}$) quantifies modal losses. For a numerical implementation using the finite element method, please refer to our GitHub repository~\cite{FEWEC}, which includes a tutorial on solving the 
+ where the real part is a measure of the mode overlap with the refractive index distribution, and the imaginary part ($\Im\{n_\text{eff}\}$) quantifies modal losses. For a numerical implementation of this method, please refer to our GitHub repository~\cite{FEWEC}, which includes a tutorial on solving the 
  generalized eigenvalue problem in \eqref{eq:wg_eq} to find the effective indices and field distributions of waveguide eigenmodes.
 
  \subsection*{PT-symmetry breaking waveguides}
  Recent progress in waveguide design by U.D. Dave and M. Lipson~\cite{lipson}, proposed the use of \textbf{PT-symmetry breaking} (\secref{sec:nanophotonics}) \textbf{waveguides} as promising candidates for
  thermo-optical phase shifter devices, since they can minimize optical losses while being placed in close contact with (lossy) metallic heaters. To understand this phenomenon, we consider an example with a 
  simulation domain with a $5$ \textmu m height and a $15$ \textmu m width. At the center of a silica cladding ($n\approx 2$) there is a silicon ($n \approx 3.48$) waveguide with a $2$ \textmu m height and 
- a $10 \textmu$ m width, where where half ($x<0$) of the waveguide is lossy [characterized by an extinction coefficient $\kappa>0$ (\eqref{eq:perm})]  at the center of a silica cladding.
+ a $10$ \textmu m width, where where half ($x<0$) of the waveguide is lossy [characterized by an extinction coefficient $\kappa>0$ (\eqref{eq:perm})]  at the center of a silica cladding.
 
 \begin{figure}[tb]
     \centering
@@ -128,37 +128,41 @@ Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide 
     \label{fig:pt}
 \end{figure}
 
-With this configuration and applying PEC boundary conditions (\secref{sec:nanophotonics}) on all boundaries, we solve the generalized eigenvalue problem in \eqref{eq:wg_eq} at the telecom wavelength ($\lambda=1.55$ \textmu m) for varying extinction coefficients and find the results in \figref{fig:pt}.
-As loss increases, the fundamental mode becomes more lossy until reaching a 
-bifurcation point where it splits into high- and low-loss modes. Surprisingly, further increasing the extinction coefficient $\kappa$ counter-intuitively reduces the loss of the low-loss mode. This effect is beneficial in the design of
-thermo-optical waveguide devices, since it enables the placement a lossy metallic heater in direct contact with the waveguide core, allowing for improved heat conduction. At the same time, the mode can still propagate with low losses.
+Using this configuration and PEC boundary conditions (\secref{sec:nanophotonics}), we solve the generalized eigenvalue
+ problem \eqref{eq:wg_eq} at the telecom wavelength ($\lambda = 1.55$ \textmu m) for varying extinction coefficients. 
+ As shown in \figref{fig:pt}, increasing loss initially makes the fundamental mode more lossy until a bifurcation splits
+  it into high- and low-loss modes. Counter-intuitively, further increasing the extinction coefficient reduces the loss of the low-loss mode 
+  because its spatial profile shifts to overlap more strongly with the lossless half of the waveguide.
+   This effect is beneficial in thermo-optical waveguide design, since it  enables placing a metallic heater in direct contact with the waveguide for better heat transfer while still
+    maintaining low optical losses.
 
 \subsection*{Topology optimization results~\cite{ownpub0}}
 
-Inspired by PT-symmetry breaking waveguides, in~\cite{ownpub0} we use topology optimization to achieve good heat conduction and low optical loss in thermo-optical phase shifters.
+Inspired by PT-symmetry breaking waveguides, in~\cite{ownpub0}, we use topology optimization to achieve good heat conduction and low optical loss in thermo-optical phase shifters.
 The optimization problem considers a waveguide cross-section with a metallic heater, and seeks to find the distribution of metal around the waveguide that minimizes optical loss for both heated and 
 unheated configurations. 
 
-Unlike the eigenvalue-based approach in~\cite{lipson}, which evaluates losses via the imaginary part of
- the effective index, our method assesses losses by solving a linear system where the waveguide is excited and the mode amplitude
- measured. The waveguide mode behaves like a resonance in the effective index spectrum, with the imaginary part defining the
- resonance linewidth and thus the losses. A smaller imaginary part corresponds to a narrower resonance and lower loss. 
- Maximizing the excited mode amplitude sharpens this resonance, effectively minimizing losses. 
- Building on this insight, we formulate an optimization problem that designs the metallic heater by maximizing the worst-case
- electric-field intensity at two effective indices representing the heated and unheated waveguide states. 
+Unlike the eigenvalue-based approach presented in the previous section, which estimates losses from the imaginary part of the effective index,
+ our method evaluates losses by directly solving a linear system. An optical source excites the waveguide mode, which appears
+  as a resonance in the effective index spectrum. The imaginary part controls the resonance linewidth and therefore the loss:
+   the smaller it is, the sharper the resonance and the lower the loss. By maximizing the amplitude of the excited mode,
+    we can sharpen this resonance and thus minimize losses. Based on this idea, we formulate an optimization problem that designs
+     the metallic heater around the waveguide by maximizing the worst-case electric-field intensity at two effective indices, representing
+      the heated and unheated waveguide states.
  
  To integrate the heat problem into the 
  topology optimization framework, we use a linear material interpolation 
 for the conductivity (Eq. 13 in~\cite{ownpub0}) and an interpolation for the heat source given by $
- Q(\hat{\rho})=P_{\text{in}} \hat{\rho}^p / \left( L a_e \sum_j \hat{\rho}_j \right)\,,
+ Q(\hat{\rho})=P_{\text{in}} \hat{\rho}^p / \left( L a_e \sum^{N_\text{e}}_j \hat{\rho}_j \right)\,,
 $
-where $P_\text{in}$ is the input power in the heater, $p$ is a penalization factor, and $a_e$ is the area of each element. 
+where $P_\text{in}$ is the input power in the heater, $p$ is a penalization factor, $a_e$ is the area of each element, and 
+$N_e$ is the total number of elements in the finite-element problem. 
 This expression models a resistive heater with all material connected in parallel, so that for a fixed input power, the heat 
 generation per unit volume increases as the total heater volume decreases.
 To solve the inverse design
-problem we derive a coupled adjoint sensitivity analysis~\cite{ownpub0} enabling gradient-based optimization.
+problem, we derive a coupled adjoint sensitivity analysis~\cite{ownpub0} enabling gradient-based optimization.
 
-Using this framework, we find the results in \figref{fig:thermo_res}, where we depict the waveguide cross-section with the topology-optimized metallic heater,
+Using this framework, we find the results in \figref{fig:thermo_res} (b), where we depict the waveguide cross-section with the topology-optimized metallic heater,
 allowing the same low-loss mode to propagate in both the heated and unheated scenarios,
 reducing optical losses by $\approx 33 \%$ compared to state-of-the-art PT-symmetry breaking thermo-optical phase-shifter proposals~\cite{lipson}. Similar to the devices
 in~\cite{lipson}, the optimized design utilizes the spatially heterogeneous loss profile to engineer an efficient low-loss mode. Using this optimized device as a starting point, several extensions of the topology optimization problem are considered in~\cite{ownpub0}, such as varying volume constraints, optical power, and the inclusion of fabrication constraints (e.g., minimum length scales and layered 
@@ -184,19 +188,20 @@ where the material losses ($\varepsilon^{\prime \prime}$) convert the electromag
 This expression is crucial in metal nanostructures, where plasmonic resonances can lead to localized temperature increases~\cite{plasm_heat_source}, or in 
 high-intensity photonics, where even low absorption materials can generate significant heat~\cite{thermal_nl, high_I_T}. Moreover, the thermo-optical feedback can give rise to nonlinear effects (\secref{sec:nanophotonics}), such as self-focusing~\cite{thermal_nl}. If we still consider a linear
 thermal response and TOC,
-the nonlinearity has the form of a Kerr-type nonlinearity ($\Delta n \propto \vert \mathbf{E} \vert^2$). Accounting and modeling
-these effects could open up the avenue for the inverse design of novel nonlinear thermophotonic devices, with potential applications
+the nonlinearity has the form of a Kerr-type nonlinearity ($\Delta n \propto \vert \mathbf{E} \vert^2$). Accounting for and modeling
+these effects could open up the avenue for the inverse design of novel nonlinear thermo-optical devices, with potential applications
 in integrated nonlinear photonics~\cite{nl_photonics}, metasurfaces~\cite{nl_meta}, and plasmonics~\cite{novotny}.
 
-\section{Heat transfer as an auxiliary connectivity constraint}\label{sec:aux}
+\section{Heat transfer as a connectivity constraint}\label{sec:aux}
 
-Lastly, it is worth mentioning that the heat equation can be used as an auxiliary equation to enforce connectivity
-and structural integrity in topology optimization problems (e.g.,~\cite{vanessa, structural_heat}), which is exemplified by some of our
+Lastly, it is worth mentioning that an additional heat equation can be used as an auxiliary equation to enforce connectivity
+and structural integrity in topology optimization problems (e.g.,~\cite{vanessa, structural_heat}), which is also exemplified by some of our
 works~\cite{ownpub1,ownpub2}. 
 
 This method, introduced in~\cite{li_structural_2016}, is known as the \textbf{Virtual Temperature Method} (VTM). The core idea of the VTM is to simulate a heat transfer problem on an auxiliary thermal field, where the solid domain
  is treated as a heat source and a thermally conductive material. At the same time, void regions are modeled as an
-insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required. When 
+insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required and Neuman boundary conditions
+on the rest of boundaries. When 
 solving the steady-state heat equation (\eqref{eq:heat}), regions that are disconnected from the boundary 
 cannot dissipate heat and therefore attain elevated temperatures. By applying a threshold criterion on the thermal field, such as $T < T_\text{thresh}$, disconnected islands in the design can be 
 detected and penalized. For instance, in our works~\cite{ownpub1,ownpub2}, we compute a measure of the total virtual temperature
