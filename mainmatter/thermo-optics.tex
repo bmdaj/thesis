@@ -22,7 +22,7 @@
 %TODO: Include if we end up doing the Green's function study.
 % Make a connection to the Green's function formalism and derive system of coupled equations.
 %\section{Thermo-optical systems~\cite{ownpub0}}\label{sec:thermo_optical}
-Thermo-optical systems exploit the interplay between the temperature and electromagnetic fields to enable active control over optical properties. 
+Thermo-optical systems exploit the interplay between temperature and electromagnetic fields to enable active control over optical properties. 
 The primary mechanism behind this coupling is the thermo-optic effect, 
 in which the refractive index of a material changes as a function of temperature. 
 This effect plays a central role in many integrated photonics applications, such as
@@ -34,8 +34,8 @@ This effect plays a central role in many integrated photonics applications, such
 structural integrity constraints~\cite{structural_heat}, among others.
 
 In the following sections, we provide an overview of how to model and optimize thermo-optic systems, 
-focusing on our research contribution~\cite{ownpub0}. Our work extends previous thermo-optic topology 
-optimization methods by incorporating the full coupling between heat transfer and optics.
+focusing on our research contribution~\cite{ownpub0}, which extends previous thermo-optic topology 
+optimization methods by explicitly incorporating the coupling between heat transfer and optics.
 
 \section{The thermo-optic effect}\label{sec:to_effect}
 
@@ -58,7 +58,7 @@ in \eqref{eq:heat}
 to determine the temperature profile, which can be used to determine
 the spatially varying refractive index. The temperature-dependent refractive index is then used in \eqref{eq:wave_eq} to find the optical field.
 
-\section{Topology optimization of thermo-optical phase-shifters~\cite{ownpub0}}\label{sec:TOPS}
+\section{Topology optimization of thermo-optical phase shifters~\cite{ownpub0}}\label{sec:TOPS}
 
 Among the many applications that utilize the thermo-optic coefficient, we find integrated photonic circuit components, which rely on the large 
 TOC of silicon ($\text{TOC} \approx 1.8 \cdot 10^{-4}\, \text{K}^{-1}$) at room-temperature ($\approx300$ K) and telecom wavelength 
@@ -70,7 +70,7 @@ uses a heating device to locally modify the refractive index of a waveguide stru
 where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} - n_\text{eff, unheated}$
  is the change of the effective refractive index of the guided mode. 
  
- It is not straightforward to design thermo-optical phase-shifters; ideally, one would like to place a heater close to the waveguide to achieve a phase shift with minimum input power.
+ It is not straightforward to design thermo-optical phase shifters; ideally, one would like to place a heater close to the waveguide to achieve a phase shift with minimum input power.
  Theoretically, this would imply positioning the metal in contact to the waveguide to ensure efficient heat transfer, but since the heaters are usually metallic, this would result
  in optical losses. As shown in the optical and thermal responses in \figref{fig:thermo_res} (b), this trade-off problem can be tackled with topology optimization to design efficient low-loss thermo-optical phase shifters, 
  as we will detail in the following sections.
@@ -78,16 +78,16 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/TOPS_results.png}}%%
-    \caption{Topology optimization of thermo-optical phase-shifters. (a) Phase-shifting mechanism, where a heater changes the temperature in the waveguide $\Delta T$, inducing a phase shift
+    \caption{Topology optimization of thermo-optical phase shifters. (a) Phase-shifting mechanism, where a heater changes the temperature in the waveguide $\Delta T$, inducing a phase shift
     $\Delta \Phi$ over a length $L$. (b) Thermal and optical response of the topology optimized device. Adapted with permission from~\cite{ownpub0} © Optical Society of America.}
     \label{fig:thermo_res}
 \end{figure}
 
 
-\subsection*{The effective index via waveguide finite-element analysis}
+\subsection*{The effective index via waveguide finite element analysis}
 
 To calculate the phase shift (\eqref{eq:phase_shift}), one needs to find the effective index of an optical mode. This can be done by 
-using the finite-element formulation for two-dimensional waveguide cross-sections~\cite{jin}
+using the finite element formulation for two-dimensional waveguide cross-sections~\cite{jin}
 \begin{equation}\label{eq:wg_eq}
  \left[\begin{array}{cc}
  A_{\text{tt}}(\varepsilon,k) & 0 \\
@@ -118,7 +118,7 @@ Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide 
  Recent progress in waveguide design by U.D. Dave and M. Lipson~\cite{lipson}, proposed the use of \textbf{PT-symmetry breaking} (\secref{sec:nanophotonics}) \textbf{waveguides} as promising candidates for
  thermo-optical phase shifter devices, since they can minimize optical losses while being placed in close contact with (lossy) metallic heaters. To understand this phenomenon, we consider an example with a 
  simulation domain with a $5$ \textmu m height and a $15$ \textmu m width. At the center of a silica cladding ($n\approx 2$) there is a silicon ($n \approx 3.48$) waveguide with a $2$ \textmu m height and 
- a $10$ \textmu m width, where where half ($x<0$) of the waveguide is lossy [characterized by an extinction coefficient $\kappa>0$ (\eqref{eq:perm})]  at the center of a silica cladding.
+ a $10$ \textmu m width, where half ($x<0$) of the waveguide is lossy [characterized by an extinction coefficient $\kappa>0$ (\eqref{eq:perm})].
 
 \begin{figure}[tb]
     \centering
@@ -128,7 +128,7 @@ Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide 
     \label{fig:pt}
 \end{figure}
 
-Using this configuration and PEC boundary conditions (\secref{sec:nanophotonics}), we solve the generalized eigenvalue
+Using this configuration and perfect electric conductor boundary conditions (\secref{sec:nanophotonics}), we solve the generalized eigenvalue
  problem \eqref{eq:wg_eq} at the telecom wavelength ($\lambda = 1.55$ \textmu m) for varying extinction coefficients. 
  As shown in \figref{fig:pt}, increasing loss initially makes the fundamental mode more lossy until a bifurcation splits
   it into high- and low-loss modes. Counter-intuitively, further increasing the extinction coefficient reduces the loss of the low-loss mode 
@@ -144,11 +144,11 @@ unheated configurations.
 
 Unlike the eigenvalue-based approach presented in the previous section, which estimates losses from the imaginary part of the effective index,
  our method evaluates losses by directly solving a linear system. An optical source excites the waveguide mode, which appears
-  as a resonance in the effective index spectrum. The imaginary part controls the resonance linewidth and therefore the loss:
+  as a resonance in the effective index spectrum. The imaginary part of the refractive index ($\Im\{n_\text{eff}\}$) represents the resonance linewidth and therefore the loss:
    the smaller it is, the sharper the resonance and the lower the loss. By maximizing the amplitude of the excited mode,
     we can sharpen this resonance and thus minimize losses. Based on this idea, we formulate an optimization problem that designs
      the metallic heater around the waveguide by maximizing the worst-case electric-field intensity at two effective indices, representing
-      the heated and unheated waveguide states.
+      the heated and unheated waveguide states (Fig. 4 and Fig. 5 in~\cite{ownpub0}).
  
  To integrate the heat problem into the 
  topology optimization framework, we use a linear material interpolation 
@@ -156,7 +156,7 @@ for the conductivity (Eq. 13 in~\cite{ownpub0}) and an interpolation for the hea
  Q(\hat{\rho})=P_{\text{in}} \hat{\rho}^p / \left( L a_e \sum^{N_\text{e}}_j \hat{\rho}_j \right)\,,
 $
 where $P_\text{in}$ is the input power in the heater, $p$ is a penalization factor, $a_e$ is the area of each element, and 
-$N_e$ is the total number of elements in the finite-element problem. 
+$N_e$ is the total number of elements in the finite element problem. 
 This expression models a resistive heater with all material connected in parallel, so that for a fixed input power, the heat 
 generation per unit volume increases as the total heater volume decreases.
 To solve the inverse design
@@ -170,7 +170,7 @@ lithography processes).
 
 \subsection*{Outlook and future work}
 
-The framework presented in our work~\cite{ownpub0} provides a foundation for studying and optimizing weakly coupled topology optimization problems. For example, for the design of phase-shifters and thermo-optical modulators, it should be straightforward to extend this
+The framework presented in our work~\cite{ownpub0} provides a foundation for studying and optimizing weakly coupled topology optimization problems. For example, for the design of phase shifters and thermo-optical modulators, it should be straightforward to extend this
 formalism to three dimensional system, where one could account for insertion/coupling losses of the integrated photonic circuits. Another example is the use of multi-material topology optimization to design the heating device and the optical waveguide. Finally, this formalism could be applied to design completely different devices, such as re-configurable photonic systems that might be modulated by an external heat source, or thermo-optical
 switches based on optical cavities~\cite{switch, switch_2}, where the change in refractive index shifts the cavity in- or out-of-resonance. Lastly, the thermo-optical phase-shifter problem could be
 extended to electro-optical phase shifters~\cite{pockels} (\secref{chap:eo}), since the electrostatic Poisson equation $\nabla^2 V = -\rho/\varepsilon_0$ is a special case of the heat equation with a spatially homogenous
@@ -180,13 +180,12 @@ conduction coefficient, where $V$ is the electric potential that replaces the te
 
 In the strong coupling regime, the optical response will modify the thermal response, and vice versa.
 An example of such an effect is \textbf{optical absorption}, which can lead to significant local heating, altering the refractive index and thus modifying the optical field. 
-This mutual dependence requires a strongly coupled treatment of the heat and optical problems (\secref{sec:coupled}), where the coupling is modeled with an electric field dependent volumetric heat source~\cite{plasm_heat_source}
+This mutual dependence requires a strongly coupled treatment of the heat and optical problems (\secref{sec:coupled}), modeled via an electric-field-dependent volumetric heat source~\cite{plasm_heat_source}
 \[
-Q(\mathbf{r}) = \frac{1}{2} \omega \varepsilon_0 \varepsilon^{\prime \prime} |\mathbf{E}(\mathbf{r})|^2,
+Q(\mathbf{r}) = \frac{1}{2} \omega \varepsilon_0 \varepsilon_r^{\prime \prime} |\mathbf{E}(\mathbf{r})|^2,
 \]
-where the material losses ($\varepsilon^{\prime \prime}$) convert the electromagnetic energy into heat. 
-This expression is crucial in metal nanostructures, where plasmonic resonances can lead to localized temperature increases~\cite{plasm_heat_source}, or in 
-high-intensity photonics, where even low absorption materials can generate significant heat~\cite{thermal_nl, high_I_T}. Moreover, the thermo-optical feedback can give rise to nonlinear effects (\secref{sec:nanophotonics}), such as self-focusing~\cite{thermal_nl}. If we still consider a linear
+where the material losses ($\varepsilon_r^{\prime \prime}$) convert the electromagnetic energy into heat. 
+This expression is critical for metal nanostructures, where plasmonic resonances cause localized heating~\cite{plasm_heat_source}, and in high-intensity photonics, where even weakly absorbing materials can produce significant heat~\cite{thermal_nl, high_I_T}. Moreover, the thermo-optical feedback can give rise to nonlinear effects (\secref{sec:nanophotonics}), such as self-focusing~\cite{thermal_nl}. If we still consider a linear
 thermal response and TOC,
 the nonlinearity has the form of a Kerr-type nonlinearity ($\Delta n \propto \vert \mathbf{E} \vert^2$). Accounting for and modeling
 these effects could open up the avenue for the inverse design of novel nonlinear thermo-optical devices, with potential applications
@@ -200,13 +199,13 @@ works~\cite{ownpub1,ownpub2}.
 
 This method, introduced in~\cite{li_structural_2016}, is known as the \textbf{Virtual Temperature Method} (VTM). The core idea of the VTM is to simulate a heat transfer problem on an auxiliary thermal field, where the solid domain
  is treated as a heat source and a thermally conductive material. At the same time, void regions are modeled as an
-insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required and Neuman boundary conditions
+insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required while Neuman boundary conditions are imposed
 on the rest of boundaries. When 
 solving the steady-state heat equation (\eqref{eq:heat}), regions that are disconnected from the boundary 
 cannot dissipate heat and therefore attain elevated temperatures. By applying a threshold criterion on the thermal field, such as $T < T_\text{thresh}$, disconnected islands in the design can be 
 detected and penalized. For instance, in our works~\cite{ownpub1,ownpub2}, we compute a measure of the total virtual temperature
-by integrating the temperature field over the design domain, and add it as a constraint in the optimization problem 
-$\int_{\Omega_D} T \d \Omega \leq \epsilon_C$, where $\Omega_D$ is the design domain and $\epsilon_c$ is a sufficiently small constant. Accounting for this constraint in the optimization problem ensures that the final design remains physically connected to the required 
+by integrating the temperature field over the design domain ($\Omega_D$), and add it as a constraint in the optimization problem 
+$\int_{\Omega_D} T \d \Omega \leq \epsilon_C$, where $\epsilon_c$ is a sufficiently small constant. Accounting for this constraint in the optimization problem ensures that the final design remains physically connected to the required 
 boundaries. 
 
 

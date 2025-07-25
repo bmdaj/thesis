@@ -2,13 +2,13 @@
 %\section{Opto-mechanical systems~\cite{ownpub1,ownpub2,ownpub3}}\label{sec:optomechanics}
 Optomechanics, the study of the interaction between light and mechanical motion, is at the heart of state-of-the-art technologies, such as 
 optical trapping~\cite{ashkin_acceleration_1970, moffitt_recent_2008} and cooling~\cite{cooling}, quantum information processing~\cite{Andrews_2014, Xi_2025}
-, light sails~\cite{lightsail, lightsail1}, and high-precision metrology and sensing~\cite{sensing, weakforce, Li:18, Mason_2019}. The most basic description of this interaction is given by the \textbf{Lorentz force}, which governs how moving charges respond to electric and magnetic fields:
+, light sails~\cite{lightsail, lightsail1}, and high-precision metrology and sensing~\cite{sensing, weakforce, Li:18, Mason_2019}. The most basic description of this interaction is given by the \textbf{Lorentz force}, which governs how moving charges respond to electric and magnetic fields
 \begin{equation}\label{eq:lorentz_f}
  \mathbf{\bm{\mathcal{F}}}(\mathbf{r},t) = q \left[ \bm{\mathcal{E}}(\mathbf{r},t) + \mathbf{v}(t) \times \bm{\mathcal{B}}(\mathbf{r},t) \right]\,,
 \end{equation}
 where $q$ is the charge and $\mathbf{v}$ is the velocity of the particle. This force can be generalized to describe more complex systems,
 such as the force between two current-carrying 
-wires (Ampere's force law), and the electromotive force, which is at the core of many technologies, such as induction motors or generators.
+wires (Ampère's force law), and the electromotive force, which is at the core of many technologies, such as induction motors or generators.
 In optomechanical systems, shaping the distribution and magnitude of these forces at the micro- and nanoscale is crucial for controlling mechanical motion with light. 
 However, designing structures that can efficiently harness and manipulate these interactions often requires navigating highly complex
  parameter spaces and trade-offs between optical, mechanical, and material constraints.
@@ -56,20 +56,20 @@ where $\otimes$ denotes the outer product. Note that the permittivity ($\varepsi
 
 \subsection*{Engineering optical forces via topology optimization}
 
-In~\cite{ownpub2} we apply this formalism to optimize the geometry of particle-metalens pairs for different applications, such as attracting, repelling, 
+In~\cite{ownpub2} we apply this formalism to optimize the two-dimensional particle--metalens geometries for different applications, such as attracting, repelling, 
 oscillating, and trapping particles. In \figref{fig:eng_res} we depict an example optimization result from our work, where 
 we optimize the geometry of a particle to maximize the vertical component of the optical force by targeting $\text{FOM} = \langle\mathbf{F}\rangle \cdot \mathbf{n}_y$, where
 in our two-dimensional example $\mathbf{n}_y = (0, 1)$ is the unitary vector in the vertical direction. To calculate the force via \eqref{eq:f_MST} we integrate around the design domain. Our results show that the optimized particle geometry is a Bragg-mirror-like
-structure, which can efficiently reflect the incoming plane-wave, resulting in an efficient exchange of force and momentum. As a matter of fact, by comparing the response of the optimized design
+structure, which can efficiently reflect the incoming plane wave, resulting in an efficient exchange of force and momentum. As a matter of fact, by comparing the response of the optimized design
 to a reference square particle, we observe that the topology-optimized device feels a $\approx 3\times$ stronger vertical force than the reference.
- Moreover, in~\cite{ownpub2} we show that by also designing a metalens to focus the incoming plane-wave onto the particle, one can utilize nearly all the momentum available in the simulation domain\footnote{This compares the calculated force with the radiation pressure force on a perfectly reflecting surface spanning the entire simulation domain~\cite{ownpub2}.},
+ Moreover, in~\cite{ownpub2} we show that by also designing a metalens to focus the incoming plane wave onto the particle, one can utilize nearly all the momentum available in the simulation domain\footnote{This compares the calculated force with the radiation pressure force on a perfectly reflecting surface spanning the entire simulation domain~\cite{ownpub2}.},
  allowing for a $\approx 13\times$ stronger force than the reference square particle in free space. 
  In the remainder of~\cite{ownpub2} we further extend these examples by designing
 attractive particle geometries, and optical-tweezer-like setups to trap the particle in space. All the code developed in this work is available on GitHub~\cite{github_MST} with tutorials on force calculation and topology optimization. 
 
-One noteworthy aspect of the topology optimization of particles in the MST formalism is that, with our current framework, the particle cannot feature disconnected members; otherwise, instead of integrating around the whole design domain,
-one would need to integrate around the (disconnected) individual components to calculate their individual force contribution. It is possible to solve this problem by enforcing 
-a connectivity constraint via the VTM~\cite{li_structural_2016} (see \secref{sec:aux}). In our examples,
+One noteworthy aspect of the topology optimization of particles in the MST formalism is that, with our current framework, the particle cannot feature disconnected members; otherwise, instead of integrating around the whole design domain, to calculate their individual force contribution (\eqref{eq:f_MST})
+one would need to integrate around the (disconnected) individual components. It is possible to solve this problem by enforcing 
+a connectivity constraint via the VTM~\cite{li_structural_2016} (\secref{sec:aux}). In our examples,
 we enforce particle connectivity to the center of the particle and connect the metalens structure to the bottom to ensure the structural
 integrity of the structure.
 
@@ -95,7 +95,7 @@ When particles are much smaller than the wavelength of the electromagnetic field
 ($s \ll \lambda$), the optical force can be described using the dipole approximation 
 in the quasistatic limit (\secref{sec:nanophotonics}). In this approximation, the 
 particle is treated as a point dipole with a complex polarizability $\alpha$ that 
-describes its response to the local electric field $\mathbf{E}$ in the frequency domain. 
+describes its response to the local electric field. 
 The time-averaged optical force on the dipole is given by~\cite{novotny}
 \begin{equation}\label{eq:dip_force}
     \langle \mathbf{F} \rangle = 
@@ -108,9 +108,9 @@ where the polarizability $\alpha = \alpha^\prime + i\,\alpha^{\prime\prime}$ is 
 real and imaginary parts, $\langle \mathbf{S} \rangle = \frac{1}{2} \Re\{\mathbf{E} \times 
 \mathbf{H}^*\}$ is the time-averaged Poynting vector, and 
 $\langle \mathbf{L} \rangle = \frac{\varepsilon_0}{4 i \omega} (\mathbf{E} \times \mathbf{E}^*)$ 
-is the spin angular momentum density. The real part $\alpha^\prime$ produces the 
+is the spin angular momentum density. The real part of the polarizability ($\alpha^\prime$) produces the 
 \textbf{gradient force} (GF), which is conservative and pulls the particle toward regions 
-of varying field intensity. The imaginary part $\alpha^{\prime\prime}$ 
+of varying field intensity. The imaginary part of the polarizability ($\alpha^{\prime\prime}$) 
 gives rise to non-conservative scattering forces: the component associated with the Poynting vector is 
 the radiation pressure force (RPF), which pushes the particle in the direction of energy 
 flow, and the term associated with the angular momentum is the spin-curl force (SCF), 
@@ -120,14 +120,14 @@ In the abscence of absorption effects ($\alpha^{\prime \prime}=0$), the force is
 by the conservative gradient force, which can be described as the gradient 
 of a potential:
 \begin{equation*}
-    U (\mathbf{r}) = -\frac{\alpha^{\prime}}{4} \left|\mathbf{E}(\mathbf{r})\right|^2\,.
+    U (\mathbf{r}) = -\frac{\alpha^{\prime}}{4} \left|\mathbf{E}(\mathbf{r})\right|^2\,,
 \end{equation*}
 where the force can be calculated as $\mathbf{F} = -\nabla U(\mathbf{r})$. In optical trapping applications, $U$ is often referred to as the \textbf{trapping potential}.
 For non-resonant and non-absorbing isotropic particles, the polarizability is 
 described through the relation~\cite{BornWolf:1999:Book} 
     $\alpha^{\prime}= 3 \varepsilon_0 V (\varepsilon_p-\varepsilon_m)/(\varepsilon_p+2 \varepsilon_m)\,,$
 where $V$ is the volume of the particle, $\varepsilon_p$ and $\varepsilon_m$ are the
-dielectric constants of the particle and the background medium, respectively. 
+dielectric permittivities of the particle and the background medium, respectively. 
 
 Note that in the dipole approximation, for infinitesimally small particles, the field $\mathbf{E}$ is not modified by the presence of the particle.
 This works well for point-like particles in free space but not necessarily 
@@ -141,23 +141,17 @@ This agreement is often used to validate the dipole approximation (e.g., \cite{o
 
 \subsection*{On-chip omnidirectional optical trapping via topology optimization~\cite{ownpub1}}
 
-Using the dipole approximation formalism in~\cite{ownpub1}, we use topology optimization to design an integrated \textbf{omnidirectional trapping} optical cavity,
-which was previously only possible with the use of free-space optical tweezers~\cite{ashkin_acceleration_1970}, or bulky photonic devices~\cite{manka_simulation_2024}. The trapping device
-consists of two silicon waveguides connected to a central design domain, in which
+Based on the dipole approximation formalism, we demonstrate in~\cite{ownpub1} that topology optimization can be used to design an integrated \textbf{omnidirectional trapping} optical cavity, which was previously achievable only with free-space optical tweezers~\cite{ashkin_acceleration_1970} or bulky photonic devices~\cite{manka_simulation_2024}.” The trapping device
+consists of two silicon waveguides connected to a central design domain in which
 topology optimization is applied (\figref{fig:MST_dipole}). The central region contains a cylindrical air exclusion with a radius
 $R_\text{exc}=300$ nm and a thickness of $800$ nm, in which the stable trap is located.
 To design an omnidirectional trapping device, we minimize  
 the difference of the electric-field norm with respect to a reference field $\mathbf{E}_\text{ref}$
 \begin{equation}
- \text{FOM} =\sqrt{\int_{\Omega}\left[\Theta_{\beta,\eta}\left(\frac{|\mathbf{E}(\mathbf{r})|}{\left|\mathbf{E}\left(\mathbf{r}_0\right)\right|}-\frac{\left|\mathbf{E}_{\text{ref}}(\mathbf{r})\right|}{\left|\mathbf{E}_{\text{ref}}\left(\mathbf{r}_0\right)\right|}\right)\right]^2} \text{~d} \Omega
+ \text{FOM} =\sqrt{\int_{\Omega}\left[\Theta_{\beta,\eta}\left(\frac{|\mathbf{E}(\mathbf{r})|}{\left|\mathbf{E}\left(\mathbf{r}_0\right)\right|}-\frac{\left|\mathbf{E}_{\text{ref}}(\mathbf{r})\right|}{\left|\mathbf{E}_{\text{ref}}\left(\mathbf{r}_0\right)\right|}\right)\right]^2 \text{~d} \Omega}
     \end{equation}
 where the fields are normalized with respect to the value at the center of the cavity ($\mathbf{r}_0$), and $\Theta_{\beta,\eta}$ is the smoothed Heaviside threshold (\eqref{eq:threshold}), which ensures
 potentials as steep or steeper than the reference. The reference is chosen as a Gaussian trapping potential with standard deviations $\sigma_x=\sigma_y=300$ nm and $\sigma_z=400$ nm, but can be chosen to have any other form, such as a harmonic potential ($U\propto\mathbf{r}^2$).
-
-By applying this optimization framework, we obtain the topology-optimized cavity design in \figref{fig:MST_dipole}, which can trap particles at the center of an optical
-cavity in three dimensions and has an associated Gaussian-like trapping potential, with a depth  $U<-10\, k_B T$ at room temperature ($T=300$ K), which is conventionally needed to overcome Brownian fluctuations~\cite{novotny}.
-Since the framework is based on the dipole approximation,
-as long as the dipole approximation is valid, it allows tuning the input power to arbitrarily small particles.
 
 \begin{figure}[tb]
     \centering
@@ -168,36 +162,41 @@ as long as the dipole approximation is valid, it allows tuning the input power t
     \label{fig:MST_dipole}
 \end{figure}
 
+By applying this optimization framework, we obtain the topology-optimized cavity design in \figref{fig:MST_dipole}, which can trap particles at the center of an optical
+cavity in three dimensions and has an associated Gaussian-like trapping potential, with a depth  $U<-10\, k_B T$\footnote{This depth is conventionally required to overcome Brownian fluctuations and ensure stable trapping~\cite{novotny}.} at room temperature ($T=300$ K).
+Since the framework is based on the dipole approximation,
+as long as the dipole approximation is valid, it allows tuning the input power to arbitrarily small particles.
+
 From the dipole approximation trapping potential, we calculate the force-displacement curves and we determine trapping stiffnesses
 of $k \approx 0.5$ fN/nm, an order of magnitude larger than diffraction-limited free-space optical tweezers~\cite{ownpub1}. To validate these findings,
-we employ the MST formalism to calculate the force on spherical particles as they are displaced from the cavity center and find excellent
+we employ the MST formalism (\secref{sec:engi}) to calculate the force on spherical particles as they are displaced from the cavity center and find excellent
 agreement with the dipole approximation. As shown in \figref{fig:SPIE}, to further verify the the dipole approximation assumption, in~\cite{ownpub3} we compare the results of the dipole approximation with the MST
 for varying spherical particle radii ($R_\text{sph}$) and refractive indices ($n_\text{sph}$), showing good agreement between the two methods
-even for large values of the refractive index (e.g., $n_\text{sph}=3$) and particle sizes up to $s \sim R_\text{sph}\approx 0.05 \lambda$.
-
-\begin{figure}[tb]
-    \centering
-    \makebox[\textwidth][c]{\includegraphics{figures/SPIE_results.png}}%%
-    \caption{Validating the dipole approximation force (dashed line) against the MST force (data points), as a function of displacement ($d$) from the cavity center.
-    (a) Volume-normalized force ($F/R^3_\text{sph}$) for different particle sizes with refractive index $n_\text{sph}=2$. (b) Force for different refractive indices of the particle for a particle radius $R_\text{sph}=50$ nm. Adapted with permission from~\cite{ownpub3} © 2024 IEEE.}
-    \label{fig:SPIE}
-\end{figure}
+even for large values of the refractive index (e.g., $n_\text{sph}=3$) and particle sizes up to $s \sim R_\text{sph}\approx 0.05 \lambda$, highlighting the versatility of the optimized device.
 
 \subsection*{A metric for trapping performance~\cite{ownpub1}}
 
 When designing optical trapping platforms, it is important to be able to compare performance across platforms. To this end, in~\cite{ownpub3} we introduce a \textbf{normalized
 trapping stiffness} metric, which normalizes trapping stiffness to particle  polarizability and input power ($P_\text{in}$)
 \begin{equation}
- e_i=\frac{k_i \varepsilon_0}{\alpha^\prime P_{\text{in}}}
+ e_i=\frac{k_i \varepsilon_0}{\alpha^\prime P_{\text{in}}}\,,
 \end{equation}
 where $i \in \lbrace x,y,z \rbrace$ is an axis index. This metric enables one-to-one comparison across trapping devices\footnote{As noted in~\cite{ownpub3} this metric diverges for lightless platforms (e.g., Casimir force-based traps), where the metric could be redefined
-without including the input power $e_i=k_i \varepsilon_0/\alpha^\prime$.}. The normalized trapping stiffness allows us to show that (Tab. 1 in~\cite{ownpub3}), although plasmonic devices can reach higher normalized 
-stiffnesses, they suffer from optical losses to heating and lack omnidirectional stable trapping. In contrast, the inverse-designed dielectric platform in \figref{fig:MST_dipole}
+without including the input power $e_i=k_i \varepsilon_0/\alpha^\prime$.}. The normalized trapping stiffness allows us to show that (Tab. 1 in~\cite{ownpub3}), although plasmonic devices can reach larger values of the normalized 
+stiffness, they suffer from optical losses to heating and lack omnidirectional stable trapping. In contrast, the inverse-designed dielectric platform in \figref{fig:MST_dipole}
  achieves comparable normalized stiffnesses to other dielectric traps while uniquely offering fully stable, omnidirectional trapping
  without relying on SIBA effects. Notably, SIBA-based devices are particle-specific, and their functionality can break down
  for different particle geometries or materials. Compared to conventional optical tweezers, our device maintains similar trapping
  strength at lower input power due to its integrated, waveguide-coupled design, highlighting the benefits of miniaturized,
  near-field-based optical trapping.
+
+ \begin{figure}[tb]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics{figures/SPIE_results.png}}%%
+    \caption{Validating the dipole approximation force (dashed line) against the MST force (data points), as a function of displacement ($d$) from the cavity center.
+    (a) Volume-normalized force ($F/R^3_\text{sph}$) for different particle sizes with refractive index $n_\text{sph}=2$. (b) Force for different refractive indices of the particle for a particle radius $R_\text{sph}=50$ nm. Adapted with permission from~\cite{ownpub3} © 2024 IEEE.}
+    \label{fig:SPIE}
+\end{figure}
 
 \subsection*{Outlook and future work}
 
@@ -216,14 +215,14 @@ traps for lossy or resonant particles, and devices with multiple trapping sites.
 \section{Strongly coupled optomechanical systems~\cite{ownpub5}}\label{sec:mech_strongly_coupled}
 
 In strongly coupled optomechanical systems, the optical field can cause significant deformations of the device,
- which in turn alter its optical response.In most optomechanical systems the optical response is much faster than the mechanical response, since the 
+ which in turn alter its optical response. In most optomechanical systems the optical response is much faster than the mechanical response, since the 
 mechanical frequencies ($\omega_\text{mech}$) are orders of magnitude lower than the optical frequency ($\omega_\text{mech}\ll\omega$) or optical resonance decay rates ($\omega_\text{mech}\ll\gamma$, so one 
-can neglect sideband cooling or amplification)\cite{opto_crys, photo_topopt, ownpub5}. Due to the slower mechanical dynamics, it is possible to analyze the mechanical response of the structure in the quasistatic approximation, by only considering the mechanical steady-state response of the structure. 
-This can be accounted for by considering the time-averaged force in the MST formalism (\eqref{eq:f_MST}) in the continuum mechanics momentum equation:
+can neglect sideband cooling or amplification)\cite{opto_crys, photo_topopt, ownpub5}. Due to the slower mechanical dynamics, it is possible to analyze the mechanical response of the structure in the quasistatic approximation, by only considering the mechanical steady-state response. 
+This can be accounted for by considering the time-averaged force in the MST formalism (\eqref{eq:f_MST}) in the continuum mechanics momentum equation
 \begin{equation}\label{eq:mech}
     \nabla \cdot \overleftrightarrow{\boldsymbol{\sigma}} = \mathbf{f}_\text{MST}  \,,
 \end{equation}
-where the volumetric force from the MST is given by $ \mathbf{f}_\text{MST} = \nabla \cdot \langle \stackrel{\leftrightarrow}{\bm{\mathcal{T}}} \rangle$ (\eqref{eq:f_MST}) and $\overleftrightarrow{\boldsymbol{\sigma}}$ is the stress tensor of the mechanical system. Solving for the mechanical
+where the volumetric force from the MST is given by $ \mathbf{f}_\text{MST} = \nabla \cdot \langle \stackrel{\leftrightarrow}{\bm{\mathcal{T}}} \rangle$ (\eqref{eq:f_MST}) and $\overleftrightarrow{\boldsymbol{\sigma}}$ is the stress tensor of the mechanical system. Solving the mechanical problem for the
 displacement $\mathbf{u}$ [e.g., via the finite element method (\secref{sec:fem}) \cite{cook_concepts_2001}], one can find the deformed configuration of a structure. Together, the 
 solutions to the mechanical problem (\eqref{eq:mech}) and the optical problem (\eqref{eq:wave_eq}) 
 form the foundation for addressing strongly coupled optomechanical systems. Another possibility of including further optomechanical coupling would be to consider
@@ -232,11 +231,11 @@ photoelastic effects, where the in-material strain modifies the material refract
 \subsection*{Topology optimization of strongly coupled optomechanical membranes}
 
 To illustrate the use of topology optimization for strongly coupled optomechanical problems, we consider the two-dimensional model of an optomechanical membrane-like device presented in~\cite{ownpub5}. 
-This system consists of a clamped-clamped membrane connected to a central design domain (see Fig. 1 in~\cite{ownpub5}). The device is excited by an incoming plane-wave from the bottom, which generates a mechanical volumetric load on the structure ($\mathbf{f}_\text{MST}$),
+This system consists of a clamped-clamped membrane connected to a central design domain (see Fig. 1 in~\cite{ownpub5}). The device is excited by an incoming plane wave from the bottom, which generates a mechanical volumetric load on the structure ($\mathbf{f}_\text{MST}$),
 resulting in an upwards deformation of the membrane. The goal of the optimization problem is to target the system's optomechanical coupling by maximizing the vertical component of the displacement ($u_y$) at a point ($\mathbf{r}_0$)
 in the structure, so that $\text{FOM}=u_y(\mathbf{r}_0)$.
 
-We solve the strongly coupled optomechanical problem by considering an optical frequency-domain problem (\eqref{eq:wave_eq}) coupled to a geometrically nonlinear mechanical problem~\cite{ownpub5,cook_concepts_2001}. Discretizing the system via the finite-element
+We solve the strongly coupled optomechanical problem by considering an optical frequency-domain problem (\eqref{eq:wave_eq}) coupled to a geometrically nonlinear mechanical problem~\cite{ownpub5,cook_concepts_2001}. Discretizing the system via the finite element
 method (\secref{sec:fem}) yields the coupled system of equations
 \begin{equation}\label{eq:coupled}
     \begin{aligned}
@@ -247,7 +246,7 @@ method (\secref{sec:fem}) yields the coupled system of equations
 where $\mathbf{S}$ is the discretized system matrix which encodes the operators
  in the linear optical problem, $\mathbf{E}$ and 
  $\mathbf{E}_\text{in}$ are the vectors containing the nodal degrees-of-freedom for the electric 
-field and the forcing term respectively; $\mathbf{R}$ is the residual of the
+field and the forcing term, respectively; $\mathbf{R}$ is the residual of the
  geometrically nonlinear mechanical problem~\cite{cook_concepts_2001}, and 
  $\mathbf{U}$ and $\mathbf{F}_\text{MST}$ are the vectors containing the nodal
  degrees-of-freedom for the displacement field and the MST forcing term, respectively. 
@@ -271,18 +270,18 @@ field and the forcing term respectively; $\mathbf{R}$ is the residual of the
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/fields_panels_SC.png}}%%
-    \caption{Device evaluation in the deformed material configuration. (a) Electric-field norm ($\vert\mathbf{E}\vert$) for the SCTO device.
-     (b) Vertical ($y$) component of the MST force ($\langle f^\text{MST}_y\rangle$) for the SCTO device. (c) Vertical ($y$) component of
-      the MST force ($\langle f^\text{MST}_y\rangle$) for the WCTO device. (d) Vertical displacement ($u_y$) for the SCTO device. Adapted from~\cite{ownpub5}.}
+    \caption{Device evaluation in the deformed material configuration. (a) Electric-field norm ($\vert\mathbf{E}\vert$) for the SCTO device. (b) Vertical displacement ($u_y$) for the SCTO device. Adapted from~\cite{ownpub5}.
+     (c) Vertical ($y$) component of the MST force ($\langle f^\text{MST}_y\rangle$) for the SCTO device. (d) Vertical ($y$) component of
+      the MST force ($\langle f^\text{MST}_y\rangle$) for the WCTO device.}
     \label{fig:SC}
 \end{figure}
 
 
 Using this formalism, we optimize a membrane-like device with a central hole that spans its full height and splits it along the $x$-axis\footnote{In~\cite{ownpub5}, we also optimized a connected membrane-like device without a central hole.}. We then optimize the design based on two models: the strongly 
-coupled case ($\alpha = 1$, SC) and the weakly coupled case ($\alpha = 0$, WC). We refer to the optimize devices as SCTO 
-(strongly coupled topology-optimized) and WCTO (weakly coupled topology-optimized). When evaluating the 
-figure of merit, $\text{FOM}^a_b$, the superscript $a$ indicates the model type and the subscript $b$ indicates the device. 
-When evaluated with the fully coupled model, the SCTO device achieves a $\text{FOM}^\text{SC}_\text{SCTO}\approx 110$\, nm, while the WCTO achieves only
+coupled ($\alpha = 1$, SC) and the weakly coupled ($\alpha = 0$, WC) models. We refer to the optimized devices as SCTO 
+(strongly coupled topology-optimized) and WCTO (weakly coupled topology-optimized). Moreover, when evaluating the 
+figure of merit, we use the notation $\text{FOM}^a_b$, where the superscript $a$ indicates the model type and the subscript $b$ indicates the device. 
+When evaluated with the strongly coupled model, the SCTO device achieves a $\text{FOM}^\text{SC}_\text{SCTO}\approx 110$\, nm, while the WCTO achieves only
 $\text{FOM}^\text{SC}_\text{WCTO}\approx 43$\,nm, demonstrating a $\approx$3$\times$ improvement when the full coupling
  is accounted for during optimization. Evaluating the WCTO using the
  weakly coupled model gives an FOM of $\text{FOM}^\text{WC}_\text{WCTO}\approx$69\,nm, highlighting
@@ -295,11 +294,12 @@ $\text{FOM}^\text{SC}_\text{WCTO}\approx 43$\,nm, demonstrating a $\approx$3$\ti
  The SCTO design outperforms the WCTO device because the device rotates, causing heterogeneous
  vertical displacements that reduce its ability to reflect light effectively and weaken the
  optical forces [\figref{fig:SC}(d)]. As a result, the SCTO develops Bragg-mirror-like features
- that are slightly tilted compared to those in the WCTO, improving reflection of the incoming field.
+ that are slightly tilted compared to those in the WCTO, improving reflection of the incoming field
+ and yielding larger deformations compared to the WCTO device [\figref{fig:SC}(b)].
         
 
 \subsection*{Outlook and future work}
-This topology optimization framework can be applied to a wide
+This topology optimization framework for strongly coupled ooptomechanical systems can be applied to a wide
  range of optomechanical devices and paves the way for future developments. 
  For example, extending the method to include clamping losses and three-dimensional designs
   would improve accuracy for high aspect-ratio membranes~\cite{aspect_ratio}, while including

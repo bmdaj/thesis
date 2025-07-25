@@ -8,7 +8,7 @@ Despite this inherently multiphysics nature, most current design approaches trea
 for idealized optical performance, while non-optical effects are considered only a posteriori,
 often resulting in suboptimal or unstable devices. This gap between idealized design models and real-world device behavior limits the scalability and robustness of current nanophotonic technologies.
 
-One reason for this limitation is that conventional design methods rely on well-established, single-physics models (e.g., photonic crystals and waveguides), while the full multiphysics problem remains computationally challenging.
+One reason for this limitation is that conventional design methods rely on well-established, single-physics models (e.g., photonic crystals and waveguides), while the full multiphysics problem often remains conceptually and computationally challenging.
 However, when thermal, mechanical, or electrical effects strongly influence the optical response, neglecting them in the design phase can compromise overall device performance.
 
 This Ph.D. project aims to address these challenges by developing and applying multiphysics topology optimization methods for nanophotonic device design. These methods enable the simultaneous treatment of coupled physical effects, 
@@ -32,8 +32,8 @@ Another striking example is the soap bubble, where iridiscent colors arise from 
 In engineered nanophotonics, multiphysic couplings are fundamental to various key applications. From photonic integrated circuits that tune light through  
 thermo-optic~\cite{TOPS_1, TOPS_2, TOPS_3, program, PIC} and electro-optic~\cite{modu, modu1, modu2, pockels} effects, to nanolasers that balance optical gain, carrier dynamics, and heat dissipation~\cite{laser,laser_pic}, multiphysics couplings enable stable, efficient on-chip light manipulation. Equally, sensors  
 push sensitivity limits by coupling electromagnetic fields with mechanical motion, thermal gradients, or chemical environments, to achieve unprecedented sensitivities \cite{therm_sensing,sensing, weakforce}.
-Precise optomechanical manipulation, whether trapping nanoparticles~\cite{ashkin_acceleration_1970} or actuating tiny structures with light~\cite{ivanyi_optically_2024}, further illustrates how forces and electromagnetic fields work together at the nanoscale. Quantum photonic devices 
-also leverage electrical, mechanical, and thermal effects to preserve quantum coherence, or achieve robust state manipulation~\cite{quant_eo, Andrews_2014, Xi_2025}. Bridging these advances, nano-opto-electro-mechanical systems (NOEMS)~\cite{NOEMS} uniquely integrate all these  
+Precise optomechanical manipulation, wheth\-er trapping nanoparticles~\cite{ashkin_acceleration_1970} or actuating tiny structures with light~\cite{ivanyi_optically_2024}, further illustrates how forces and electromagnetic fields work together at the nanoscale. Quantum photonic devices 
+also leverage electrical, mechanical, and thermal effects to preserve quantum coherence, or achieve robust state manipulation~\cite{quant_eo, Andrews_2014, Xi_2025}. Bridging these advances, nano-opto-electro-mechanical systems (NOEMS)~\cite{NOEMS} uniquely integrate most of these  
 domains, allowing electrical actuation, mechanical motion, and optical response to coexist in ultra-compact, reconfigurable platforms. 
 
 % Wikimedia commons:
@@ -62,17 +62,17 @@ electromagnetics~\cite{topopt_EM}, (nano)photonics~\cite{topopt_phot}, and multi
 topology optimization in multiphysics nanophotonics and nano-optics problems~\cite{jensen_review}.
 
 \textbf{Density-based topology optimization} describes the distribution of materials within a design space using a 
-density\footnote{Note that this \emph{density} is not a density in the physical sense of the word but rather a design field used in topology optimization.} field $\rho(\mathbf{r}) \in [0,1]$, where $\mathbf{r}$ is the position vector, $\rho = 0$ corresponds to one material, typically air or void, and $\rho = 1$ corresponds to a solid material.
+density\footnote{Note that this \emph{density} does not correspond to a physical material density, but rather represents a design variable used to describe material distribution.} field $\rho(\mathbf{r}) \in [0,1]$, where $\mathbf{r}$ is the position vector, $\rho = 0$ corresponds to one material, typically air or void, and $\rho = 1$ corresponds to a solid material.
  As illustrated 
 in \autoref{fig:top_opt} for a nanophotonic system, the objective is to optimize the arrangement of these materials within 
-the design domain to achieve a desired performance (e.g. maximizing transmission, reflection, absorption) when illuminated by a light source, such as a laser beam, an LED, or a focused light beam. 
-The structure consists of passive regions, where the material remains fixed (e.g., void), and design regions, where the material distribution 
-is optimized. The optimization process iteratively updates the density field until FOM is maximized or minimized, and the targeted optical response is achieved.
+the design domain to achieve a desired performance (e.g., maximizing transmission, reflection, absorption) when illuminated by a light source, such as a laser beam, an LED, or a focused light beam. 
+The structure consists of passive regions, where the material remains fixed (e.g., void in \figref{fig:top_opt}), and design regions, where the material distribution 
+is optimized. The optimization process iteratively updates the density field until the FOM is maximized or minimized, and the targeted optical response is achieved.
 
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/top_opt.png}}%%
-    \caption{Topology optimization of a nanophotonic system, that is excited by an optical source. The simulation domain comprises a passive domain where the material is fixed, and a design domain (grey), where the material distribution is optimized for two different materials.}
+    \caption{Topology optimization of a nanophotonic system, that is excited by an optical source. The simulation domain comprises a passive domain (white) where the material is fixed, and a design domain (grey), where the material distribution is optimized for two different materials.}
         \label{fig:top_opt}
 \end{figure}
 
@@ -88,20 +88,20 @@ This thesis combines the concepts presented in \secref{intro:multi} and \secref{
 
   \textbf{Chapter 2} introduces the theoretical framework used throughout the thesis, including the mathematical formalism
   to describe the propagation of light in nanophotonic systems (\secref{sec:nanophotonics}), the basics for the numerical implementation of 
-  finite element-based simulation tools (\secref{sec:fem}) and the theory behind inverse design by topology optimization in multiphysics systems (\secref{sec:topopt_theory}).
+  finite element-based simulation tools (\secref{sec:fem}), and the theory behind inverse design by topology optimization in multiphysics systems (\secref{sec:topopt_theory}).
   
-  \textbf{Chapter 3} focuses on thermo-optically coupled topology optimization problems, emphasizing the topology optimization of 
-  thermo-optical phase-shifters (\secref{sec:TOPS})~\cite{ownpub0}.
+  \textbf{Chapter 3} covers thermo-optically coupled topology optimization problems, with 
+  special emphasis on the topology optimization of thermo-optical phase-shifters (\secref{sec:TOPS})~\cite{ownpub0}.
+
   
-  \textbf{Chapter 4} addresses optomechanically coupled topology optimization problems, highlighting the optimization of optical forces via
+  \textbf{Chapter 4} addresses optomechanically coupled topology optimization problems, highlighting the topology optimization of: optical forces via
   the Maxwell stress tensor formalism (\secref{sec:engi})~\cite{ownpub2}, integrated optical trapping cavities (\secref{sec:dip})~\cite{ownpub1, ownpub3}, and strongly coupled topology optimization 
   problems such as optomechanical membrane devices (\secref{sec:mech_strongly_coupled})~\cite{ownpub5}.
   
   \textbf{Chapter 5} explores electro-optically coupled topology optimization problems, with special focus on on the topology optimization of 
   nanolaser devices (\secref{sec:laser})~\cite{ownpub4}.
   
-  \textbf{Chapter 6} concludes the thesis by summarizing the main results and outlining future work in the field of multiphysics topology optimization in nanophotonics.
+  \textbf{Chapter 6} concludes the thesis by summarizing the main results and outlining potential directions for future research in the field.
 
-This thesis consists of a collection of papers, including unpublished work on
-strongly coupled optomechanical systems. The published and unpublished content is included in the attached
-papers~\cite{ownpub0, ownpub1, ownpub2, ownpub3} and manuscripts~\cite{ownpub4, ownpub5}, respectively.
+This thesis comprises a collection of papers~\cite{ownpub0, ownpub1, ownpub2, ownpub3} and manuscripts~\cite{ownpub4, ownpub5} that
+are attached at the end of the thesis.

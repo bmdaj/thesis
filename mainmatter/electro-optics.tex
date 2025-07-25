@@ -1,6 +1,6 @@
 \chapter{Electro-optical topology optimization problems}\label{chap:eo}
 %\section{Electro-optical systems~\cite{ownpub4}}\label{sec:electro_optical}
-Electro-optics describes the interaction between electricity and optics. Electricity involves the presence and flow of electric charges, which can generate electromagnetic fields.
+Electro-optics describes the interaction between electricity and optics. Electricity involves the presence and flow of electric charges, which can generate electromagnetic fields (\eqref{eq:faraday}--\eqref{eq:Gauss_B}).
 However, the main difference between electricity and optics is that the frequency of the electrical fields ($\omega_E$)
 is much lower than for optical fields ($\omega_E \ll \omega $), so that they can generally be treated as static fields\footnote{Similarly, as discussed in \secref{sec:nanophotonics}, the size ($s$) of optical devices
 is usually much smaller than the wavelength of the electrical fields ($s\ll \lambda_E $), and the field is effectively quasistatic.}.
@@ -10,16 +10,14 @@ These systems exploit mechanisms ranging from the electro-optic effect~\cite{eo_
 
 As a basic example of electro-optic coupling, one can consider the \textbf{electro-optic effect}~\cite{eo_effect}\footnote{This is analogous to the thermo-optic effect presented in \secref{sec:to_effect}.},
 where the refractive index of a material ($n$) can be modified under the influence of an external (static) electric field. The linear term in the electro-optic effect is known as the
-Pockels effect~\cite{pockels} $
+Pockels effect$
     \Delta n = -(1/2) n^3 r E\,,$
-where $r$ is the electro-optic coefficient, and $E$ is the applied electric field. The quadratic term 
+where $r$ is the electro-optic coefficient, and $E$ is the applied electric field~\cite{pockels}. The quadratic term 
 is the electro-optic Kerr effect $\Delta n = n_2 E^2$, where $n_2$ is the Kerr-coefficient~\cite{phot_crys}. Note that based on the applied external
 quasistatic electric field, one can model the refractive index change by accounting for higher order terms in the expansion of the polarizability
 in terms of the electric field (\eqref{eq:polarization}), where the Pockels effect corrresponds to the $\chi^{(2)}$ term, and the Kerr effect to the $\chi^{(3)}$ term.
 
-Building on this understanding of electro-optic phenomena, topology optimization has been extensively applied to design coupled electrical systems such as electromechanical~\cite{MEMS_multi,electrostatic_act} or electrochemical~\cite{electrode} systems. However, the field of electro-optics is
-still relatively unexplored with few works, such as \cite{g_heat}, which studies the design of diffusion-based systems with applications on
-carrier dynamics in semiconductor devices.
+Building on this understanding of electro-optic phenomena, topology optimization has been extensively applied to design coupled electrical systems such as electromechanical~\cite{MEMS_multi,electrostatic_act} or electrochemical~\cite{electrode} systems. However, electro-optics remains relatively unexplored, with only a few studies, such as~\cite{g_heat}, which focuses on diffusion-based designs for carrier dynamics in semiconductor devices.
 
 In the remainder of the section, we focus on our work~\cite{ownpub4} , where we apply topology 
 optimization to design a nanolaser device, where electrical pumping can be used to achieve efficient light emission.
@@ -28,12 +26,11 @@ optimization to design a nanolaser device, where electrical pumping can be used 
 
 \subsection*{A figure of merit for nanolaser performance}
 
-A nanolaser is a nanoscale laser device that emits light by stimulating the emission of photons in a gain medium, which is typically a semiconductor material. This is illustrated
+A nanolaser is a nanoscale device that emits light by stimulating the emission of photons in a gain medium, which is typically a semiconductor material. This is illustrated
 in \figref{fig:laser2d}, where a pump laser excites the emitters or carriers (e.g., electrons and holes) in a gain medium $D_0$, which then emits light into an output channel (e.g., waveguide) via
 stimulated emission. This physical
 mechanism can be described by using the Maxwell-Bloch equations~\cite{haken_laser_dynamics, PhysRev.134.A1429, SALT_original}, which are a set of nonlinear time-dependent 
-partial differential equations. When aligned to high quality factor ($Q \sim$ lifetime/period)~\cite{phot_crys} resonance ($Q\gtrapprox 100$~\cite{cerjan_2016}) lasing
-mode, the Maxwell-Bloch equations can be simplified via the single-pole approximation (SPA-) steady-state ab-initio laser theory (SALT)~\cite{Ge_2010}, leading to
+partial differential equations. When aligned to high-quality-factor ($Q \sim$ lifetime/period)~\cite{phot_crys} lasing mode ($Q\gtrapprox 100$~\cite{cerjan_2016}), the Maxwell-Bloch equations can be simplified via the single-pole approximation (SPA-) steady-state ab-initio laser theory (SALT)~\cite{Ge_2010}, leading to
 \begin{equation}\label{eq:SPA_SALT}
     \left[(\nabla \times 
      \nabla \times ) -\left[\varepsilon_c(\mathbf{r})-i \Delta \varepsilon^{\prime \prime} (\mathbf{r})\right] \left(\frac{\omega_L}{c}\right)^2\right] \mathbf{E}_L(\mathbf{r})=0\,.
@@ -44,7 +41,7 @@ imaginary part of the permittivity is given by
         \Delta \varepsilon^{\prime \prime} (\mathbf{r}) =  \frac{D_0(\mathbf{r}) d}{1+ e_c^{-2}\left|\mathbf{E}_L(\mathbf{r})\right|^2}\,.
 \end{equation}
 where $D_0$ is the gain profile, $d$ is a scalar pumping strength, and $e_c$ is a non-dimensionalization parameter~\cite{Ge_2010}. While the SPA-SALT model (\eqref{eq:SPA_SALT}) 
-is simpler and can be solved more efficiently than the Maxwell-Bloch equations, it still requires solving a nonlinear eigenproblem. This can be computationally expensive, especially in 
+is simpler, and can be solved more efficiently than the Maxwell-Bloch equations, it still requires solving a nonlinear eigenproblem. This can be computationally expensive, especially in 
 inverse design tasks where hundreds or thousands of such problems must be solved to optimize a device.
 
 \begin{figure}[tb]
@@ -57,12 +54,12 @@ inverse design tasks where hundreds or thousands of such problems must be solved
 \end{figure}
 
 To circumvent this, in~\cite{ownpub4} we propose a synthesis of SPA-SALT, perturbation theory, and coupled mode theory to simplify the problem. 
-The two key results of this derivation are the expression of the lasing threshold and the FOM for the optimization, which can be evaluated by solving a linear system of equations.
+The two key results of this derivation are the expression of the lasing threshold and the FOM for nanolaser design, which can be evaluated by solving a linear system of equations.
 The expression for the \textbf{lasing threshold} is given by~\cite{ownpub4}
 \begin{equation}\label{eq:pump_thresh}
  d_\text{thresh} = \frac{1}{\Gamma Q} = \frac{1}{Q} \frac{\int_{\Omega} \varepsilon_c(\mathbf{r})|\mathbf{E}_{\text{r}}(\mathbf{r})|^2\, \d \Omega}{\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^2\, \d \Omega}\,.
 \end{equation}
-where $\mathbf{E}_\text{r}$ is the field in a reciprocal problem (\secref{sec:nanophotonics}) where the system is excited from an output port\footnote{In a high-$Q$ system, the field from the reciprocal solve $\mathbf{E}_r$ is almost exactly equal to the cavity mode and/or the lasing mode plus a $\mathcal{O}(1/\sqrt{Q})$ error~\cite{phot_crys}.} (e.g. the waveguide in \figref{fig:laser2d}), and $\Gamma$ is a measure 
+where $\mathbf{E}_\text{r}$ is the field in a reciprocal problem (\eqref{eq:reciprocity}) where the system is excited from an output port\footnote{In a high-$Q$ system, the field from the reciprocal solve $\mathbf{E}_r$ is almost exactly equal to the cavity mode and/or the lasing mode plus a $\mathcal{O}(1/\sqrt{Q})$ error~\cite{phot_crys}.} (e.g. the waveguide in \figref{fig:laser2d}), and $\Gamma$ is a measure 
 of energy confinement in the gain region. From this expression, one can reduce the lasing threshold (for more energy-efficient lasers) by increasing $Q$ and enhancing the energy confinement in the
 active medium ($\Gamma$). In the single-emitter limit, where the emitter is modeled as 
 \(D_0(\mathbf{r}) \propto \delta(\mathbf{r} - \mathbf{r}^\prime)\) at position \(\mathbf{r}^\prime\), 
@@ -76,8 +73,8 @@ The second key result of the work is \textbf{a FOM for nanolaser design} that in
     \frac{P_\text{out}}{P_\text{pump}} \propto \frac{\left( \int_{\Omega} D_0(\mathbf{r})|\mathbf{E}_{\text{r}}(\mathbf{r})|^2 \,  \d \Omega \right)^3} {\int_{\Omega} D_0(\mathbf{r}) |\mathbf{E}_{\text{r}}(\mathbf{r})|^4 \,  \d \Omega} = \text{FOM}.
 \end{equation}
 We refer to this FOM as the \emph{nonlinear} FOM, since it accounts for the laser nonlinearities perturbatively. The FOM is roughly proportional 
-to the energy in the cavity ($\sim |\mathbf{E}_{\text{r}}|^6 / |\mathbf{E}_{\text{r}}|^4 \sim |\mathbf{E}_{\text{r}}|^2$), and thus to the $Q$ factor, which also contributes to attaining a low
-laser threshold (\eqref{eq:pump_thresh}). Consequently, as the optimization progresses, the high-$Q$ assumption in SPA-SALT (\eqref{eq:SPA_SALT}) will become increasingly accurate. In the single emitter limit, the FOM becomes
+to the energy in the cavity ($\sim |\mathbf{E}_{\text{r}}|^6 / |\mathbf{E}_{\text{r}}|^4 \sim |\mathbf{E}_{\text{r}}|^2$), and thus to the $Q$ factor\footnote{This also contributes to attaining a low
+laser threshold (\eqref{eq:pump_thresh}).}. Consequently, as the optimization progresses, the high-$Q$ assumption in SPA-SALT (\eqref{eq:SPA_SALT}) will become increasingly accurate. In the single emitter limit, the FOM becomes
 $\text{FOM}=\vert \mathbf{E}_{r}(\mathbf{r}^\prime) \vert^2$, which resembles an LDOS-like quantity in the reciprocal problem formulation~\cite{reci} and is proportional to the total power emitted into an output channel~\cite[App.~C]{reci}. 
  Note that this FOM also describes the case of a single-point gain region (e.g., a quantum dot),
 whose location is randomly distributed in the cavity with a probability density $\mathcal{P} \sim D_0$. 
@@ -89,7 +86,7 @@ medium $D_0$
  \text{FOM}_{\text {naive }}=\int_{\Omega} D_0(\mathbf{r})\left|\mathbf{E}_{\text{r}}(\mathbf{r})\right|^2 \d \Omega\,,
 \end{equation}
 which we refer to as the \emph{naive} FOM, defined by the overlap of the electric-field intensity of the reciprocal field with the gain distribution.
-Note that this naive FOM is also proportional to the intensity of the reciprocal field ($\sim |\mathbf{E}_{\text{r}}|^2$), and thus roughly proportional to $Q$, thus ensuring 
+Note that this naive FOM is also proportional to the intensity of the reciprocal field ($\sim |\mathbf{E}_{\text{r}}|^2$), and thus roughly proportional to $Q$, and should also result in 
 high-$Q$ optimized cavities.
 
 \subsection*{Optimization results for extended gain media}
@@ -103,16 +100,19 @@ high-$Q$ optimized cavities.
 \end{figure}
 
 Using the formalism introduced in the last subsection, we optimize two-dimensional nanolasers and study the influence of the gain region size in 
-nanolaser design (\figref{fig:laser_size}). A design-dependent Gaussian distribution describes the gain medium as
+nanolaser design (\figref{fig:laser_size}). A design-dependent Gaussian distribution centered around the center, $\mathbf{r}_0$, of the cavity, describes the gain medium as
 \begin{equation}
-D_0 (\mathbf{r}, \hat{\rho}) = \varepsilon_{\text{r}}(\mathbf{r})  \hat{\rho}(\mathbf{r}) \, e^{- \vert \mathbf{r} \vert^2 / 2 \sigma_{\text{g}}^2 }\,,
+D_0 (\mathbf{r}, \hat{\rho}) = \varepsilon_{\text{r}}(\mathbf{r})  \hat{\rho}(\mathbf{r}) \, e^{- \vert \mathbf{r}- \mathbf{r}_0 \vert^2 / 2 \sigma_{\text{g}}^2 }\,,
 \end{equation}
 where
 $\sigma_g$ is the standard deviation of the Gaussian and acts as a measure of the gain region size. We verify that for point-like gain regions, the devices optimized for the FOM and the naive FOM (\eqref{eq:SEL})
 achieve similar performance (limited by the finite size of the tiny gain region), favoring bowtie-like cavity designs
-where the in-plane electric field is concentrated at a bowtie sharpness-limited field singularity~\cite{sing}. Moreover, we show that for
-distributed gain media with sizes comparable to the wavelength ($\sigma_g \sim \lambda$, for $\lambda=1.55$ \textmu m) the derived FOM discourages field localization due to the denominator in \eqref{eq:eff_nl} (since $\int \vert \mathbf{E} \vert^2$ is finite), in contrast to the naive FOM, 
-resulting in a $\approx 3\times$ enhancement when targeting the correct nanolaser FOM (\eqref{eq:eff_nl}). 
+where the in-plane electric field is concentrated at a bowtie sharpness-limited field singularity~\cite{sing}. Moreover, we show that for distributed gain media with sizes comparable to the wavelength 
+($\sigma_g \sim \lambda$, for $\lambda = 1.55$~\textmu m), 
+the derived FOM, in contrast to the naive FOM, discourages field localization due to the quartic field term in the denominator of~\eqref{eq:eff_nl} 
+(since $\int |\mathbf{E}|^2$ is finite). 
+This results in an approximate $3\times$ enhancement when targeting the correct (nonlinear) nanolaser FOM~\eqref{eq:eff_nl}.
+
 \subsection*{Accounting for gain diffusion}
 
 In semiconductors with extended gain media, it is essential to model the electrical effect of \textbf{carrier diffusion}. This effect can be introduced by modeling the semiconductor gain medium in the free-carrier approximation\footnote{Neglecting carrier-carrier Coulomb interactions.}, using a diffusion 
@@ -147,12 +147,12 @@ enhance the coupling between the carriers and the optical field, and results in 
 
 Finally, we apply the formalism to design three-dimensional silicon-on-insulator nanolasers (\figref{fig:laser3d}), 
 and verify that, similar to the two-dimensional case, the FOM discourages field localization while still efficiently coupling to the output waveguide, yielding a $\approx 1.6\times$
-enhancement when considering the correct nonlinear FOM for extended gain media (\eqref{eq:eff_nl}). We attribute the enhancement drop with respect to the two-dimensional optimization results to the fact that localizing a high-$Q$ resonance is more difficult in three dimensions.
+enhancement when considering the correct nonlinear FOM for extended gain media (\eqref{eq:eff_nl}). We attribute the enhancement drop with respect to the two-dimensional optimization results to the fact that localizing a high-$Q$ resonance is more difficult in three dimensions, due to out-of-plane radiation losses.
 
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/laser_2.png}}%%
-    \caption{Topology-optimized nanolasers in three dimensions. The devices lases into the cavity mode (inset plot) and out-couple to the waveguide mode. (a) Device optimized for the naive FOM. (b) Device optimized for the nonlinear FOM.
+    \caption{Topology-optimized nanolasers in three dimensions. The devices lase into the cavity mode (inset plot) and out-couple to the waveguide mode. (a) Device optimized for the naive FOM. (b) Device optimized for the nonlinear FOM.
     Adapted from~\cite{ownpub4}.}
     \label{fig:laser3d}
 \end{figure}
@@ -165,4 +165,4 @@ spatial hole-burning, and gain diffusion at little extra computational cost. The
 single linear reciprocal Maxwell solve (plus potentially two scalar solves for gain diffusion), making it 
 an efficient formulation for laser optimization. This efficient first-principles approach allows for inverse nanolaser design in two and three dimensions, while  
 also allowing for future refinements, including accounting for the laser linewidth~\cite{pick}, or accurate pumping models, where optical or electrical pumping could be explicitly
-modeled.
+modeled by solving an additional partial differential equation.

@@ -28,8 +28,8 @@ In this appendix, we derive the adjoint sensitivity expressions for a general we
     \end{bmatrix}\,,
 \end{equation}
 where we have chosen the upper diagonal version of the weakly coupled problem and the system of equations has been rewriten in terms of the stiffness ($\mathbf{K}_i$) and 
-coupling matrices ($\mathbf{C}_{ij}$) so that the right-hand-side $\mathbf{f}=[\mathbf{f}_1, \cdots, \mathbf{f}_N]$ does not depend
-on the solution vector $\mathbf{u}=[\mathbf{u}_1, \cdots, \mathbf{u}_N]$. This notation is equivalent to having $N$ equations of the form
+coupling matrices ($\mathbf{C}_{ij}$) so that the right-hand-side $\mathbf{f}=[\mathbf{f}_1, \cdots, \mathbf{f}_N]^\top$ does not depend
+on the solution vector $\mathbf{u}=[\mathbf{u}_1, \cdots, \mathbf{u}_N]^\top$. This notation is equivalent to having $N$ equations of the form
 \begin{align}
 \left\{
     \begin{aligned}
@@ -95,7 +95,7 @@ thus yielding the final expression for the sensitivities
 \begin{equation}
     \frac{\d \Psi^\prime}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,.
 \end{equation}
-This means that the adjoint equations in \eqref{eq:app_adj_eqs} are solved in recevere order with respect to the forward solution (\eqref{eq:app_multiphysics_weak}). In other words, one needs to solve the first adjoint equation ($i=1$) 
+This means that the adjoint equations in \eqref{eq:app_adj_eqs} are solved in reverse order with respect to the forward solution (\eqref{eq:app_multiphysics_weak}). In other words, one needs to solve the first adjoint equation ($i=1$) 
 and feed the solution the next adjoint equation ($i=2$), and so on, to solve the last adjoint problem $i=N$  (as in the sequence: $\Lambda_1 \to \Lambda_{2} \to \cdots \to \Lambda_N$).
 
 % In the sequential case, the solutions of the different physics couple one-to-one in a seggregated fashion (
