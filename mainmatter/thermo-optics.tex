@@ -41,9 +41,9 @@ optimization methods by explicitly incorporating the coupling between heat trans
 
 To model the coupled thermo-optical topology optimization problem, we combine the governing equation of the optical model (\eqref{eq:wave_eq})
 with a heat transfer model. The simplest heat transfer model is the steady-state heat equation, which describes the
-heat transfer in a medium due to conduction and heat sources. The steadys-state \textbf{heat equation} is given by
+heat transfer in a medium due to conduction and heat sources. The steady-state \textbf{heat equation} is given by
 \begin{equation}\label{eq:heat}
- -\nabla \cdot \left[ G(\mathbf{r})\cdot \nabla T(\mathbf{r}) \right] = Q(\mathbf{r})
+ -\nabla \cdot \left[ G(\mathbf{r})\cdot \nabla T(\mathbf{r}) \right] = Q(\mathbf{r})\,,
 \end{equation}
 where $T$ is the temperature, $G$ is the thermal conductivity, and $Q$ is a volumetric heat source. This equation can be
 extended by considering convection and radiation effects, which may be important in some thermo-optical systems.
@@ -65,7 +65,7 @@ TOC of silicon ($\text{TOC} \approx 1.8 \cdot 10^{-4}\, \text{K}^{-1}$) at room-
 ($\lambda=1.55$ \textmu m)~\cite{thermo-optic-coef}. One of those components is the \textbf{thermo-optical phase shifter}, which, as shown in \figref{fig:thermo_res} (a),
 uses a heating device to locally modify the refractive index of a waveguide structure to induce a phase shift ($\Delta \Phi$) in the propagating optical mode
 \begin{equation}\label{eq:phase_shift}
-\Delta \Phi = \frac{2\pi L}{\lambda} \Delta n_\text{eff},
+\Delta \Phi = \frac{2\pi L}{\lambda} \Delta n_\text{eff}\,,
 \end{equation}
 where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} - n_\text{eff, unheated}$
  is the change of the effective refractive index of the guided mode. 
@@ -107,9 +107,10 @@ using the finite element formulation for two-dimensional waveguide cross-section
  E_z
     \end{array}\right\},
     \end{equation}
-where $E_{\text{t}}$ and $E_z$ are the transverse and longitudinal electric field components, $k_z$ is the propagation constant of the optical mode, and $A_{tt}, B_{tt},
+where $E_{\text{t}}$ and $E_z$ are the transverse ($x,y$) and longitudinal ($z$) electric field components, respectively, $k_z$ is the propagation constant of the optical mode, and $A_{tt}, B_{tt},
 B_{zt}$, $B_{tz}$, and $B_{zz}$ are matrices that can be assembled using the shape functions (\eqref{eq:ned_shape})~\cite{jin}. Following~\cite{jin}, we use Nédélec elements (\secref{sec:fem}) for the in-plane components of the electric field and 
 Lagrange elements for out-of-plane components. 
+
 Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide modes ($E_t$, $E_z$) and propagation constants ($k_z$). The propagation constant can be rewritten into the \textbf{effective index} $n_\text{eff} = k_z / k$,
  where the real part is a measure of the mode overlap with the refractive index distribution, and the imaginary part ($\Im\{n_\text{eff}\}$) quantifies modal losses. For a numerical implementation of this method, please refer to our GitHub repository~\cite{FEWEC}, which includes a tutorial on solving the 
  generalized eigenvalue problem in \eqref{eq:wg_eq} to find the effective indices and field distributions of waveguide eigenmodes.
@@ -145,11 +146,22 @@ unheated configurations.
 Unlike the eigenvalue-based approach presented in the previous section, which estimates losses from the imaginary part of the effective index,
  our method evaluates losses by directly solving a linear system. An optical source excites the waveguide mode, which appears
   as a resonance in the effective index spectrum. The imaginary part of the refractive index ($\Im\{n_\text{eff}\}$) represents the resonance linewidth and therefore the loss:
-   the smaller it is, the sharper the resonance and the lower the loss. By maximizing the amplitude of the excited mode,
+   the smaller it is, the sharper the resonance and the lower the loss. By maximizing the electric-fielf intensity of the excited mode,
     we can sharpen this resonance and thus minimize losses. Based on this idea, we formulate an optimization problem that designs
      the metallic heater around the waveguide by maximizing the worst-case electric-field intensity at two effective indices, representing
-      the heated and unheated waveguide states (Fig. 4 and Fig. 5 in~\cite{ownpub0}).
+      the heated and unheated waveguide states. An example of this is shown in \figref{fig:therm_opt_neff}, where we plot the maximum electric field intensity in the waveguide as a function of 
+      the effective index for the optimized device (\figref{fig:thermo_res}) and a reference design in the unheated and heated configurations, showing a larger and sharper resonances 
+      for the optimized device.
  
+      \begin{figure}[b]
+         \centering
+         \makebox[\textwidth][c]{\includegraphics{figures/TOPS_results_2.png}}%%
+         \caption{Maximum electric field intensity [$\max(\vert \mathbf{E} \vert^2)$] in the waveguide as a function of the effective index for the topology-optimized and reference designs in the unheated and heated
+         configurations. Adapted with permission from~\cite{ownpub0} © Optical Society of America.}
+         \label{fig:therm_opt_neff}
+      \end{figure}
+      
+
  To integrate the heat problem into the 
  topology optimization framework, we use a linear material interpolation 
 for the conductivity (Eq. 13 in~\cite{ownpub0}) and an interpolation for the heat source given by $
@@ -162,7 +174,7 @@ generation per unit volume increases as the total heater volume decreases.
 To solve the inverse design
 problem, we derive a coupled adjoint sensitivity analysis~\cite{ownpub0} enabling gradient-based optimization.
 
-Using this framework, we find the results in \figref{fig:thermo_res} (b), where we depict the waveguide cross-section with the topology-optimized metallic heater,
+Using this framework, we find the results in \figref{fig:therm_opt_neff} and \figref{fig:thermo_res} (b), where we depict the waveguide cross-section with the topology-optimized metallic heater,
 allowing the same low-loss mode to propagate in both the heated and unheated scenarios,
 reducing optical losses by $\approx 33 \%$ compared to state-of-the-art PT-symmetry breaking thermo-optical phase-shifter proposals~\cite{lipson}. Similar to the devices
 in~\cite{lipson}, the optimized design utilizes the spatially heterogeneous loss profile to engineer an efficient low-loss mode. Using this optimized device as a starting point, several extensions of the topology optimization problem are considered in~\cite{ownpub0}, such as varying volume constraints, optical power, and the inclusion of fabrication constraints (e.g., minimum length scales and layered 
@@ -197,7 +209,7 @@ Lastly, it is worth mentioning that an additional heat equation can be used as a
 and structural integrity in topology optimization problems (e.g.,~\cite{vanessa, structural_heat}), which is also exemplified by some of our
 works~\cite{ownpub1,ownpub2}. 
 
-This method, introduced in~\cite{li_structural_2016}, is known as the \textbf{Virtual Temperature Method} (VTM). The core idea of the VTM is to simulate a heat transfer problem on an auxiliary thermal field, where the solid domain
+This method, introduced in~\cite{li_structural_2016}, is known as the \textbf{virtual temperature method} (VTM). The core idea of the VTM is to simulate a heat transfer problem on an auxiliary thermal field, where the solid domain
  is treated as a heat source and a thermally conductive material. At the same time, void regions are modeled as an
 insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required while Neuman boundary conditions are imposed
 on the rest of boundaries. When 
@@ -211,6 +223,6 @@ boundaries.
 
 Note that by appropriately selecting the connecting boundaries it is possible to use the VTM to enforce
 (mechanical) structural integrity of the designs~\cite{structural_heat}, which can also be achieved by solving an auxiliary
-mechanical problem~\cite{structural_integrity}. For a more robust connectivity constraint formulation with less parameter tuning, we refer the reader to the Nonlinear 
-Virtual Temperature Method (NVTM)~\cite{nvtm}, and for further details on connectivity constraints, we refer the reader to the review 
+mechanical problem~\cite{structural_integrity}. For a more robust connectivity constraint formulation with less parameter tuning, we refer the reader to the nonlinear 
+virtual temperature method (NVTM)~\cite{nvtm}, and for further details on connectivity constraints, we refer the reader to the review 
 article by Cool et al.~\cite{vanessa}.

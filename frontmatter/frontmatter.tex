@@ -35,7 +35,7 @@
 \chapter*{Preface}
 This thesis is submitted in partial fulfillment of the requirements for obtaining
 the PhD degree at the Technical University of Denmark
-(DTU). The Danish National Research Foundation funded the project as a part of
+(DTU). The Danish National Research Foundation has funded the project as a part of
 the NanoPhoton -- Center for Nanophotonics. The work has been carried out at the
 Section for Solid Mechanics at the Department of Civil and Mechanical Engineering
 at DTU. The project has been carried out between the 1$^\text{st}$ of August 2022 and the 31$^\text{st}$
@@ -64,20 +64,20 @@ And to my parents, Berni and Katja, and my sister Nahia, thank you for always be
 
 This Ph.D. thesis addresses the development of multiphysics topology optimization methods and their application to nanophotonic device design. The work covers three multiphysics systems: thermo-optical, optomechanical, and electro-optical systems.
 
-In thermo-optical domain, we investigate the design of phase shifters for integrated photonic circuits. Using topology optimization, we engineer the distribution of a resistive metallic heater around an optical waveguide to achieve a low optical loss phase shift between heated and unheated states. This approach reduces optical losses by $\approx 33\%$ compared to state-of-the-art designs.
+In thermo-optical domain, the design of phase shifters for integrated photonic circuits is investigated. Using topology optimization, the distribution of a resistive metallic heater around an optical waveguide is engineered to achieve a low optical loss phase shift between heated and unheated states. This approach reduces optical losses by $\approx 33\%$ compared to state-of-the-art designs.
 
-In the optomechanical domain we explore several design problems. First, we optimize particle and environment geometries to enhance optical forces, achieving up to a $\approx 13 \times$ improvement over a reference design. We then design compact on-chip optical cavities capable of omnidirectional trapping of sub-wavelength particles, improving trapping stiffness by an order of magnitude compared to conventional optical tweezers. Finally, we optimize the design of an optomechanical membrane device, showing that incorporating optical-force-induced deformation into the model yields a $\approx 3 \times$ performance increase over designs that neglect this strong coupling effect.
+In the optomechanical several design problems are explored. First, particle and environment geometries are optimized to enhance optical forces, resulting in up to a $\approx 13 \times$ improvement over a reference design. Compact on-chip optical cavities capable of omnidirectional trapping of sub-wavelength particles are then designed, improving the trapping stiffness by an order of magnitude compared to conventional optical tweezers. Finally, the design of an optomechanical membrane device is optimized, showing that incorporating optical-force-induced deformation into the model yields a $\approx 3 \times$ performance increase over designs that neglect this strong coupling effect.
 
-In the electro-optical domain, we address nanolaser design. We derive an efficient figure of merit that incorporates the underlying laser physics, including carrier diffusion. This formulation leads to up to a $\approx 3\times$ performance improvement over traditional optimization approaches that do not account for these effects.
+In the electro-optical domain, nanolaser design is studied. An efficient figure of merit that incorporates the underlying laser physics, including carrier diffusion, is derived. This formulation leads to up to a $\approx 3\times$ performance improvement over traditional optimization approaches that do not account for these effects.
 
 \chapter*{Resumé}
-Denne Ph.d.-afhandling omhandler udviklingen af mul\-ti\-fy\-sisk-to\-po\-lo\-gi\-op\-ti\-merings\-me\-to\-der og deres anvendelse til design af nanofotoniske komponenter. Arbejdet dækker tre multifysisk systemer: termo-optiske, opto\-mekaniske og elektro-optiske systemer.
+Denne ph.d.-afhandling omhandler udviklingen af mul\-ti\-fy\-sisk-to\-po\-lo\-gi\-op\-ti\-merings\-me\-to\-der og deres anvendelse til design af nanofotoniske komponenter. Arbejdet dækker tre multifysiske systemer: termo-optiske, opto\-mekaniske og elektro-optiske systemer.
 
-Inden for det termo-optiske område fokuserer vi på design af fase\-skiftere til integrerede fotoniske kredsløb. Ved hjælp af topologioptimering designer vi fordelingen af et elektrisk varmelegeme omkring en optisk bølgeleder, hvil\-ket muliggør et faseskift med lavt optisk tab mellem den opvarmede og den ikke-opvarmede tilstand. Denne tilgang reducerer de optiske tab med $\approx 33\%$ sammenlignet med state-of-the-art løsninger.
+Inden for det termo-optiske område undersøges designet af fase\-skiftere til integrerede fotoniske kredsløb. Ved hjælp af topologioptimering designes fordelingen af et elektrisk varmelegeme omkring en optisk bølgeleder, hvil\-ket muliggør et faseskift med lavt optisk tab mellem den opvarmede og den ikke-opvarmede tilstand. Denne tilgang reducerer de optiske tab med $\approx 33\%$ sammenlignet med state-of-the-art løsninger.
 
-Inden for det optomekaniske område undersøger vi flere designproblemer. Først optimerer vi partikel- og omgivelsesgeometrier for at forstærke optiske kræfter, hvilket giver op til en $\approx 13 \times$ forbedring i forhold til en referencestruktur. Dernæst designer vi kompakte on-chip optiske kaviteter, der kan indfange sub-bølgelængde partikler i alle retninger, hvilket giver en væsentligt stærkere fastholdelse af partiklerne sammenlignet med konventionelle optiske pincetter. Endelig optimerer vi designet af en optomekanisk membran\-struktur og viser, at inklusion af optisk kraft-induceret deformation i modellen giver en $\approx 3 \times$ bedre ydeevne sammenlignet med design, der ikke inkluderer denne stærke koblingseffekt.
+Inden for det optomekaniske område behandles flere designproblemer. Først optimeres partikel- og omgivelsesgeometrier for at forstærke optiske kræfter, hvilket giver op til en $\approx 13 \times$ forbedring i forhold til en referencestruktur. Dernæst designes kompakte on-chip optiske kaviteter, der kan indfange sub-bølgelængde partikler i alle retninger, hvilket giver en væsentligt stærkere fastholdelse af partiklerne sammenlignet med konventionelle optiske pincetter. Endelig optimeres designet af en optomekanisk membran\-struktur, og det vises, at inklusion af optisk kraft-induceret deformation i modellen giver en $\approx 3 \times$ bedre ydeevne sammenlignet med design, der ikke inkluderer denne stærke koblingseffekt.
 
-Inden for det elektro-optiske område behandler vi designet af nanolasere. Vi udvikler en effektiv objektfunktion, der inkluderer den underliggende laser\-fy\-sik, herunder ladningsbærerdiffusion. Denne formulering medfører op til en \mbox{$\approx 3 \times$} forbe\-dring af ydeevnen i forhold til traditionelle optimeringsmetoder, der ikke tager højde for disse effekter.
+Inden for det elektro-optiske område undersøges designet af nanolasere. En effektiv objektfunktion, der inkluderer den underliggende laser\-fy\-sik, herunder ladningsbærerdiffusion, udledes. Denne formulering medfører op til en \mbox{$\approx 3 \times$} forbe\-dring af ydeevnen i forhold til traditionelle optimeringsmetoder, der ikke tager højde for disse effekter.
 
 \cleardoublepage
 \chapter*{Declaration of generative-AI assistance}
@@ -85,10 +85,10 @@ Inden for det elektro-optiske område behandler vi designet af nanolasere. Vi ud
 The author applied the large-language-model ChatGPT (o3, o4-mini) in a supportive role
 during the writing of this thesis. The model's output was employed for:
 \begin{itemize}
-\item assisting with high-level proofreading of the outline and logical structure; and
+\item assisting with high-level proofreading of the outline and logical structure;
 \item providing suggestions for the Danish translation of the abstract (\emph{resumé});
-\item suggesting alternative phrasings to improve clarit, style, and overall flow; and
-\item generating code snippets that supported more efficient numerical implementation and figure generation.
+\item suggesting alternative phrasings to improve clarity, style, and overall flow; and
+\item generating code snippets that enhanced computational speed through vectorized operations and just-in-time compilation frameworks.
 \end{itemize}
 All suggestions were critically reviewed, and where necessary, rewritten by the author before
 inclusion. Responsibility for the final text, code, and scientifc conclusions rests with the author.

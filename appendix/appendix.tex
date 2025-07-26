@@ -1,5 +1,5 @@
 \section{Sensitivity analysis for weakly coupled multiphysics problems}\label{app:appendix1}
-In this appendix, we derive the adjoint sensitivity expressions for a general weakly coupled linear multiphysics
+In this appendix, we derive the adjoint sensitivity expressions for a general weakly coupled multiphysics
  problem with $N$ physics. The system is written as $\mathbf{K}\mathbf{u} = \mathbf{f}$, where $\mathbf{K}$ is 
  the stiffness matrix of the coupled system, $\mathbf{u}$ is the solution vector, and $\mathbf{f}$ is the source or forcing term vector. For 
  simplicity, we assume real-valued problems, but this method can be extended to complex-valued cases, as shown
@@ -36,7 +36,7 @@ on the solution vector $\mathbf{u}=[\mathbf{u}_1, \cdots, \mathbf{u}_N]^\top$. T
         \quad \mathbf{K}_1(\mathbf{u}_2, \ldots, \mathbf{u}_N)\, \mathbf{u}_1  + \sum_{j=2}^N \mathbf{C}_{1j} (\mathbf{u}_2, \cdots \mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_1\,, \\
         \quad\mathbf{K}_2(\mathbf{u}_3, \ldots, \mathbf{u}_N)\, \mathbf{u}_2 + \sum_{j=3}^N \mathbf{C}_{2j} (\mathbf{u}_3, \cdots \mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_2\,, \\
         \quad\ldots \\
-        \quad\mathbf{K}_{N-1} (\mathbf{u}_N) \, \mathbf{u}_{N-1} + \mathbf{C}_{N-1\, N}(\mathbf{u}_N)\, \mathbf{u}_j &= \mathbf{f}_{N-1} \,, \\
+        \quad\mathbf{K}_{N-1} (\mathbf{u}_N) \, \mathbf{u}_{N-1} + \mathbf{C}_{N-1\, N}(\mathbf{u}_N)\, \mathbf{u}_N &= \mathbf{f}_{N-1} \,, \\
         \quad\mathbf{K}_N \, \mathbf{u}_N &= \mathbf{f}_N\,.
     \end{aligned}
 \right.
@@ -82,7 +82,7 @@ Taking \autoref{eq:sens_init} and grouping the terms it is possible to rewrite t
 \end{align}
 where $\mathcal{A}_i (\Lambda_i)$ are the adjoint equation terms
 \begin{equation}
-    \mathcal{A}_i = \frac{\partial \Psi}{\partial \mathbf{u}_i} + \Lambda_i^\top \mathbf{K}_i + \sum_{j=1}^{i} \Lambda_j^\top\left(
+    \mathcal{A}_i = \frac{\partial \Psi}{\partial \mathbf{u}_i} + \Lambda_{i-1}^\top \mathbf{K}_i + \sum_{j=1}^{i} \Lambda_j^\top\left(
      \frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\mathbf{u}_j + \sum^N_{k=j+1} \frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i} \mathbf{u}_i + \mathbf{C}_{jk}\right) \quad \quad \forall i \in [1, N] \,,
 \end{equation}
 which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint problems. 

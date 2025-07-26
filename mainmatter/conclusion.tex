@@ -3,28 +3,22 @@
 This thesis presents a comprehensive study on multiphysics topology optimization in nanophotonics, focusing on developing novel design
 methods for applications that rely on coupled physical effects, such as thermo-optical, optomechanical, and electro-optical interactions.
 
-We begin by introducing the field of nanophotonics (\secref{sec:nanophotonics}) and the numerical solution of Maxwell's equations
-(\secref{sec:fem}), which form the foundation for single-physics topology optimization. We then extend the framework to multiphysics
-problems (\secref{sec:coupled}) and present a general multiphysics topology optimization formulation (\secref{sec:topopt_theory}).
+First, the field of nanophotonics and the numerical solution of Maxwell's equations are introduced, laying the foundation for single-physics topology optimization. The framework is then extended to address multiphysics
+problems, and a general multiphysics topology optimization formulation is presented.
 
-Next, we address thermo-optical topology optimization (\chapref{chap:eo}), focusing on designing low-loss phase shifters
- (\secref{sec:TOPS}) by optimizing metallic heater layouts around optical waveguides. We derive the first coupled multiphysics topology optimization formulation
-in the nanophotonics literature and demonstrate compact, efficient conduction heater designs that reduce optical losses by
+Thermo-optical topology optimization is considered next, focusing on the design of low-loss phase shifters through the optimization of metallic heater layouts around optical waveguides. This represents the first coupled multiphysics topology optimization formulation
+in the nanophotonics literature, demonstrating compact, efficient conduction heater designs that reduce optical losses by
 $\approx 33\%$ compared to state-of-the-art solutions.
 
-We then explore optomechanical topology optimization (\chapref{chap:om}). First, we optimize the design of particles and their environments for optical force engineering (\secref{sec:engi}) by developing a topology optimization framework that uses the MST formalism to target optical forces on particles of arbitrary size and shape.
-Our optimized designs show that tailoring both the particle geometry and its
+Next, several optomechanical topology optimization problems are explored. First, a topology optimization framework based on the Maxwell stress tensor formalism is developed and used to optimize the design of particles and their surrounding environments, with the goal of enhancing optical forces on particles of arbitrary size and shape.
+It is shown that tailoring both the particle geometry and its
 environment can significantly enhance momentum exchange with an optical field, achieving force enhancements of up to
-$\approx 13\times$ compared to a reference design. Next, we design integrated photonic cavities for sub-wavelength particle trapping
-(\secref{sec:dip}) and theoretically demonstrate omnidirectional trapping without relying on SIBA effects, while achieving a trapping stiffness
-an order of magnitude larger than that of diffraction-limited optical tweezers. Lastly, we optimize optomechanical membranes
-(\secref{sec:mech_strongly_coupled}) whose optical response strongly couples to mechanical deformation. By accounting for
-optical-force-induced deformation in the design, we achieve a performance improvement of $\approx 3\times$ over designs that
+$\approx 13\times$ compared to a reference design. Additionally, integrated photonic cavities are designed to enable omnidirectional trapping of sub-wavelength particles without relying on SIBA effects. Theoretical analysis demonstrates that these cavities achieve a trapping stiffness an order of magnitude greater than that of conventional diffraction-limited optical tweezers. Finally, optomechanical membranes are designed, accounting for the interaction between their optical response and mechanical deformation. Including the
+optical-force-induced deformation in the design process, results in a performance improvement of $\approx 3\times$ over designs that
 neglect this effect, highlighting the importance of including multiphysics interactions in the design process.
 
-Finally, we consider electro-optical topology optimization (\chapref{chap:eo}), where we derive an efficient formulation for nanolaser design
-(\secref{sec:laser}). We apply this approach to design two- and three-dimensional nanolasers and show that using
- a laser physics-based FOM (accounting for factors such as extended gain media and steady-state diffusion) outperforms
+Lastly, electro-optical topology optimization is addressed. An efficient formulation for nanolaser design is derived and applied to design two- and three-dimensional nanolasers. It is demonstrated that the use of
+ a laser physics-based figure of merit, which accounts for factors such as extended gain media and steady-state diffusion, outperforms
   heuristic local-density-of-states-like metrics, yielding up to a $\approx 3\times$ improvement.
 
 Overall, this research contributes to the design of novel nanophotonic devices that leverage multiphysics interactions, enabling enhanced functionality, improved performance, and new capabilities in nanophotonic systems.
@@ -36,7 +30,7 @@ This work opens several avenues for future research, including:
 \begin{itemize}
     \item \textbf{Application to experimental setups:} While the framework was developed theoretically, it can be adapted to specific experimental configurations with minor, problem-dependent modifications.
     
-    \item \textbf{Nonlinear multiphysics extensions:} The current adjoint formulation (\secref{sec:topopt_theory}) handles cascaded nonlinear dependencies in coupled systems, where the couplings are nonlinear but physics system can still be solved linearly. Future work could extend this to fully nonlinear systems, where each governing equations depend on their respective state solution.
+    %\item \textbf{Nonlinear multiphysics extensions:} The current adjoint formulation (\secref{sec:topopt_theory}) handles cascaded nonlinear dependencies in coupled systems, where the couplings are nonlinear but physics system can still be solved linearly. Future work could extend this to fully nonlinear systems, where each governing equations depend on their respective state solution.
     
     \item \textbf{Simultaneous multiphysics effects:} Extending the framework to handle multiple coupled effects, such as thermo-electro-optical interactions or combined geometric deformation and photoelasticity (\secref{sec:mech_strongly_coupled}), could unlock advanced device functionalities.
     
@@ -44,5 +38,5 @@ This work opens several avenues for future research, including:
     
     \item \textbf{Strongly coupled systems:} Beyond the optomechanical membrane problem studied in~\secref{sec:mech_strongly_coupled}, other strongly coupled problems, like heat-induced refractive index changes from optical absorption (\secref{sec:thermo_strong_coupling}), could be investigated.
     
-    \item \textbf{Nanolaser pumping models:} The nanolaser topology optimization framework (\secref{sec:laser}) could be extended to include explicit models of optical or electrical pumping.
+    %\item \textbf{Nanolaser pumping models:} The nanolaser topology optimization framework (\secref{sec:laser}) could be extended to include explicit models of optical or electrical pumping.
 \end{itemize}
