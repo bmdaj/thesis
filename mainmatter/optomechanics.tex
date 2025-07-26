@@ -248,7 +248,7 @@ where $\mathbf{S}$ is the discretized system matrix which encodes the operators
 field and the forcing term, respectively; $\mathbf{R}$ is the residual of the
  geometrically nonlinear mechanical problem~\cite{cook_concepts_2001}, and 
  $\mathbf{U}$ and $\mathbf{F}_\text{MST}$ are the vectors containing the nodal
- degrees-of-freedom for the displacement field and the MST forcing term, respectively. 
+ degrees-of-freedom for the displacement field and the time-averaged MST forcing term, respectively. 
  Moreover, we consider the parameter $\alpha$, which allows us to control if we solve 
  the strongly coupled problem ($\alpha=1$), where the optical field deforms the structure, 
  or the weakly coupled problem ($\alpha=0$), which is a good approximation in the small deformation 
@@ -260,11 +260,11 @@ field and the forcing term, respectively; $\mathbf{R}$ is the residual of the
  For the topology optimization formulation, we consider a linear material interpolation for the Young's modulus\footnote{We did not experience any problems with grayscale in this problem, so we did not use the standard SIMP interpolation (\eqref{eq:SIMP})~\cite{SIMP}.} and the 
  refractive index. More importantly, to introduce the optical force loads in our mechanical problem, one would need to identify the boundaries of the design according to~\eqref{eq:f_MST}. However, in density-based topology optimization problems, boundaries
  are not well defined in the design process when having intermediate density values~\cite{jdara}. To circumvent this issue, we apply Gauss's theorem to
- define a volumetric load density that is linearly proportional to the physical design field
+ define mechanical load that is linearly proportional to the physical design field
     \begin{equation}
- \mathbf{f}_\text{MST} = \hat{\rho} \cdot \nabla \cdot \langle\overleftrightarrow{\bm{\mathcal{T}}}(\mathbf{r}, t)\rangle \,,
+ \langle \bm{\mathcal{F}}_\text{MST}(\mathbf{r},t) \rangle = \hat{\rho} \int_\Omega \nabla \cdot \langle\overleftrightarrow{\bm{\mathcal{T}}}(\mathbf{r}, t)\rangle \d\Omega \,,
     \end{equation}
- which can be integrated over the volume of the simulation domain to find the total force. Lastly, to ensure structural integrity, we apply a connectivity constraint via the VTM~\cite{li_structural_2016} (\secref{sec:aux}), which ensures that the design is connected to membrane ends. 
+Lastly, to ensure structural integrity, we apply a connectivity constraint via the VTM~\cite{li_structural_2016} (\secref{sec:aux}), which ensures that the design is connected to membrane ends. 
 
 \begin{figure}[tb]
     \centering
