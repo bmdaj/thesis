@@ -1,6 +1,6 @@
 \chapter{Theoretical framework}
 
-This chapter lays out the theoretical foundations used throughout the thesis and is divided into four main sections. The first section (\secref{sec:nanophotonics}) covers the fundamental physics governing nanophotonic problems in the single-physics picture. The second section (\secref{sec:fem}) provides background on solving nanophotonic problems numerically using the finite element method. The third section (\secref{sec:coupled}) presents the concept of coupled nanophotonic systems in multiphysics picture. Finally, the fourth section (\secref{sec:topopt_theory}) presents a framework for topology optimization of multiphysics systems.
+This chapter lays out the theoretical foundations used throughout the thesis and is divided into four main sections. The first section (\secref{sec:nanophotonics}) covers the fundamental physics governing nanophotonic problems in the single-physics picture. The second section (\secref{sec:fem}) provides background on solving nanophotonic problems numerically using the finite element method. The third section (\secref{sec:coupled}) presents the concept of coupled nanophotonic systems in the multiphysics picture. Finally, the fourth section (\secref{sec:topopt_theory}) presents a framework for the topology optimization of multiphysics systems.
 
 %\begin{figure}[tb]
 %    \centering
@@ -241,7 +241,7 @@ term. In the absence of sources ($\mathbf{f}=\mathbf{0})$,~\eqref{eq:maxwell_op}
    \nabla \times \left[\nabla \times
    \mathbf{E}_\lambda(\mathbf{r})\right] = \omega_\lambda^2 \varepsilon_r(\mathbf{r}) \mathbf{E}_\lambda(\mathbf{r})\,,
 \end{equation}
-where the eigenvalues are $\omega_\lambda^2=(\omega/c)^2$ and $\mathbf{E}_\lambda$ are the eigenmodes. Note that the equation in~\eqref{eq:wave_eq} can be reduced to the scalar Helmholtz equation in
+where $\omega_\lambda^2=(\omega/c)^2$ denotes the eigenvalues and $\mathbf{E}_\lambda$ denotes the eigenmodes. Note that the equation in~\eqref{eq:wave_eq} can be reduced to the scalar Helmholtz equation in
 two-dimensional problems $\nabla \cdot(A \nabla u) - B \omega^2 u=0$, in which
 $A=1, B=\varepsilon_r c^{-2}$ and $u=E_z$ for
 transverse magnetic (TM) polarized waves and $A=1 / \varepsilon_r, B=c^2$ and
@@ -269,14 +269,14 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
     \end{align}
     and the normal field conditions
     \begin{align}
-        \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) & = \sigma \label{eq:BC_D} \\
+        \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) & = \rho_s \label{eq:BC_D} \\
         \mathbf{n} \cdot (\mathbf{B}_i - \mathbf{B}_j) & = 0, \label{eq:BC_B}
     \end{align}
     where $\mathbf{n}$ is the unit vector normal to the boundary, $\mathbf{K}$ is the
     surface current density,
     and $\rho_s$ is the surface charge density. Note that in many optical problems
     there are no
-    sources in the individual domains ($\mathbf{K}=\sigma=0)$, simplifying the
+    sources in the individual domains ($\mathbf{K}=\rho_s=0)$, simplifying the
     equations.
 
 %    \begin{figure}[tb]
@@ -292,7 +292,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
     The following are some key properties of Maxwell's equations that will be
     useful throughout this thesis:
     \begin{itemize}
-        \item \textbf{Linearity and superposition:} The operator in~\eqref{eq:maxwell_op} is linear, so any linear combination of solutions is
+        \item \textbf{Linearity and superposition:} The operator $\mathcal{L}$ in~\eqref{eq:maxwell_op} is linear, so any linear combination of solutions is
               also a solution, in accordance with the superposition principle.
               For example, given two solutions $\mathbf{E}_1$ and $\mathbf{E}_2$ to the
               linear systems $\mathcal{L}[\mathbf{E}_1] = \mathbf{f}_1$ and
@@ -311,7 +311,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
               cases the problem can be linearized for small nonlinearities
               using perturbation theory (\secref{sec:laser})~\cite{ownpub4}.
 
-              \item \textbf{Hermiticity:} The operator $\mathcal{L}$ in~\eqref{eq:maxwell_op}  is self-adjoint,
+              \item \textbf{Hermiticity:} The operator $\mathcal{L}$ in~\eqref{eq:maxwell_op} is hermitian,
               meaning that the inner product of two solutions is invariant under the
               operator
                            %\begin{equation}
@@ -425,10 +425,10 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
                            $\Omega_2$
               with two current densities $\mathbf{j}_1$ and $\mathbf{j}_2$ that create
               the fields $\mathbf{E}_1$, $\mathbf{H}_1$ and $\mathbf{E}_2$, $\mathbf{H}_2$
-              respectively. It is possible to show that via Lorentz reciprocity~\cite{novotny}
+              respectively, it is possible to show that via Lorentz reciprocity~\cite{novotny}
                            \begin{equation}\label{eq:reciprocity}
-                               \int_{\Omega_1} \mathbf{E}_1^* \cdot \mathbf{j}_2 \d \Omega = \int_{\Omega_2}
-              \mathbf{E}_2^* \cdot \mathbf{j}_1 \d \Omega\,.
+                               \int_{\Omega_1} \mathbf{j}_1 \cdot  \mathbf{E}_2 \d \Omega = \int_{\Omega_2}
+                               \mathbf{j}_2 \cdot  \mathbf{E}_1 \d \Omega\,.
                            \end{equation}
               For lossless media, this is equivalent to time-reversal symmetry, but for
               lossy systems, where time-reversal symmetry breaks down, reciprocity remains valid~\cite{Carminati:98}. Reciprocity
@@ -453,7 +453,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
     \begin{equation}\label{eq:ned_shape}
  \boldsymbol{E}^e(\mathbf{r})=\sum^M_i \boldsymbol{N}_i(\mathbf{r}) E_i\,,
     \end{equation}
- where $M$ denotes the number of edges in the element, and $E_i$ is the value of the degrees-of-freedom of the electric field associated with each edge. As an example
+ where $M$ denotes the number of edges in the element, and $E_i$ is the value of the degrees-of-freedom of the electric field associated with each edge $i$. As an example
   of domain discretization, \figref{fig:fem} shows the two-dimensional domain introduced in \figref{fig:top_opt}, discretized
    into triangular Nédélec elements of the first kind~\cite{nedelec}. For illustration, the shape function corresponding to one of the edges is visualized.
 
@@ -463,8 +463,8 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
         \makebox[\textwidth][c]{\includegraphics{figures/FEM.png}}%%
         \caption{Geometrical discretization of the physical domain into the finite-element mesh, which is composed of Nédélec elements of the first kind. The element colored
  in light blue is a triangular element with three edges, where
- we have sketched a quiver plot for the shape function for \textit{Edge
- 2} $(\mathbf{N}_2)$.}
+ we have sketched a quiver plot for the shape function for Edge
+ 2 $(\mathbf{N}_2)$.}
         \label{fig:fem}
     \end{figure}
     
@@ -474,7 +474,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  - \int_{\partial \Omega} \mathbf{v} \cdot \left[ \mathbf{n} \times \left( \nabla \times \mathbf{E} \right) \right]& \d \Gamma 
  = \int_\Omega \mathbf{v} \cdot \mathbf{f} \d \Omega\,,
     \end{align}
- where $\mathbf{v}$ is a test function, $\Omega$ is the volume of the computational domain,
+ where $\mathbf{v}$ is the test function, $\Omega$ is the volume of the computational domain,
  and $\partial \Omega$ is the boundary where Neumann boundary conditions
  are prescribed. 
  
@@ -488,10 +488,10 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  which is solved for the vector $\mathbf{E}$ containing the degrees-of-freedom of the electric field, for a given stiffness matrix $\mathbf{K}$ that encodes the operator 
  in~\eqref{eq:maxwell_op}, and a 
  vector $\mathbf{F}$ containing the degrees of freedom of the forcing term. 
- As mentioned previosly\footnote{See discussion on hermiticity
+ As mentioned previosly\footnote{See discussion on hermiticity (\eqref{eq:hermiticity})
  in~\secref{sec:nanophotonics}.} the stiffness matrix is a sparse symmetric indefinite matrix,
  restricting the use of iterative solvers
- (e.g., Cholesky factorization, Krylov method) to solve the system of equations.
+ (e.g., Cholesky factorization, the Krylov method) to solve the system of equations.
  Thus, LU factorization (via sparse direct solvers) is
  a common choice for topology optimization applications, since one can reuse the factorization to solve
  the adjoint problem (e.g., \eqref{eq:adjoint_eqs} in~\secref{sec:topopt_theory}). 
@@ -513,8 +513,8 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  first problem
  is described by the equation $\mathcal{L}_1 [\mathbf{u}_1]= \mathbf{f}_1$ and
  the second problem is described by the
- equation $\mathcal{L}_2 [\mathbf{u}_2]= \mathbf{f}_2$. Using the finite element method (\secref{sec:fem}), these equations can be
- discretized into the form $\mathbf{K}_1 \mathbf{u} = \mathbf{f}_1$ and $\mathbf{K}_2 \mathbf{u}_2 =
+ equation $\mathcal{L}_2 [\mathbf{u}_2]= \mathbf{f}_2$, where $\mathbf{u}_1$ and $\mathbf{u}_2$ denote the solutions to the linear problems. Using the finite element method (\secref{sec:fem}), these equations can be
+ discretized into the form $\mathbf{K}_1 \mathbf{u}_1 = \mathbf{f}_1$ and $\mathbf{K}_2 \mathbf{u}_2 =
 \mathbf{f}_2$.
  If the stiffness matrix ($\mathbf{K}_1$, $\mathbf{K}_2$) and/or loading term ($\mathbf{f}_1$, $\mathbf{f}_2$) of one of the problems depends on the solution of the
  other problem, we say that the two physics problems are
@@ -628,8 +628,8 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
  In general, there are two main strategies for solving coupled problems. For strongly coupled problems, 
  such as the one presented in~\eqref{eq:multiphysics_strong}, a \textbf{monolithic} approach is often used, in which the entire system of 
  equations is solved simultaneously, for example, using direct solvers like LU factorization. When this is not feasible or 
- efficient, a \textbf{segregated} approach is used instead, solving the coupled problems in an iterative sequence. In this 
- approach, each subproblem is addressed separately, with the solution of one problem used to update the other, and this process 
+ efficient, a \textbf{segregated} approach may be used instead, solving the coupled problems in an iterative sequence. In this 
+ approach, each subproblem is addressed separately, with the solution of one problem used to update the others. This process 
  is repeated until a convergence criterion is met (e.g., \secref{sec:mech_strongly_coupled}~\cite{ownpub5}). In weakly coupled systems, the solution of one part feeds directly into the next. 
  As a result, each problem only needs to be solved once to obtain the full solution. This is also the case for 
  weakly nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}), where even if the coupling is nonlinear, the system of equations
@@ -707,12 +707,12 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
     The filter operation is followed by a \textbf{smoothed Heaviside
     threshold}~\cite{projection}
        \begin{equation}\label{eq:threshold}
-    \hat{\rho} \equiv \Theta_{\beta,\eta}(\hat{\rho}) =\frac{\tanh (\beta \cdot \eta)+\tanh \left[ \beta
-               \cdot(\hat{\rho}-\eta) \right]}{\tanh (\beta \cdot \eta)+\tanh \left[ \beta \cdot(1-\eta) \right]}\,,
+    \hat{\rho} \equiv \Theta_{\beta,\eta}(\tilde{\rho}) =\frac{\tanh (\beta \cdot \eta)+\tanh \left[ \beta
+               \cdot(\tilde{\rho}-\eta) \right]}{\tanh (\beta \cdot \eta)+\tanh \left[ \beta \cdot(1-\eta) \right]}\,,
     \quad \beta \in[1, \infty)\,,\, \eta \in[0,1]\,,
        \end{equation}
     to obtain the physical field $\hat{\rho}$, where $\beta$ and $\eta$ control the threshold sharpness and value in the 
-    threshold function $\Theta_{\beta,\eta}(\hat{\rho})$,
+    threshold function $\Theta_{\beta,\eta}(\tilde{\rho})$,
     respectively. Note that in topology optimization problems the threshold sharpness ($\beta$) is gradually increased as the optimization progresses, which is also known as 
     the continuation scheme. This ensures that
     small $\beta$ allows grayscale designs in which the topology can change smoothly, while larger
@@ -755,7 +755,7 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
  nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}) solved using a segregated approach, with the detailed derivations in 
     \appref{app:appendix1}. Note that for coupled problems solved with a monolithic approach, where all physics are handled
  in a single solve, the adjoint sensitivities can be computed directly by solving a single adjoint problem for the entire
- system (as shown in~\cite{jensen_review} for optical cases), with no additional derivation required.
+ system (as shown in~\cite{jensen_review} for optical cases), with no additional derivations required.
 
  Following the derivations in \appref{app:appendix1}, the sensitivities for a weakly coupled problem with nonlinear coupling solved using the segregated
  approach can be computed as
@@ -764,8 +764,8 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
     \end{equation}
  where $N$ is the number of coupled problems and the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations
     \begin{equation}\label{eq:adjoint_eqs}
-        \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
-            \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top  + \sum^N_{k=j+1} \mathbf{u}^\top_i \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{jk} \right]\Lambda_j  \quad \forall i \in [1, N] \,.
+      \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
+         \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,,
    \end{equation}
  Following these adjoint systems, one needs to solve the first adjoint equation ($i=1$) 
  and feed the solution to the following adjoint equation ($i=2$), and so on, until one can solve the last adjoint problem $i=N$; backwards compared to the forward problem (\eqref{eq:multiphysics_weak_nonlinear}).

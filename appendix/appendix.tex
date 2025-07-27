@@ -82,14 +82,14 @@ Taking \autoref{eq:sens_init} and grouping the terms it is possible to rewrite t
 \end{align}
 where $\mathcal{A}_i (\Lambda_i)$ are the adjoint equation terms
 \begin{equation}
-    \mathcal{A}_i = \frac{\partial \Psi}{\partial \mathbf{u}_i} + \Lambda_{i-1}^\top \mathbf{K}_i + \sum_{j=1}^{i} \Lambda_j^\top\left(
-     \frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\mathbf{u}_j + \sum^N_{k=j+1} \frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i} \mathbf{u}_i + \mathbf{C}_{jk}\right) \quad \quad \forall i \in [1, N] \,,
+    \mathcal{A}_i = \frac{\partial \Psi}{\partial \mathbf{u}_i} + \Lambda_{i}^\top \mathbf{K}_i + \sum_{j=1}^{i-1} \Lambda_j^\top\left(
+     \frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\mathbf{u}_j + \mathbf{C}_{ji} + \sum^N_{k=j+1} \frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i} \mathbf{u}_k  \right) \quad \quad \forall i \in [1, N] \,,
 \end{equation}
 which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint problems. 
 To solve the adjoint equations one needs to find the Lagrange multipliers $\Lambda_i$ as the solution to the adjoint equations
 \begin{equation}\label{eq:app_adj_eqs}
      \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
-     \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top  + \sum^N_{k=j+1} \mathbf{u}^\top_i \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{jk} \right]\Lambda_j  \quad \forall i \in [1, N] \,,
+     \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,,
 \end{equation}
 thus yielding the final expression for the sensitivities
 \begin{equation}

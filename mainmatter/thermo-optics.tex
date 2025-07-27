@@ -71,7 +71,7 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
  is the change of the effective refractive index of the guided mode. 
  
  It is not straightforward to design thermo-optical phase shifters; ideally, one would like to place a heater close to the waveguide to achieve a phase shift with minimum input power.
- Theoretically, this would imply positioning the metal in contact to the waveguide to ensure efficient heat transfer, but since the heaters are usually metallic, this would result
+ Theoretically, this would imply positioning the metal in contact to the waveguide to ensure efficient heat transfer, but since the heaters are usually metallic ($\kappa > 0$, in \eqref{eq:perm}), this would result
  in optical losses. As shown in the optical and thermal responses in \figref{fig:thermo_res} (b), this trade-off problem can be tackled with topology optimization to design efficient low-loss thermo-optical phase shifters, 
  as we will detail in the following sections.
 
@@ -79,7 +79,7 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/TOPS_results.png}}%%
     \caption{Topology optimization of thermo-optical phase shifters. (a) Phase-shifting mechanism, where a heater changes the temperature in the waveguide $\Delta T$, inducing a phase shift
-    $\Delta \Phi$ over a length $L$. (b) Thermal and optical response of the topology optimized device. Adapted with permission from~\cite{ownpub0} © Optical Society of America.}
+    $\Delta \Phi$ over a length $L$. (b) Thermal and optical response of the topology optimized device. Figure adapted with permission from~\cite{ownpub0} © Optical Society of America.}
     \label{fig:thermo_res}
 \end{figure}
 
@@ -87,7 +87,7 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
 \subsection*{The effective index via waveguide finite element analysis}
 
 To calculate the phase shift (\eqref{eq:phase_shift}), one needs to find the effective index of an optical mode. This can be done by 
-using the finite element formulation for two-dimensional waveguide cross-sections~\cite{jin}
+using the finite element formulation for two-dimensional waveguide cross-sections described in~\cite{jin}
 \begin{equation}\label{eq:wg_eq}
  \left[\begin{array}{cc}
  A_{\text{tt}}(\varepsilon,k) & 0 \\
@@ -124,17 +124,16 @@ Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide 
 \begin{figure}[tb]
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/TOPS_pt.png}}%%
-    \caption{Parity-time symmetry breaking mechanics in lossy waveguide modes. The modal losses ($\Im\{n_\text{eff}\}$) as a function of the extinction ($\kappa$) show the splitting of the fundamental mode into 
+    \caption{Parity-time symmetry breaking mechanism in lossy waveguide modes. The modal losses ($\Im\{n_\text{eff}\}$) as a function of the extinction coefficient ($\kappa$) show the splitting of the fundamental mode into 
     high- and low-loss modes, with their max-normalized electric field norm ($\vert \mathbf{E} \vert$) distribution.}
     \label{fig:pt}
 \end{figure}
 
-Using this configuration and perfect electric conductor boundary conditions (\secref{sec:nanophotonics}), we solve the generalized eigenvalue
- problem \eqref{eq:wg_eq} at the telecom wavelength ($\lambda = 1.55$ \textmu m) for varying extinction coefficients. 
- As shown in \figref{fig:pt}, increasing loss initially makes the fundamental mode more lossy until a bifurcation splits
+Using this configuration and perfect electric conductor boundary conditions (\secref{sec:nanophotonics}), we solve the eigenproblem in \eqref{eq:wg_eq} at the telecom wavelength ($\lambda = 1.55$ \textmu m) for varying extinction coefficients. 
+ As shown in \figref{fig:pt}, increasing the extinction coefficient initially makes the fundamental mode more lossy until a bifurcation splits
   it into high- and low-loss modes. Counter-intuitively, further increasing the extinction coefficient reduces the loss of the low-loss mode 
-  because its spatial profile shifts to overlap more strongly with the lossless half of the waveguide.
-   This effect is beneficial in thermo-optical waveguide design, since it  enables placing a metallic heater in direct contact with the waveguide for better heat transfer while still
+  because its spatial profile overlaps more strongly with the lossless half of the waveguide.
+   This effect is beneficial in thermo-optical waveguide design, since it enables placing a metallic heater in direct contact with the waveguide for better heat transfer while still
     maintaining low optical losses.
 
 \subsection*{Topology optimization results~\cite{ownpub0}}
@@ -146,18 +145,18 @@ unheated configurations.
 Unlike the eigenvalue-based approach presented in the previous section, which estimates losses from the imaginary part of the effective index,
  our method evaluates losses by directly solving a linear system. An optical source excites the waveguide mode, which appears
   as a resonance in the effective index spectrum. The imaginary part of the refractive index ($\Im\{n_\text{eff}\}$) represents the resonance linewidth and therefore the loss:
-   the smaller it is, the sharper the resonance and the lower the loss. By maximizing the electric-fielf intensity of the excited mode,
+   the smaller it is, the sharper the resonance and the lower the loss. By maximizing the electric field intensity of the excited mode,
     we can sharpen this resonance and thus minimize losses. Based on this idea, we formulate an optimization problem that designs
-     the metallic heater around the waveguide by maximizing the worst-case electric-field intensity at two effective indices, representing
+     the metallic heater around the waveguide by maximizing the worst-case electric field intensity at two effective indices, representing
       the heated and unheated waveguide states. An example of this is shown in \figref{fig:therm_opt_neff}, where we plot the maximum electric field intensity in the waveguide as a function of 
-      the effective index for the optimized device (\figref{fig:thermo_res}) and a reference design in the unheated and heated configurations, showing a larger and sharper resonances 
+      the effective index for the optimized device (\figref{fig:thermo_res}) and a reference design in the unheated and heated configurations, showing larger and sharper resonances 
       for the optimized device.
  
       \begin{figure}[b]
          \centering
          \makebox[\textwidth][c]{\includegraphics{figures/TOPS_results_2.png}}%%
          \caption{Maximum electric field intensity [$\max(\vert \mathbf{E} \vert^2)$] in the waveguide as a function of the effective index for the topology-optimized and reference designs in the unheated and heated
-         configurations. Adapted with permission from~\cite{ownpub0} © Optical Society of America.}
+         configurations. Figure adapted with permission from~\cite{ownpub0} © Optical Society of America.}
          \label{fig:therm_opt_neff}
       \end{figure}
       
@@ -176,17 +175,17 @@ problem, we derive a coupled adjoint sensitivity analysis~\cite{ownpub0} enablin
 
 Using this framework, we find the results in \figref{fig:therm_opt_neff} and \figref{fig:thermo_res} (b), where we depict the waveguide cross-section with the topology-optimized metallic heater,
 allowing the same low-loss mode to propagate in both the heated and unheated scenarios,
-reducing optical losses by $\approx 33 \%$ compared to state-of-the-art PT-symmetry breaking thermo-optical phase-shifter proposals~\cite{lipson}. Similar to the devices
+reducing optical losses by $\approx 33 \%$ compared to state-of-the-art PT-symmetry breaking thermo-optical phase-shifter proposals (see reference design in \figref{fig:therm_opt_neff})~\cite{lipson}. Similar to the devices
 in~\cite{lipson}, the optimized design utilizes the spatially heterogeneous loss profile to engineer an efficient low-loss mode. Using this optimized device as a starting point, several extensions of the topology optimization problem are considered in~\cite{ownpub0}, such as varying volume constraints, optical power, and the inclusion of fabrication constraints (e.g., minimum length scales and layered 
 lithography processes).
 
 \subsection*{Outlook and future work}
 
 The framework presented in our work~\cite{ownpub0} provides a foundation for studying and optimizing weakly coupled topology optimization problems. For example, for the design of phase shifters and thermo-optical modulators, it should be straightforward to extend this
-formalism to three dimensional system, where one could account for insertion/coupling losses of the integrated photonic circuits. Another example is the use of multi-material topology optimization to design the heating device and the optical waveguide. Finally, this formalism could be applied to design completely different devices, such as re-configurable photonic systems that might be modulated by an external heat source, or thermo-optical
+formalism to three dimensional system, where one could account for insertion/coupling losses of the integrated photonic circuits. Another example is the use of multi-material topology optimization to design the heating device and the optical waveguide simultaneously. Moreover, this formalism could be applied to design completely different devices, such as re-configurable photonic systems that might be modulated by an external heat source, or thermo-optical
 switches based on optical cavities~\cite{switch, switch_2}, where the change in refractive index shifts the cavity in- or out-of-resonance. Lastly, the thermo-optical phase-shifter problem could be
-extended to electro-optical phase shifters~\cite{pockels} (\secref{chap:eo}), since the electrostatic Poisson equation $\nabla^2 V = -\rho/\varepsilon_0$ is a special case of the heat equation with a spatially homogenous
-conduction coefficient, where $V$ is the electric potential that replaces the temperature profile. 
+extended to electro-optical phase shifters~\cite{pockels} (\secref{chap:eo}), since the electrostatic Poisson equation $\nabla^2 \phi = -\rho/\varepsilon_0$ is a special case of the heat equation with a spatially homogenous
+conduction coefficient, where $\phi$ is the electric potential that replaces the temperature profile. 
 
 \section{Towards strong coupling -- heat dissipation in optics}\label{sec:thermo_strong_coupling}
 
@@ -211,7 +210,7 @@ works~\cite{ownpub1,ownpub2}.
 
 This method, introduced in~\cite{li_structural_2016}, is known as the \textbf{virtual temperature method} (VTM). The core idea of the VTM is to simulate a heat transfer problem on an auxiliary thermal field, where the solid domain
  is treated as a heat source and a thermally conductive material. At the same time, void regions are modeled as an
-insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required while Neuman boundary conditions are imposed
+insulating material, and Dirichlet boundary conditions ($T = 0$) are imposed on the boundaries where connectivity is required, while Neuman boundary conditions are imposed
 on the rest of boundaries. When 
 solving the steady-state heat equation (\eqref{eq:heat}), regions that are disconnected from the boundary 
 cannot dissipate heat and therefore attain elevated temperatures. By applying a threshold criterion on the thermal field, such as $T < T_\text{thresh}$, disconnected islands in the design can be 

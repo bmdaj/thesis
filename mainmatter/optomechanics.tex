@@ -17,8 +17,8 @@ However, designing structures that can efficiently harness and manipulate these 
 Recent advances in optomechanical topology optimization include the design of devices harnessing the coupling between optical and elastic
  waves~\cite{photo_topopt}, optical systems with nonlinear deformations~\cite{def_wg}, high-$Q$ optomechanical membranes~\cite{highQ1, fengwen, aragon1},
 light sail structures~\cite{lightsail_topopt, lightsail_topopt1},
-on-chip optical trapping devices~\cite{ownpub1}, particle design and manipulation~\cite{ownpub2, particle_opt},
-and structural integrity constraint formulations~\cite{structural_integrity}
+photonic~\cite{ownpub1} and plasmonic~\cite{nelson_inverse_2024} particle trapping devices, particle design and manipulation~\cite{ownpub2, particle_opt},
+and structural integrity constraint formulations~\cite{structural_integrity},
  among others.
 
  In the following subsections, we highlight our contributions to the field by solving topology optimization problems in three distinct regimes: a general treatment based on the Maxwell stress tensor~\cite{ownpub2}, 
@@ -30,9 +30,9 @@ The basic idea is sketched in \figref{fig:eng_res}, where
 a particle scatters an incident time-harmonic electromagnetic field $\mathbf{E}_\text{inc}$, creating the time-harmonic scattered field $\mathbf{E}_\text{scat}$ and the net force $\mathbf{F}$ that acts
 on the particle. The net time-averaged force is given by~\cite{novotny}
 \begin{equation}\label{eq:f_MST}
-    \mathbf{F} \equiv \langle\bm{\mathcal{F}}\rangle=\int_{\partial \Omega}\langle\stackrel{\leftrightarrow}{\bm{\mathcal{T}}}(\mathbf{r}, t)\rangle \cdot \mathbf{n}_{\partial \Omega}(\mathbf{r}) \d \Omega\,,
+    \mathbf{F}(\mathbf{r}) \equiv \langle\bm{\mathcal{F}}(\mathbf{r}, t)\rangle=\int_{\partial \Omega}\langle\stackrel{\leftrightarrow}{\bm{\mathcal{T}}}(\mathbf{r}, t)\rangle \cdot \mathbf{n}_{\partial \Omega}(\mathbf{r}) \d \Omega\,,
 \end{equation}
-where $\partial \Omega$ denotes any boundary enclosing the particle, $\mathbf{n}_{\partial \Omega}$ denotes the unitary vector normal to that boundary, and
+where $\partial \Omega$ denotes any boundary enclosing the particle, $\mathbf{n}_{\partial \Omega}$ denotes the unitary vector normal to that boundary, $\bm{\mathcal{F}}$ denotes the time-dependent force, and
 the time-average of the stress tensor is given by
 \begin{equation}
         \langle \stackrel{\leftrightarrow}{\bm{\mathcal{T}}}(\mathbf{r}, t) \rangle 
@@ -40,7 +40,7 @@ the time-average of the stress tensor is given by
             \varepsilon\, \mathbf{E}(\mathbf{r}) \otimes \mathbf{E}^*(\mathbf{r})
             + \mu\, \mathbf{H}(\mathbf{r}) \otimes \mathbf{H}^*(\mathbf{r})
          - \frac{1}{2} \big( \varepsilon\, |\mathbf{E}(\mathbf{r})|^2 + \mu\, |\mathbf{H}(\mathbf{r})|^2 \big) 
-        \stackrel{\leftrightarrow}{\mathbf{I}} \Big\}.
+        \stackrel{\leftrightarrow}{\mathbf{I}} \Big\}\,,
 \end{equation}
 where $\otimes$ denotes the outer product. Note that the permittivity ($\varepsilon$) and permeability ($\mu$) correspond to those of the medium surrounding the particle.
 
@@ -50,22 +50,24 @@ where $\otimes$ denotes the outer product. Note that the permittivity ($\varepsi
     \caption{Topology optimization in optical force applications. (a) A scattering particle 
     enclosed by a boundary $\partial \Omega$ scatters a field $\mathbf{E}_\text{scat}$, when excited by an incident field $\mathbf{E}_\text{inc}$, 
     generating a net optical force $\mathbf{F}$. (b) Electric-field intensity distribution for a particle design optimized to maximize the vertical ($y$)
-    component of the optical force. Adapted with permission from~\cite{ownpub2} © Optical Society of America.}
+    component of the optical force. Figure adapted with permission from~\cite{ownpub2} © Optical Society of America.}
     \label{fig:eng_res}
 \end{figure}
 
 \subsection*{Engineering optical forces via topology optimization}
 
 In~\cite{ownpub2} we apply this formalism to optimize the two-dimensional particle--metalens geometries for different applications, such as attracting, repelling, 
-oscillating, and trapping particles. In \figref{fig:eng_res}, we show an example optimization result from this work, where we optimize the geometry of a particle to maximize the vertical component of the optical force. 
+oscillating, and trapping particles. In~\figref{fig:eng_res}, we show an example optimization result from this work, where we optimize the geometry of a particle to maximize the vertical component of the optical force. 
 The figure of merit is defined as $\text{FOM} = \mathbf{F} \cdot \mathbf{n}_y$, where $\mathbf{n}_y = (0, 1)$ is a unit vector in the vertical direction and 
-the optical force $\mathbf{F}$ (\eqref{eq:f_MST}) is computed by integrating the Maxwell stress tensor around the design domain. Our results show that the optimized particle geometry is a Bragg-mirror-like
+the optical force $\mathbf{F}$ (\eqref{eq:f_MST}) is computed by integrating the Maxwell stress tensor around the design domain. 
+
+The results in~\figref{fig:eng_res} show that the optimized particle geometry is a Bragg-mirror-like
 structure, which can efficiently reflect the incoming plane wave, resulting in an efficient exchange of force and momentum. As a matter of fact, by comparing the response of the optimized design
-to a reference square particle, we observe that the topology-optimized device feels a $\approx 3\times$ stronger vertical force than the reference.
+to a reference square particle, we find that the topology-optimized device feels a $\approx 3\times$ stronger vertical force than the reference.
  Moreover, in~\cite{ownpub2} we show that by designing a metalens to focus the incoming plane wave onto the particle, one can utilize nearly all the momentum available in the simulation domain\footnote{This compares the calculated force with the radiation pressure force on a perfectly reflecting surface spanning the entire simulation domain~\cite{ownpub2}.},
  allowing for a $\approx 13\times$ stronger force than the reference square particle in free space. 
  In the remainder of~\cite{ownpub2} we further extend these examples by designing
-attractive particle geometries, and optical-tweezer-like setups to trap the particle in space. All the code developed in this work is available on GitHub~\cite{github_MST} with tutorials on force calculation and topology optimization. 
+attractive particle geometries, and optical-tweezer-like setups to trap the particle in space. All the code developed in this work is available on our GitHub~\cite{github_MST} repository, with tutorials on force calculation and topology optimization. 
 
 One noteworthy aspect of the topology optimization of particles in the MST formalism is that, with our current framework, the particle cannot feature disconnected members; otherwise, instead of integrating around the whole design domain to calculate their individual force contribution (\eqref{eq:f_MST}),
 one would need to integrate around the (disconnected) individual components. It is possible to solve this problem by enforcing 
@@ -80,7 +82,7 @@ target optical forces via the MST formalism, paving the way for future work in t
 trajectory control~\cite{zemanek_perspective_2019, macdonald_microfluidic_2003, shilkin_directional_2017}, many-body particle systems~\cite{bechinger_active_2016, chang_colloquium_2018} or optically actuated devices~\cite{ivanyi_optically_2024}, among others. It is worth noting that an exciting and straightforward extension of the framework would be to use the MST formalism to calculate and optimize for the time-averaged torque acting on a particle, defined as~\cite{novotny}
 \begin{equation}\label{eq:torque}
     \langle \bm{\tau} \rangle = \langle \mathbf{r} \times \bm{\mathcal{F}} \rangle = - \int_{\partial \Omega} \langle \stackrel{\leftrightarrow}{\bm{\mathcal{T}}}(\mathbf{r},t)
-    \times \mathbf{r} \rangle \cdot \mathbf{n}_{\partial \Omega}(\mathbf{r}) \d\Omega 
+    \times \mathbf{r} \rangle \cdot \mathbf{n}_{\partial \Omega}(\mathbf{r}) \d\Omega \,,
 \end{equation}
 where $\mathbf{r}$ is the vector defined between the rotation axis and the force application point. This definition of torque accounts
 for two kinds of rotational motion; \textit{spinning} ($\langle \bm{\tau}_S \rangle$), where the particle rotates around its center of mass,
@@ -116,11 +118,11 @@ flow, and the term associated with the angular momentum is the spin-curl force (
 which can induce transverse motion. 
 
 In the abscence of absorption effects ($\alpha^{\prime \prime}=0,$ and $\underbar{n}=n$, \eqref{eq:perm}), the force is totally described 
-by the conservative gradient force, which can be described as the gradient 
+by the conservative gradient force, which can be written as the gradient 
 of a potential
-\begin{equation*}
+\begin{equation}
     U (\mathbf{r}) = -\frac{\alpha^{\prime}}{4} \left|\mathbf{E}(\mathbf{r})\right|^2\,,
-\end{equation*}
+\end{equation}
 where the force can be calculated as $\mathbf{F} = -\nabla U(\mathbf{r})$. In optical trapping applications, $U$ is often referred to as the \textbf{trapping potential}.
 For non-resonant and non-absorbing isotropic particles, the polarizability is 
 described through the relation~\cite{BornWolf:1999:Book} 
@@ -128,10 +130,10 @@ described through the relation~\cite{BornWolf:1999:Book}
 where $V$ is the volume of the particle, $\varepsilon_p$ and $\varepsilon_m$ are the relative
 dielectric permittivities of the particle and the background medium, respectively. 
 
-Note that in the dipole approximation, for infinitesimally small particles, the field $\mathbf{E}$ is not modified by the presence of the particle.
+Note that in the dipole approximation for infinitesimally small particles, the field $\mathbf{E}$ is not modified by the presence of the particle.
 This works well for point-like particles in free space but not necessarily 
-for large particles, particles with high refractive contrast, or particles close to material
-boundaries (e.g., optical cavities). The interaction between the background field and the particle interaction can be accounted for in the dipole
+for large particles, high refractive index contrasts between the particle and the background medium, or particles close to material
+boundaries (e.g., optical cavities). The interaction between the background field and the particle can be accounted for in the dipole
 approximation by considering the \textbf{self-induced back-action} (SIBA) effect, which assumes a weak
 perturbation of the field due to the presence of the particle and expands the field in a perturbation series in terms of 
 the scattering Green function of the particle~\cite{novotny, SIBA, benjamin}. If the series converges, the force calculated from the field 
@@ -147,7 +149,7 @@ $R_\text{exc}=300$ nm and a thickness of $800$ nm, in which the stable trap is l
 To design an omnidirectional trapping device, we minimize  
 the difference of the electric-field norm with respect to the electric-field norm of a reference field $\mathbf{E}_\text{ref}$
 \begin{equation}
- \text{FOM} =\sqrt{\int_{\Omega}\left[\Theta_{\beta,\eta}\left(\frac{|\mathbf{E}(\mathbf{r})|}{\left|\mathbf{E}\left(\mathbf{r}_0\right)\right|}-\frac{\left|\mathbf{E}_{\text{ref}}(\mathbf{r})\right|}{\left|\mathbf{E}_{\text{ref}}\left(\mathbf{r}_0\right)\right|}\right)\right]^2 \text{~d} \Omega}
+ \text{FOM} =\sqrt{\int_{\Omega}\left[\Theta_{\beta,\eta}\left(\frac{|\mathbf{E}(\mathbf{r})|}{\left|\mathbf{E}\left(\mathbf{r}_0\right)\right|}-\frac{\left|\mathbf{E}_{\text{ref}}(\mathbf{r})\right|}{\left|\mathbf{E}_{\text{ref}}\left(\mathbf{r}_0\right)\right|}\right)\right]^2 \text{~d} \Omega}\,,
     \end{equation}
 where the fields are normalized with respect to the value at the center of the cavity ($\mathbf{r}_0$), and $\Theta_{\beta,\eta}$ is the smoothed Heaviside threshold (\eqref{eq:threshold}), which ensures
 potentials as steep or steeper than the reference. The reference is chosen as a Gaussian trapping potential with standard deviations $\sigma_x=\sigma_y=300$ nm and $\sigma_z=400$ nm, but can be chosen to have any other form, such as a harmonic potential ($U\propto\mathbf{r}^2$).
@@ -157,14 +159,14 @@ potentials as steep or steeper than the reference. The reference is chosen as a 
     \makebox[\textwidth][c]{\includegraphics{figures/MST_dipole.png}}%%
     \caption{Optical response and trappig potential for the topology-optimized particle trap. (a) Lower half ($z<0$) of the optimized cavity, with the electric-field intensity
     distribution when excited with the fundamental waveguide mode with an input power of $P_\text{in}=60$ mW at $\lambda=1.55$ \textmu m. (b) Trapping potential for a $R=15$ nm and $n=2$ particle in the cavity region for the different axial line- and plane-cuts as a function
-    of the distance from the center ($d$), with the stable trapping regime ($U<-10 k_B\, T$) highlighted in gray. Adapted with permission from~\cite{ownpub1} © 2024 American Chemical Society.}
+    of the distance from the center $d$, with the stable trapping regime ($U<-10 k_B\, T$) highlighted in gray. Figure adapted with permission from~\cite{ownpub1} © 2024 American Chemical Society.}
     \label{fig:MST_dipole}
 \end{figure}
 
 By applying this optimization framework, we obtain the topology-optimized cavity design in \figref{fig:MST_dipole} (a), which can trap particles at the center of an optical
 cavity in three dimensions and has an associated Gaussian-like trapping potential [\figref{fig:MST_dipole} (b)], with a depth  $U<-10\, k_B T$\footnote{This depth is conventionally required to overcome Brownian fluctuations and ensure stable trapping~\cite{novotny}.} for a deeply sub-wavelength particle with radius $R=15$ nm and refractive index $n=2$, at room temperature ($T=300$ K).
 Since the framework is based on the dipole approximation,
-as long as the dipole approximation is valid, it allows tuning the input power to arbitrarily small particles.
+as long as the approximation is valid, it allows to trap arbitrarily small particles by tuning the input power.
 
 From the dipole approximation trapping potential, we calculate the force-displacement curves and we determine trapping stiffnesses
 of $K \approx 0.5$ fN/nm, an order of magnitude larger than diffraction-limited free-space optical tweezers~\cite{ownpub1}. To validate these findings,
@@ -193,17 +195,14 @@ stiffness, they suffer from optical losses to heating and lack omnidirectional s
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/SPIE_results.png}}%%
     \caption{Validating the dipole approximation force calculation (dashed line) against the MST force calculation (data points), as a function of displacement ($d$) from the cavity center.
-    (a) Volume-normalized force ($F/R^3_\text{sph}$) for different particle sizes with refractive index $n_\text{sph}=2$. (b) Force for different refractive indices of the particle for a particle radius $R_\text{sph}=50$ nm. Adapted with permission from~\cite{ownpub3} © 2024 IEEE.}
+    (a) Volume-normalized force ($F/R^3_\text{sph}$) for different particle sizes with refractive index $n_\text{sph}=2$. (b) Force for different refractive indices of the particle for a particle radius $R_\text{sph}=50$ nm. Figure adapted with permission from~\cite{ownpub3} © 2024 IEEE.}
     \label{fig:SPIE}
 \end{figure}
 
 \subsection*{Outlook and future work}
 
-Aside from the results presented here, in~\cite{ownpub2} we discuss the effects of Casimir-Polder effects
- on particle loading and outline potential applications of our proposed devices in particle optomechanics
-  and biophotonics, where compact, integrated, omnidirectional trapping could
-   enable new technologies. The demonstrated on-chip omnidirectional trapping shows promise for applications in biophotonics, and fundamental physics,
-    offering strong confinement with low input power for trapping and manipulating deeply sub-wavelength particles.
+Aside from the results presented here, in~\cite{ownpub2}, we discuss the influence of Casimir-Polder effects
+ on particle loading, and discuss prospective applications of the proposed devices in optomechanics and biophotonics. The demonstrated on-chip, omnidirectional trapping enables strong confinement with low input power, offering a compact platform for manipulating deeply subwavelength particles and advancing both applied and fundamental research.
 
 Future work could focus on extending the inverse design framework to support alternative materials, 
 traps for lossy or resonant particles, and devices with multiple trapping sites.
@@ -245,7 +244,7 @@ method (\secref{sec:fem}) yields the coupled system of equations
 where $\mathbf{S}$ is the discretized system matrix which encodes the operators
  in the linear optical problem, $\mathbf{E}$ and 
  $\mathbf{E}_\text{in}$ are the vectors containing the nodal degrees-of-freedom for the electric 
-field and the forcing term, respectively; $\mathbf{R}$ is the residual of the
+field and the forcing term, respectively, $\mathbf{R}$ is the residual of the
  geometrically nonlinear mechanical problem~\cite{cook_concepts_2001}, and 
  $\mathbf{U}$ and $\mathbf{F}_\text{MST}$ are the vectors containing the nodal
  degrees-of-freedom for the displacement field and the time-averaged MST forcing term, respectively. 
@@ -262,7 +261,7 @@ field and the forcing term, respectively; $\mathbf{R}$ is the residual of the
  are not well defined in the design process when having intermediate density values~\cite{jdara}. To circumvent this issue, we apply Gauss's theorem to
  define mechanical load that is linearly proportional to the physical design field
     \begin{equation}
- \langle \bm{\mathcal{F}}_\text{MST}(\mathbf{r},t) \rangle = \hat{\rho} \int_\Omega \nabla \cdot \langle\overleftrightarrow{\bm{\mathcal{T}}}(\mathbf{r}, t)\rangle \d\Omega \,,
+ \langle \bm{\mathcal{F}}_\text{MST}(\mathbf{r},t) \rangle = \hat{\rho} \int_\Omega \nabla \cdot \langle\overleftrightarrow{\bm{\mathcal{T}}}(\mathbf{r}, t)\rangle \d\Omega \,.
     \end{equation}
 Lastly, to ensure structural integrity, we apply a connectivity constraint via the VTM~\cite{li_structural_2016} (\secref{sec:aux}), which ensures that the design is connected to membrane ends. 
 
@@ -290,7 +289,7 @@ $\text{FOM}^\text{SC}_\text{WCTO}\approx 43$\,nm, demonstrating a $\approx$3$\ti
  Based on the results in \figref{fig:SC}, we see that the SCTO device efficiently reflects
  the incoming plane wave [\figref{fig:SC}(a)], generating a strong optical force distribution
  [\figref{fig:SC}(c)] that leads to significant deformation [\figref{fig:SC}(b)]. 
- The SCTO design outperforms the WCTO device because the device rotates, causing heterogeneous
+ The SCTO design outperforms the WCTO design because the device rotates, causing heterogeneous
  vertical displacements that reduce its ability to reflect light effectively and weaken the
  optical forces [\figref{fig:SC}(d)]. As a result, the SCTO develops Bragg-mirror-like features
  that are slightly tilted compared to those in the WCTO, improving reflection of the incoming field
@@ -298,7 +297,7 @@ $\text{FOM}^\text{SC}_\text{WCTO}\approx 43$\,nm, demonstrating a $\approx$3$\ti
         
 
 \subsection*{Outlook and future work}
-This topology optimization framework for strongly coupled ooptomechanical systems can be applied to a wide
+This topology optimization framework for strongly coupled optomechanical systems can be applied to a wide
  range of optomechanical devices and paves the way for future developments. 
  For example, extending the method to include clamping losses and three-dimensional designs
   would improve accuracy for high aspect-ratio membranes~\cite{aspect_ratio}, while including
