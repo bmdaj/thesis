@@ -53,23 +53,21 @@ of the state equations, multiplied by a set of Lagrange multipliers ($\Lambda_i$
 Now we calculate the sensitivities by taking the derivative of the FOM with respect to the physical field ($\hat{\rho}$)
 \begin{align}\label{eq:sens_init}
     \frac{\d \Psi^\prime}{\d \hat{\rho}} 
-    = \frac{\partial \Psi}{\partial \hat{\rho}} 
-    &+ \sum_{i=1}^N \mathcal{D}^{(i)}[\Psi]
-    + \sum_{i=1}^N \Lambda_i^\top \Bigg\{\Bigg(
-        \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} 
-        + \mathcal{D}^{(i+1)}[\mathbf{K}_i]\Bigg) \mathbf{u}_i 
-        + \mathbf{K}_i \mathcal{D}^{(i)}[\mathbf{u}_i] \nonumber \\
-        - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} 
-        &+ \sum_{j=i+1}^{N} \Bigg[ \Bigg(
-            \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} + 
-            \mathcal{D}^{(i+1)}[\mathbf{C}_{ij}] \Bigg)\, \mathbf{u}_j 
+    =  
+     \mathcal{D}^{(1)}[\Psi]
+    + \sum_{i=1}^N  \Lambda_i^\top \bigg\{& 
+        \mathcal{D}^{(i+1)}[\mathbf{K}_i] \mathbf{u}_i 
+        + \mathbf{K}_i \mathcal{D}^{(i+1)}[\mathbf{u}_i] - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \nonumber \\
+        & 
+        + \sum_{j=i+1}^{N}\left[ 
+            \mathcal{D}^{(i+1)}[\mathbf{C}_{ij}]  \mathbf{u}_j 
             + \mathbf{C}_{ij} \mathcal{D}^{(j)}[\mathbf{u}_j] 
-        \Bigg]
-    \Bigg\}. 
+        \right]
+    \bigg\}\,, 
 \end{align}
-where we have defined $\mathcal{D}^{(i)}[a]$ as the cascaded differential operator acting on $a$ to compactly write the derivative
+where we have defined $\mathcal{D}^{(i)}[\square]$ as the cascaded differential operator acting on $\square$ to compactly write the derivative
 \begin{align}
-    \hspace*{-0.775cm}\mathcal{D}^{(i)}[a] &= \sum^N_{i} \frac{\partial a}{\partial \mathbf{u}_i} \Bigg[ \frac{\partial \mathbf{u}_i}{\partial \hat{\rho}} + 
+    \hspace*{-0.775cm}\mathcal{D}^{(i)}[\square] &= \frac{\partial \square }{\partial \hat{\rho}} + \sum^N_{i} \frac{\partial a}{\partial \mathbf{u}_i} \Bigg[ \frac{\partial \mathbf{u}_i}{\partial \hat{\rho}} + 
     \sum_{j=i+1}^{N} \frac{\partial \mathbf{u}_i}{\partial \mathbf{u}_j} \Bigg( \frac{\partial \mathbf{u}_j}{\partial \hat{\rho}} + 
     \sum_{k=j+1}^{N} \frac{\partial \mathbf{u}_j}{\partial \mathbf{u}_k} \Bigg( \frac{\partial \mathbf{u}_k}{\partial \hat{\rho}} + \cdots \Bigg) \Bigg) \Bigg] \,\,\,\, \forall i \in [1, N] \,.
 \end{align}
