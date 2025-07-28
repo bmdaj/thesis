@@ -189,11 +189,11 @@ hold for arbitrary material properties.
 \subsection*{Electromagnetics in the frequency domain}
 
 The time dependence in Maxwell's equations can be separated by assuming a
-time harmonic fields
+time-harmonic fields
 \begin{equation}
  \bm{\mathcal{E}}(\mathbf{r}, t) = \Re \{ \mathbf{E}(\mathbf{r}) e^{-i\omega
- t} \}= \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{i\omega t} +
- \mathbf{E}^*(\mathbf{r}) e^{-i\omega t}\right],
+ t} \}= \frac{1}{2}\left[ \mathbf{E}(\mathbf{r}) e^{-i\omega t} +
+ \mathbf{E}^*(\mathbf{r}) e^{i\omega t}\right],
 \end{equation}
 where $\mathbf{E}$ is the complex electric field phasor, $\bullet^*$ denotes the complex conjugate, $\omega=ck$ is the angular
 frequency of the light, and $k=2\pi/\lambda$ is the wavenumber.
@@ -216,7 +216,7 @@ the material parameters are also complex functions of space and frequency [e.g.,
 $\varepsilon(\omega, \mathbf{r}$)].
 
 \subsection*{Time-harmonic wave equation}
-By using the frequency-domain constitutive relations for non-magnetic materials ($\mu=\mu_0$) and applying the curl
+By using the frequency-domain constitutive relations for non-magnetic materials ($\mu=\mu_0$ in~\eqref{eq:H}) and applying the curl
 operator to Faraday's law (\eqref{eq:curlE_freq}) and Ampère's law
 (\eqref{eq:curlH_freq}) in the frequency domain,
 we can combine both equations into a single wave equation for the electric
@@ -225,17 +225,17 @@ for the magnetic field.}
 \begin{equation}\label{eq:wave_eq}
        \nabla \times \left[\nabla \times
 \mathbf{E}(\mathbf{r})\right] - \left( \frac{\omega}{c} \right)^2
-       \varepsilon_r(\mathbf{r}) \mathbf{E}(\mathbf{r}) = -i\omega \mu
+       \varepsilon_r(\mathbf{r}) \mathbf{E}(\mathbf{r}) = -i\omega \mu_0
 \mathbf{j}(\mathbf{r})\,.
    \end{equation}
 This equation can be further simplified by adopting an operator notation
 \begin{equation}\label{eq:maxwell_op}
-      \mathcal{L}[\mathbf{E}(\mathbf{r})] = \mathbf{f}\,,
+      \mathcal{L}[\mathbf{E}] = \mathbf{f}\,,
 \end{equation}
 where $\mathcal{L}[\square] = [ \nabla \times \left( \nabla \times
-\mathbf{\square} \right) - \left(\omega/c \right)^2 \varepsilon\cdot \square] $ is a differential
+\mathbf{\square} \right) - \left(\omega/c \right)^2 \varepsilon_r \cdot \square] $ is a differential
 operator acting on a vector field $\mathbf{\square}$,
-and $\mathbf{f} = -i\omega \mu \mathbf{j}(\mathbf{r})$ represents the source
+and $\mathbf{f} = -i\omega \mu_0 \mathbf{j}(\mathbf{r})$ represents the source
 term. In the absence of sources ($\mathbf{f}=\mathbf{0})$,~\eqref{eq:maxwell_op} becomes a generalized eigenvalue problem
 \begin{equation}\label{eq:gen_eigen}
    \nabla \times \left[\nabla \times
@@ -245,7 +245,7 @@ where $\omega_\lambda^2=(\omega/c)^2$ denotes the eigenvalues and $\mathbf{E}_\l
 two-dimensional problems $\nabla \cdot(A \nabla u) - B \omega^2 u=0$, in which
 $A=1, B=\varepsilon_r c^{-2}$ and $u=E_z$ for
 transverse magnetic (TM) polarized waves and $A=1 / \varepsilon_r, B=c^2$ and
-$u=H_z$ for the transverse electric (TE) polarized waves~\cite{jensen_review} (as used in~\cite{ownpub2}).
+$u=H_z$ for the transverse electric (TE) polarized waves~\cite{jensen_review} (as applied in~\cite{ownpub2}).
 
     \subsection*{Boundary conditions at material interfaces}
 
@@ -258,9 +258,9 @@ $u=H_z$ for the transverse electric (TE) polarized waves~\cite{jensen_review} (a
     
     The boundary conditions are derived by applying Gauss's theorem to
      the divergence equations~\eqref{eq:divD_freq} and~\eqref{eq:divB_freq}, and Stokes's
-      theorem to the curl equations~\eqref{eq:curlE_freq} and~\eqref{eq:curlH_freq} of
+      theorem to the curl equations~\eqref{eq:curlE_freq} and~\eqref{eq:curlH_freq} in
        Maxwell's equations~\cite{novotny}.
-       For a boundary $\partial \Omega_{ij}$ separating domain
+       For a boundary $\Gamma_{ij}$ separating domain
 $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
     \begin{align}
         \mathbf{n} \times (\mathbf{E}_i - \mathbf{E}_j) & = 0 \label{eq:BC_E} \\
@@ -335,7 +335,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
               
               However, for materials with
               gain or loss
-              ($\varepsilon_r^{\prime\prime} \neq 0$, in~\eqref{eq:perm}) or some boundary conditions, the operators $\mathcal{L}$ and $\mathcal{L}_2$ become non-hermitian. In addition, the operator $\mathcal{L}_2$ becomes \textbf{indefinite} and eigenvalues can be positive, negative, or zero. For example, this occurs in lossy
+              ($\varepsilon_r^{\prime\prime} \neq 0$ in~\eqref{eq:perm}) or some boundary conditions, the operators $\mathcal{L}$ and $\mathcal{L}_2$ become non-hermitian. In addition, the operator $\mathcal{L}_2$ becomes \textbf{indefinite} and eigenvalues can be positive, negative, or zero. For example, this occurs in lossy
               material systems
               (e.g., lossy metals in~\secref{sec:TOPS}~\cite{ownpub0}) and in lossy cavities~\cite{ownpub4},
               where the imaginary part of the mode frequency ($\Im\{\omega_\lambda\}$) is
@@ -430,7 +430,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
                                \int_{\Omega_1} \mathbf{j}_1 \cdot  \mathbf{E}_2 \d \Omega = \int_{\Omega_2}
                                \mathbf{j}_2 \cdot  \mathbf{E}_1 \d \Omega\,.
                            \end{equation}
-              For lossless media, this is equivalent to time-reversal symmetry, but for
+              For lossless media ($\varepsilon_r^{\prime\prime} = 0$ in~\eqref{eq:perm}), this is equivalent to time-reversal symmetry, but for
               lossy systems, where time-reversal symmetry breaks down, reciprocity remains valid~\cite{Carminati:98}. Reciprocity
               is a very useful property of Maxwell's equations, as it can be used to
               greatly simplify some formulations of inverse design problems. For example, it has been used in device design for
@@ -443,25 +443,25 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
 
     \section{The finite element method in electromagnetics}\label{sec:fem}
  The frequency-domain Maxwell wave equation introduced in \eqref{eq:wave_eq} can be solved numerically with \textbf{the finite element method}, as covered in detail 
- in many textbooks~\cite{jin, fem_book}. The main idea is to discretize the domain into a finite number of elements (e.g., tetrahedra, hexahedra, etc.), and then approximate the solution
+ in many textbooks~\cite{jin, fem_book}. The main idea is to discretize the domain into a finite number of elements (e.g., tetrahedra, hexahedra), and then approximate the solution
  within each element using piecewise polynomial basis functions, also known as the shape functions. 
  
  In electromagnetic problems, vector-valued edge elements, known as Né\-dé\-lec elements~\cite{nedelec}, 
  are a natural choice. They are specifically designed to represent divergence-free fields and 
  to enforce the continuity of the tangential electric field across element boundaries, fullfulling the boundary condition in~\eqref{eq:BC_E}.
- The shape functions ($\mathbf{N}$) associated with Nédélec elements can be used to represent the electric field inside a finite element as
+ The shape functions associated with Nédélec elements can be used to represent the electric field inside a finite element as
     \begin{equation}\label{eq:ned_shape}
  \boldsymbol{E}^e(\mathbf{r})=\sum^M_i \boldsymbol{N}_i(\mathbf{r}) E_i\,,
     \end{equation}
- where $M$ denotes the number of edges in the element, and $E_i$ is the value of the degrees-of-freedom of the electric field associated with each edge $i$. As an example
+ where $M$ denotes the number of edges in the element, $\boldsymbol{N}_i$ denotes the shape functions, and $E_i$ is the value of the degrees-of-freedom of the electric field associated with each edge $i$. As an example
   of domain discretization, \figref{fig:fem} shows the two-dimensional domain introduced in \figref{fig:top_opt}, discretized
-   into triangular Nédélec elements of the first kind~\cite{nedelec}. For illustration, the shape function corresponding to one of the edges is visualized.
+   into triangular first-order Nédélec elements~\cite{nedelec}. For illustration, the shape function corresponding to one of the edges is visualized.
 
     \begin{figure}[tb]
         \centering
 
         \makebox[\textwidth][c]{\includegraphics{figures/FEM.png}}%%
-        \caption{Geometrical discretization of the physical domain into the finite-element mesh, which is composed of Nédélec elements of the first kind. The element colored
+        \caption{Geometrical discretization of the physical domain into the finite-element mesh, which is composed of first-order Nédélec elements. The element colored
  in light blue is a triangular element with three edges, where
  we have sketched a quiver plot for the shape function for Edge
  2 $(\mathbf{N}_2)$.}
@@ -471,11 +471,10 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  To derive the finite element formulation, the first step is to rewrite the governing partial differential equation in its weak (variational) form. This is done by multiplying the frequency-domain wave equation (\eqref{eq:wave_eq}) by a suitable test function, integrating over the computational domain, and applying integration by parts\footnote{Note that the weak form will be different for two-dimensional problems \cite{ownpub0, ownpub2}.}
     \begin{align}\label{eq:weak_form}
         \int_\Omega \left[ \left( \nabla \times \mathbf{v} \right) \cdot \left( \nabla \times \mathbf{E} \right)- \left(\frac{\omega}{c}\right)^2 \mathbf{v}\cdot(\varepsilon_r \mathbf{E})\right]& \d \Omega \nonumber \\ 
- - \int_{\partial \Omega} \mathbf{v} \cdot \left[ \mathbf{n} \times \left( \nabla \times \mathbf{E} \right) \right]& \d \Gamma 
+ - \int_{\Gamma} \mathbf{v} \cdot \left[ \mathbf{n} \times \left( \nabla \times \mathbf{E} \right) \right]& \d \Gamma 
  = \int_\Omega \mathbf{v} \cdot \mathbf{f} \d \Omega\,,
     \end{align}
- where $\mathbf{v}$ is the test function, $\Omega$ is the volume of the computational domain,
- and $\partial \Omega$ is the boundary where Neumann boundary conditions
+ where $\mathbf{v}$ is the test function, $\Omega$ is the volume of the computational domain, and $\Gamma$ is the boundary where Neumann boundary conditions
  are prescribed. 
  
  By using
@@ -505,9 +504,9 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  Coupled multiphysics systems are physical systems where the solution to one physical 
  problem depends on the solution of another. For example, in the coupled multiphysics 
  problem studied in~\cite{ownpub0}, the optical field depends on the temperature profile via
- the temperature-dependent refractive index. Thus, one first needs to solve a heat conduction problem to find the temperature distribution. 
+ the temperature-dependent refractive index. Thus, one first needs to solve a heat transfer problem [e.g., via the finite element method (\secref{sec:fem})] to find the temperature distribution. 
  This temperature profile is then used to calculate the refractive index, which is needed to solve the optical problem.
-    \subsection*{Two coupled linear problems}
+    \subsection*{Two linearly coupled problems}
  Let us consider a more general scenario than the previous example, where two physical
  problems can be described by linear partial differential equations. Following the notation in~\eqref{eq:maxwell_op}, the
  first problem
@@ -520,12 +519,12 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  other problem, we say that the two physics problems are
     \textbf{coupled}. 
     
-    For \textbf{linearly coupled problems} with coupling terms $\mathbf{C}_{12}$ and $\mathbf{C}_{21}$, it is possible to write out the two equations as a system of equations
+    For \textbf{linearly coupled problems}, it is possible to write out the two equations as a system of equations
     \begin{equation}\label{eq:c_N_2}
  \mathbf{K} \mathbf{u} = \mathbf{f} \quad \longleftrightarrow \quad 
         \begin{bmatrix}
- \mathbf{K}^\prime_1  & \mathbf{C}_{12} \\
- \mathbf{C}_{21} & \mathbf{K}^\prime_2
+ \mathbf{K}_1  & \mathbf{C}_{12} \\
+ \mathbf{C}_{21} & \mathbf{K}_2
         \end{bmatrix}
         \begin{bmatrix}
  \mathbf{u}_1 \\
@@ -541,7 +540,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
 $\mathbf{C}_{21}$ is the linear term that couples physics $1$ to physics $2$, and the
  prime ($\prime$) denotes that we have rewritten the loading terms so that they do not
  depend on the solution vector, so that all couplings are
- accounted for in the stiffness matrices and/or in the coupling terms. 
+ accounted for in the coupling terms. 
  
  If the coupling
  matrices in~\eqref{eq:c_N_2} are non-zero ($\mathbf{C}_{12}\neq 0$ and $\mathbf{C}_{21}\neq 0$), we
@@ -555,7 +554,7 @@ $\mathbf{C}_{21}$ is the linear term that couples physics $1$ to physics $2$, an
  coupled} since the solution of physics $1$ ($2$) depends on the solution of physics
 $2$ ($1$), but not vice versa.
 
-\subsection*{$N$ coupled linear problems}
+\subsection*{$N$ linearly coupled problems}
 
  In the case of $N$ coupled problems, the system of equations in the $N=2$ case (\eqref{eq:c_N_2}) generalizes to
     \begin{equation} \label{eq:multiphysics_strong}
@@ -630,9 +629,9 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
  equations is solved simultaneously, for example, using direct solvers like LU factorization. When this is not feasible or 
  efficient, a \textbf{segregated} approach may be used instead, solving the coupled problems in an iterative sequence. In this 
  approach, each subproblem is addressed separately, with the solution of one problem used to update the others. This process 
- is repeated until a convergence criterion is met (e.g., \secref{sec:mech_strongly_coupled}~\cite{ownpub5}). In weakly coupled systems, the solution of one part feeds directly into the next. 
+ is repeated until a convergence criterion is met (e.g., \secref{sec:mech_strongly_coupled}~\cite{ownpub5}). In weakly coupled systems, the solution of one subproblem feeds directly into the next. 
  As a result, each problem only needs to be solved once to obtain the full solution. This is also the case for 
- weakly nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}), where even if the coupling is nonlinear, the system of equations
+ weak nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}), where even if the coupling is nonlinear, the system of equations
  can be solved by solving $N$ seggregated linear problems (e.g.,~\cite{ownpub0}).
     
  \section{Topology optimization framework}\label{sec:topopt_theory}
@@ -640,7 +639,7 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
  As an example, in \figref{fig:top_opt_multi}, we build on the depiction of the nanophotonic topology optimization problem presented in \figref{fig:top_opt}, by considering
  multiphysics effects, such as heat sources and mechanical forces.
 
- Seminal work~\cite{MEMS_multi} by Sigmund laid the foundation for \textbf{multiphysics topology optimization}, with the optimization of micro-electro-mechanical system (MEMS) devices. 
+ Seminal work by Sigmund~\cite{MEMS_multi} laid the foundation for \textbf{multiphysics topology optimization}, with the optimization of micro-electro-mechanical system (MEMS) devices. 
  Still today, multiphysics topology optimization is an active topic of research, where state-of-the-art multiphysics topology optimization is used to tackle complex coupled design problems; for instance, optimizing for thermo-mechanical~\cite{third_thermal}, magneto-mechanical~\cite{magneto}, or fluid-structure interaction~\cite{fsint} problems. 
  This has enabled highly efficient and integrated designs across engineering disciplines, but remains mainly uncharted territory for nanophotonic device optimization. In the remainder of this section, we will review the theory behind multiphysics topology optimization. For a more detailed overview of some problems in coupled multiphysics
  topology optimization, we refer the reader to the book chapter by Maute~\cite{coupled_topopt}.
@@ -770,14 +769,14 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
  Following these adjoint systems, one needs to solve the first adjoint equation ($i=1$) 
  and feed the solution to the following adjoint equation ($i=2$), and so on, until one can solve the last adjoint problem $i=N$; backwards compared to the forward problem (\eqref{eq:multiphysics_weak_nonlinear}).
  Note that by using this derivation, we can recover the sensitivities derived in~\cite{ownpub0} for a thermo-optical coupled problem ($N=2$), with weak nonlinear coupling
- via the stiffness matrix of the optical problem [$\mathbf{K}_1(\mathbf{u}_2)$ and $\mathbf{C}_{12}=\mathbf{C}_{21}=0$, where ''$1$'' refers to the optical problem and ''$2$'' to the 
+ via the stiffness matrix of the optical problem [$\mathbf{K}_1(\mathbf{u}_2)$ and $\mathbf{C}_{12}=\mathbf{C}_{21}=0$, where ``$1$'' refers to the optical problem and ``$2$'' refers to the 
  heat transfer problem].
     
  To recover the final sensitivities, one applies the chain rule with respect to the filtering and thresholding operations
     \begin{equation}
  \frac{\d \Psi}{\d \rho} = \frac{\partial \Psi}{\partial \hat{\rho}} \cdot \frac{\partial \hat{\rho}}{\partial \tilde{\rho}} \cdot \frac{\partial \tilde{\rho}}{\partial \rho}\,,
     \end{equation}
- where the final sensitivity $\d \Psi/\d \rho$ are the sensitivities used by the optimization algorithm.
+ where the final sensitivities $\d \Psi/\d \rho$ are the sensitivities used by the optimization algorithm.
 
 %\section{A practical note on computational implementation}
 

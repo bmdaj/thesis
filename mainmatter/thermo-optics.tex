@@ -70,7 +70,7 @@ uses a heating device to locally modify the refractive index of a waveguide stru
 where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} - n_\text{eff, unheated}$
  is the change of the effective refractive index of the guided mode. 
  
- It is not straightforward to design thermo-optical phase shifters; ideally, one would like to place a heater close to the waveguide to achieve a phase shift with minimum input power.
+ It is not straightforward to design thermo-optical phase shifters. Ideally, one would like to place a heater close to the waveguide to achieve a phase shift with minimum input power.
  Theoretically, this would imply positioning the metal in contact to the waveguide to ensure efficient heat transfer, but since the heaters are usually metallic ($\kappa > 0$, in \eqref{eq:perm}), this would result
  in optical losses. As shown in the optical and thermal responses in \figref{fig:thermo_res} (b), this trade-off problem can be tackled with topology optimization to design efficient low-loss thermo-optical phase shifters, 
  as we will detail in the following sections.
@@ -107,7 +107,7 @@ using the finite element formulation for two-dimensional waveguide cross-section
  E_z
     \end{array}\right\},
     \end{equation}
-where $E_{\text{t}}$ and $E_z$ are the transverse ($x,y$) and longitudinal ($z$) electric field components, respectively, $k_z$ is the propagation constant of the optical mode, and $A_{tt}, B_{tt},
+where $E_{\text{t}}$ and $E_z$ are the transverse ($x,y$) and longitudinal ($z$) electric field components respectively, $k_z$ is the propagation constant of the optical mode, and $A_{tt}, B_{tt},
 B_{zt}$, $B_{tz}$, and $B_{zz}$ are matrices that can be assembled using the shape functions (\eqref{eq:ned_shape})~\cite{jin}. Following~\cite{jin}, we use Nédélec elements (\secref{sec:fem}) for the in-plane components of the electric field and 
 Lagrange elements for out-of-plane components. 
 
@@ -116,10 +116,10 @@ Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide 
  generalized eigenvalue problem in \eqref{eq:wg_eq} to find the effective indices and field distributions of waveguide eigenmodes.
 
  \subsection*{PT-symmetry breaking waveguides}
- Recent progress in waveguide design by U.D. Dave and M. Lipson~\cite{lipson}, proposed the use of \textbf{PT-symmetry breaking} (\secref{sec:nanophotonics}) \textbf{waveguides} as promising candidates for
+ Recent progress in waveguide design by Dave and Lipson~\cite{lipson}, proposed the use of \textbf{PT-symmetry breaking} (\secref{sec:nanophotonics}) \textbf{waveguides} as promising candidates for
  thermo-optical phase shifter devices, since they can minimize optical losses while being placed in close contact with (lossy) metallic heaters. To understand this phenomenon, we consider an example with a 
  simulation domain with a $5$ \textmu m height and a $15$ \textmu m width. At the center of a silica cladding ($n\approx 2$) there is a silicon ($n \approx 3.48$) waveguide with a $2$ \textmu m height and 
- a $10$ \textmu m width, where half ($x<0$) of the waveguide is lossy [characterized by an extinction coefficient $\kappa>0$ (\eqref{eq:perm})].
+ a $10$ \textmu m width, where the left half ($x<0$) of the waveguide is lossy [characterized by an extinction coefficient $\kappa>0$ (\eqref{eq:perm})].
 
 \begin{figure}[tb]
     \centering
@@ -129,8 +129,8 @@ Solving the generalized eigenvalue problem in \eqref{eq:wg_eq} yields waveguide 
     \label{fig:pt}
 \end{figure}
 
-Using this configuration and perfect electric conductor boundary conditions (\secref{sec:nanophotonics}), we solve the eigenproblem in \eqref{eq:wg_eq} at the telecom wavelength ($\lambda = 1.55$ \textmu m) for varying extinction coefficients. 
- As shown in \figref{fig:pt}, increasing the extinction coefficient initially makes the fundamental mode more lossy until a bifurcation splits
+Using this configuration and perfect electric conductor boundary conditions, we solve the eigenproblem in~\eqref{eq:wg_eq} at the telecom wavelength ($\lambda = 1.55$ \textmu m) for varying extinction coefficients. 
+ As shown in~\figref{fig:pt}, increasing the extinction coefficient initially makes the fundamental mode more lossy until a bifurcation (star in~\figref{fig:pt}) splits
   it into high- and low-loss modes. Counter-intuitively, further increasing the extinction coefficient reduces the loss of the low-loss mode 
   because its spatial profile overlaps more strongly with the lossless half of the waveguide.
    This effect is beneficial in thermo-optical waveguide design, since it enables placing a metallic heater in direct contact with the waveguide for better heat transfer while still
@@ -139,7 +139,7 @@ Using this configuration and perfect electric conductor boundary conditions (\se
 \subsection*{Topology optimization results~\cite{ownpub0}}
 
 Inspired by PT-symmetry breaking waveguides, in~\cite{ownpub0}, we use topology optimization to achieve good heat conduction and low optical loss in thermo-optical phase shifters.
-The optimization problem considers a waveguide cross-section with a metallic heater, and seeks to find the distribution of metal around the waveguide that minimizes optical loss for both heated and 
+The optimization problem considers a waveguide cross-section with a lossy metallic heater, and seeks to find the distribution of metal around the waveguide that minimizes optical loss for both heated and 
 unheated configurations. 
 
 Unlike the eigenvalue-based approach presented in the previous section, which estimates losses from the imaginary part of the effective index,
@@ -164,9 +164,9 @@ Unlike the eigenvalue-based approach presented in the previous section, which es
  To integrate the heat problem into the 
  topology optimization framework, we use a linear material interpolation 
 for the conductivity (Eq. 13 in~\cite{ownpub0}) and an interpolation for the heat source given by $
- Q(\hat{\rho})=P_{\text{in}} \hat{\rho}^p / \left( L a_e \sum^{N_\text{e}}_j \hat{\rho}_j \right)\,,
+ Q(\hat{\rho})=P_{\text{in}} \hat{\rho}^p / \left( L A_e \sum^{N_\text{e}}_j \hat{\rho}_j \right)\,,
 $
-where $P_\text{in}$ is the input power in the heater, $p$ is a penalization factor, $a_e$ is the area of each element, and 
+where $P_\text{in}$ is the input power in the heater, $p$ is a penalization factor, $A_e$ is the area of each element, and 
 $N_e$ is the total number of elements in the finite element problem. 
 This expression models a resistive heater with all material connected in parallel, so that for a fixed input power, the heat 
 generation per unit volume increases as the total heater volume decreases.
