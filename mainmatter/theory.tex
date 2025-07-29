@@ -746,7 +746,7 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
 
     \subsection*{Adjoint sensitivity analysis}
 
-    Adjoint sensitivity analysis provides an efficient way to calculate the gradient of the FOM with respect to the design variables,
+    Adjoint sensitivity analysis provides an efficient way to calculate the gradient of the FOM ($\Psi$) with respect to the design variables,
  enabling gradient-based optimization. In this thesis, it is applied to multiphysics problems,
  where we consider the case of weakly coupled problems with
  nonlinear coupling (\eqref{eq:multiphysics_weak_nonlinear}) solved using a segregated approach, with the detailed derivations in 
@@ -759,7 +759,7 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
     \begin{equation}
  \frac{\d \Psi}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,,
     \end{equation}
- where $N$ is the number of coupled problems and the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations
+ where $N$ is the number of coupled problems, $\bullet^\top$ denotes the transpose, and the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations
     \begin{equation}\label{eq:adjoint_eqs}
       \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
          \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,.

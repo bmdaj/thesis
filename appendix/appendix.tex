@@ -87,9 +87,9 @@ which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint equations.
 To solve the adjoint equations one needs to find the Lagrange multipliers $\Lambda_i$ that satisfy the expressions
 \begin{equation}\label{eq:app_adj_eqs}
      \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
-     \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,,
+     \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,.
 \end{equation}
-thus yielding the final expression for the sensitivities
+This yields the final expression for the sensitivities
 \begin{equation}
     \frac{\d \Psi^\prime}{\d \hat{\rho}}  = \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum^N_{j=i+1} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho}} \mathbf{u}_j \right)\,.
 \end{equation}
