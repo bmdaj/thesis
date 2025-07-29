@@ -63,7 +63,7 @@ Now we calculate the sensitivities by taking the derivative of the FOM with resp
             \mathcal{D}^{(i+1)}[\mathbf{C}_{ij}]  \mathbf{u}_j 
             + \mathbf{C}_{ij} \mathcal{D}^{(j)}[\mathbf{u}_j] 
         \right]
-    \bigg\}\,, 
+    \bigg\}\,,  
 \end{align}
 where we have defined $\mathcal{D}^{(i)}[\square]$ as the cascaded differential operator acting on $\square$ to compactly write the derivative
 \begin{align}
@@ -73,7 +73,7 @@ where we have defined $\mathcal{D}^{(i)}[\square]$ as the cascaded differential 
 \end{align}
 The chain-rule-based derivative expression in \eqref{eq:sens_init} takes into account all the dependencies of the solutions in the weakly coupled problem (\eqref{eq:app_multiphysics_weak}).
 
-Taking \autoref{eq:sens_init} and grouping the terms it is possible to rewrite the sensitivities as
+Taking \autoref{eq:sens_init} and grouping the terms, it is possible to rewrite the sensitivities as
 \begin{align}
     \frac{\d \Psi^\prime}{\d \hat{\rho}}  &= \frac{\partial \Psi}{\partial \hat{\rho}} + \sum^N_{i=1} \Lambda_{i}^{\top} \left( \frac{\partial \mathbf{K}_i}{\partial \hat{\rho}} \mathbf{u}_i - \frac{\partial \mathbf{f}_i}{\partial \hat{\rho}} + \sum_{j=i+1}^{N} \frac{\partial \mathbf{C}_{ij}}{\partial \hat{\rho} } \mathbf{u}_j \right) + \\ &+ \frac{\partial \mathbf{u}_1}{\partial \hat{\rho}} \big( \mathcal{A}_1 \big) + \frac{\partial \mathbf{u}_2}{\partial \hat{\rho}} \left( \mathcal{A}_1 \frac{\partial \mathbf{u}_1}{\partial \mathbf{u}_2} + \mathcal{A}_2 \right) + \\
     &+ \frac{\partial \mathbf{u}_3}{\partial \hat{\rho}} \left[ \mathcal{A}_1 \left( \frac{\partial \mathbf{u}_1}{\partial \mathbf{u}_3} + \frac{\partial \mathbf{u}_2}{\partial \mathbf{u}_3}\frac{\partial \mathbf{u}_1}{\partial \mathbf{u}_2}\right) + \frac{\partial \mathbf{u}_2}{\partial \mathbf{u}_3} \mathcal{A}_2 + \mathcal{A}_3 \right] + \cdots
@@ -83,8 +83,8 @@ where $\mathcal{A}_i (\Lambda_i)$ are the adjoint equation terms
     \mathcal{A}_i = \frac{\partial \Psi}{\partial \mathbf{u}_i} + \Lambda_{i}^\top \mathbf{K}_i + \sum_{j=1}^{i-1} \Lambda_j^\top\left(
      \frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\mathbf{u}_j + \mathbf{C}_{ji} + \sum^N_{k=j+1} \frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i} \mathbf{u}_k  \right) \quad \quad \forall i \in [1, N] \,,
 \end{equation}
-which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint problems. 
-To solve the adjoint equations one needs to find the Lagrange multipliers $\Lambda_i$ as the solution to the adjoint equations
+which can be set to zero ($\mathcal{A}_i=0$) by solving the adjoint equations. 
+To solve the adjoint equations one needs to find the Lagrange multipliers $\Lambda_i$ that satisfy the expressions
 \begin{equation}\label{eq:app_adj_eqs}
      \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
      \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,,

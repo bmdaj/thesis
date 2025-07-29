@@ -71,7 +71,7 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
  is the change of the effective refractive index of the guided mode. 
  
  It is not straightforward to design thermo-optical phase shifters. Ideally, one would like to place a heater close to the waveguide to achieve a phase shift with minimum input power.
- Theoretically, this would imply positioning the metal in contact to the waveguide to ensure efficient heat transfer, but since the heaters are usually metallic ($\kappa > 0$, in \eqref{eq:perm}), this would result
+ Theoretically, this would imply positioning the metal in contact to the waveguide to ensure efficient heat transfer, but since the heaters are usually metallic ($\kappa > 0$ in \eqref{eq:perm}), this would result
  in optical losses. As shown in the optical and thermal responses in \figref{fig:thermo_res} (b), this trade-off problem can be tackled with topology optimization to design efficient low-loss thermo-optical phase shifters, 
  as we will detail in the following sections.
 
@@ -79,7 +79,7 @@ where $L$ is the device length and $\Delta n_\text{eff} = n_\text{eff, heated} -
     \centering
     \makebox[\textwidth][c]{\includegraphics{figures/TOPS_results.png}}%%
     \caption{Topology optimization of thermo-optical phase shifters. (a) Phase-shifting mechanism, where a heater changes the temperature in the waveguide $\Delta T$, inducing a phase shift
-    $\Delta \Phi$ over a length $L$. (b) Thermal and optical response of the topology optimized device. Figure adapted with permission from~\cite{ownpub0} © Optical Society of America.}
+    $\Delta \Phi$ over a length $L$. (b) Thermal and optical response of the topology-optimized device. Figure adapted with permission from~\cite{ownpub0} © Optical Society of America.}
     \label{fig:thermo_res}
 \end{figure}
 
@@ -149,7 +149,7 @@ Unlike the eigenvalue-based approach presented in the previous section, which es
     we can sharpen this resonance and thus minimize losses. Based on this idea, we formulate an optimization problem that designs
      the metallic heater around the waveguide by maximizing the worst-case electric field intensity at two effective indices, representing
       the heated and unheated waveguide states. An example of this is shown in \figref{fig:therm_opt_neff}, where we plot the maximum electric field intensity in the waveguide as a function of 
-      the effective index for the optimized device (\figref{fig:thermo_res}) and a reference design in the unheated and heated configurations, showing larger and sharper resonances 
+      the effective index for the optimized device [\figref{fig:thermo_res} (b)] and a reference design in the unheated and heated configurations, showing larger and sharper resonances 
       for the optimized device.
  
       \begin{figure}[b]
@@ -163,7 +163,7 @@ Unlike the eigenvalue-based approach presented in the previous section, which es
 
  To integrate the heat problem into the 
  topology optimization framework, we use a linear material interpolation 
-for the conductivity (Eq. 13 in~\cite{ownpub0}) and an interpolation for the heat source given by $
+for the conductivity (Eq.~13 in~\cite{ownpub0}) and an interpolation for the heat source given by $
  Q(\hat{\rho})=P_{\text{in}} \hat{\rho}^p / \left( L A_e \sum^{N_\text{e}}_j \hat{\rho}_j \right)\,,
 $
 where $P_\text{in}$ is the input power in the heater, $p$ is a penalization factor, $A_e$ is the area of each element, and 
@@ -184,7 +184,7 @@ lithography processes).
 The framework presented in our work~\cite{ownpub0} provides a foundation for studying and optimizing weakly coupled topology optimization problems. For example, for the design of phase shifters and thermo-optical modulators, it should be straightforward to extend this
 formalism to three dimensional system, where one could account for insertion/coupling losses of the integrated photonic circuits. Another example is the use of multi-material topology optimization to design the heating device and the optical waveguide simultaneously. Moreover, this formalism could be applied to design completely different devices, such as re-configurable photonic systems that might be modulated by an external heat source, or thermo-optical
 switches based on optical cavities~\cite{switch, switch_2}, where the change in refractive index shifts the cavity in- or out-of-resonance. Lastly, the thermo-optical phase-shifter problem could be
-extended to electro-optical phase shifters~\cite{pockels} (\secref{chap:eo}), since the electrostatic Poisson equation $\nabla^2 \phi = -\rho/\varepsilon_0$ is a special case of the heat equation with a spatially homogenous
+extended to electro-optical phase shifters~\cite{pockels} (\secref{chap:eo}), since the electrostatic Poisson equation $\nabla^2 \phi = -\varrho_q/\varepsilon_0$ is a special case of the heat equation with a spatially homogenous
 conduction coefficient, where $\phi$ is the electric potential that replaces the temperature profile. 
 
 \section{Towards strong coupling -- heat dissipation in optics}\label{sec:thermo_strong_coupling}

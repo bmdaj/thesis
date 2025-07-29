@@ -37,11 +37,11 @@ This chapter lays out the theoretical foundations used throughout the thesis and
    When objects are much smaller than the wavelength, the electromagnetic fields vary slowly over the object's dimensions 
    and can be approximated quasistatically. For instance, electronic devices
    can be modeled in this regime using circuit models with sources ($V$) and lumped elements, 
-   like resistors ($R$) or capacitors ($C$) and coils ($L$).
+   like resistors ($R$), capacitors ($C$) and coils ($L$).
   \end{itemize}
 
   In the fields of nano-optics and nanophotonics, the visible
-  (\(\lambda \approx 400\)--\(800\) nm) and infrared (\(\lambda \approx 800\)--\(2500\)
+  (\(\lambda \approx 400\)--\(800\) nm) and near-infrared (\(\lambda \approx 800\)--\(2500\)
   nm)
   spectral regions are most commonly explored, and components often have nano- to
   microscale dimensions. As a result, the \textbf{wave-optics} regime ($s
@@ -57,9 +57,9 @@ This chapter lays out the theoretical foundations used throughout the thesis and
 
 \subsection*{The macroscopic Maxwell's equations}
 
-Light propagation in a \emph{macroscopic} electromagnetic systems can be
-described by Maxwell's equations. The \textbf{time-domain Maxwell's
-equations} in a linear, isotropic, and homogeneous medium can be written as~\cite{maxwell1873,novotny}
+Light propagation in macroscopic electromagnetic systems can be
+described by the \emph{macroscopic} Maxwell's equations. The \textbf{time-domain Maxwell's
+equations} in a linear, isotropic, and homogeneous medium are~\cite{maxwell1873,novotny}
 \begin{align}
     \nabla \times \bm{\mathcal{E}} (\mathbf{r},t)            & = - \frac{\partial
     \bm{\mathcal{B}}(\mathbf{r},t)}{\partial t}, \quad \quad & \text{(Faraday's
@@ -68,7 +68,7 @@ equations} in a linear, isotropic, and homogeneous medium can be written as~\cit
         \bm{\mathcal{D}}(\mathbf{r},t)}{\partial t} + \bm{\mathcal{J}}(\mathbf{r},t),
     \quad \quad                                              & \text{(Ampère's law)} \label{eq:ampere}               \\
     \nabla \cdot \bm{\mathcal{D}} (\mathbf{r},t)             & =
-    \mathcal{\rho}(\mathbf{r},t), \quad \quad                & \text{(Gauss's law for electricity)}
+    \varrho_q(\mathbf{r},t), \quad \quad                & \text{(Gauss's law for electricity)}
     \label{eq:gauss_E}                                                                                               \\
     \nabla \cdot \bm{\mathcal{B}} (\mathbf{r},t)             & = 0, \quad \quad
                                                              & \text{(Gauss's law for magnetism)} \label{eq:Gauss_B}
@@ -78,7 +78,7 @@ and magnetic (induction) fields, respectively,
 $\bm{\mathcal{D}}$ is the time-dependent electric displacement field,
 $\bm{\mathcal{B}}$ is the time-dependent magnetic (flux-density) field,
 $\bm{\mathcal{J}}$ is the current density,
-and $\mathcal{\rho}$ is the time-dependent charge density. % Maxwell's equations
+and $\varrho_q$ is the time-dependent charge density. % Maxwell's equations
 %combine previously established
 %physical laws, in 4 equations:
 %\begin{itemize}
@@ -168,7 +168,7 @@ considered. \\
 Using Maxwell's equations and applying the curl operator to Faraday's law
     (\eqref{eq:faraday}) and Ampère's law (\eqref{eq:ampere}),
 together with the constitutive relations (\eqref{eq:D} and
-        \eqref{eq:H}), yields two coupled
+        \eqref{eq:H}), yields two
 \textbf{wave equation}s for the electric and magnetic fields
 \begin{equation}
     \begin{aligned}
@@ -204,7 +204,7 @@ Using this complex field, the \textbf{frequency-domain Maxwell's equations} can 
     \nabla \times \mathbf{H}(\mathbf{r}) & = -i\omega \mathbf{D}(\mathbf{r}) +
  \mathbf{j}(\mathbf{r}), \quad \quad  & \text{(Ampère's law)}
     \label{eq:curlH_freq}                                                                                                 \\
-    \nabla \cdot \mathbf{D}(\mathbf{r})  & = \rho(\mathbf{r}), \quad \quad
+    \nabla \cdot \mathbf{D}(\mathbf{r})  & = \varrho_q(\mathbf{r}), \quad \quad
                                          & \text{(Gauss's law for electricity)} \label{eq:divD_freq}                      \\
     \nabla \cdot \mathbf{B}(\mathbf{r})  & = 0, \quad \quad                                          & \text{(Gauss's law
  for magnetism)} \label{eq:divB_freq}
@@ -216,10 +216,10 @@ the material parameters are also complex functions of space and frequency [e.g.,
 $\varepsilon(\omega, \mathbf{r}$)].
 
 \subsection*{Time-harmonic wave equation}
-By using the frequency-domain constitutive relations for non-magnetic materials ($\mu=\mu_0$ in~\eqref{eq:H}) and applying the curl
-operator to Faraday's law (\eqref{eq:curlE_freq}) and Ampère's law
-(\eqref{eq:curlH_freq}) in the frequency domain,
-we can combine both equations into a single wave equation for the electric
+By combining the frequency-domain constitutive relations for non-magnetic materials ($\mu=\mu_0$ in~\eqref{eq:H}), Ampère's law
+(\eqref{eq:curlH_freq}) and the curl
+of Faraday's law (\eqref{eq:curlE_freq}) in the frequency domain,
+one can find a single wave equation for the electric
 field\footnote{A similar procedure can be applied to derive a wave equation
 for the magnetic field.}
 \begin{equation}\label{eq:wave_eq}
@@ -257,8 +257,8 @@ $u=H_z$ for the transverse electric (TE) polarized waves~\cite{jensen_review} (a
     the interfaces.
     
     The boundary conditions are derived by applying Gauss's theorem to
-     the divergence equations~\eqref{eq:divD_freq} and~\eqref{eq:divB_freq}, and Stokes's
-      theorem to the curl equations~\eqref{eq:curlE_freq} and~\eqref{eq:curlH_freq} in
+     the divergence equations (\eqref{eq:divD_freq} and~\eqref{eq:divB_freq}), and Stokes's
+      theorem to the curl equations (\eqref{eq:curlE_freq} and~\eqref{eq:curlH_freq}) in
        Maxwell's equations~\cite{novotny}.
        For a boundary $\Gamma_{ij}$ separating domain
 $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
@@ -267,16 +267,16 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
         \mathbf{n} \times (\mathbf{H}_i - \mathbf{H}_j) & = \mathbf{K} ,
         \label{eq:BC_H}
     \end{align}
-    and the normal field conditions
+    and the normal field conditions are
     \begin{align}
-        \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) & = \rho_s \label{eq:BC_D} \\
+        \mathbf{n} \cdot (\mathbf{D}_i - \mathbf{D}_j) & = \sigma_q \label{eq:BC_D} \\
         \mathbf{n} \cdot (\mathbf{B}_i - \mathbf{B}_j) & = 0, \label{eq:BC_B}
     \end{align}
-    where $\mathbf{n}$ is the unit vector normal to the boundary, $\mathbf{K}$ is the
+    where $\mathbf{n}$ is the unit vector normal to the boundary $\Gamma_{ij}$, $\mathbf{K}$ is the
     surface current density,
-    and $\rho_s$ is the surface charge density. Note that in many optical problems
+    and $\sigma_q$ is the surface charge density. Note that in many optical problems
     there are no
-    sources in the individual domains ($\mathbf{K}=\rho_s=0)$, simplifying the
+    sources in the individual domains ($\mathbf{K}=\sigma_q=0)$, simplifying the
     equations.
 
 %    \begin{figure}[tb]
@@ -402,11 +402,11 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
                   t)\to-\bm{\mathcal{B}}(\mathbf{r}, -t)$, while the current density and charge
               density transform as
               $\bm{\mathcal{J}}(\mathbf{r},
-                  t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\bm{\mathcal{\rho}}(\mathbf{r},
-                  t)\to\bm{\mathcal{\rho}}(\mathbf{r}, -t)$, respectively~\cite{reciprocity}.
+                  t)\to-\bm{\mathcal{J}}(\mathbf{r}, -t)$ and $\varrho_q(\mathbf{r},
+                  t)\to \varrho_q (\mathbf{r}, -t)$, respectively~\cite{reciprocity}.
               Applying these transformations
               to Maxwell's equations (\eqref{eq:curlE_freq}--\eqref{eq:divB_freq}) shows
-              that the equations remain invariant under time-reversal. 
+              that the equations remain invariant under time reversal. 
               
               This
               symmetry can be extended by
@@ -505,7 +505,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  problem depends on the solution of another. For example, in the coupled multiphysics 
  problem studied in~\cite{ownpub0}, the optical field depends on the temperature profile via
  the temperature-dependent refractive index. Thus, one first needs to solve a heat transfer problem [e.g., via the finite element method (\secref{sec:fem})] to find the temperature distribution. 
- This temperature profile is then used to calculate the refractive index, which is needed to solve the optical problem.
+ This temperature distribution is then used to calculate the refractive index, which is needed to solve the optical problem.
     \subsection*{Two linearly coupled problems}
  Let us consider a more general scenario than the previous example, where two physical
  problems can be described by linear partial differential equations. Following the notation in~\eqref{eq:maxwell_op}, the
@@ -539,7 +539,7 @@ $i$ from domain $j$, the tangential field conditions are~\cite{novotny}
  where $\mathbf{C}_{12}$ is the linear term that couples physics $2$ to physics $1$,
 $\mathbf{C}_{21}$ is the linear term that couples physics $1$ to physics $2$, and the
  prime ($\prime$) denotes that we have rewritten the loading terms so that they do not
- depend on the solution vector, so that all couplings are
+ depend on the solution vector, ensuring that all couplings are
  accounted for in the coupling terms. 
  
  If the coupling
@@ -649,11 +649,11 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
     expressed as
     \begin{equation}
         \begin{array}{clr}
-            \max\limits_{\rho}                        & \Psi(\rho, \mathbf{u}_i) \quad \quad \quad \quad \,\,\,\, 
-             \forall i \in\left[1, N\right] & \text { (Objective function) }                                                         \\
-            \text { s.t. }                            & \mathbf{K}_i(\rho, \mathbf{u}_i)-\mathbf{f}_i=0 \quad
-            \forall i \in\left[1, N\right]          & \text { (State equations) }                                                            \\
-                                                      & c_j(\rho, \mathbf{u}) \leq 0 \quad \quad \quad \,\,\, \forall j \in\left[1,
+            \max\limits_{\rho}                        & \Psi(\rho, \mathbf{u}) \quad \quad \quad \quad \,\,\,\, 
+              & \text { (Objective function) }                                                         \\
+            \text { s.t. }                            & \mathbf{K}(\rho, \mathbf{u})\mathbf{u} -\mathbf{f} (\rho, \mathbf{u})=0 \quad
+                     & \text { (State equations) }                                                            \\
+                                                      & c_j(\rho, \mathbf{u}) \leq 0 \quad \quad \quad \quad \quad  \,\,\, \forall j \in\left[1,
             N_c\right]                                & \text { (Inequality constraints) }                                                     \\
                                                       & \rho_{\text {min }} \leq \rho \leq \rho_{\text {max }}                  & \text { (Box
                 constraints) }
@@ -661,10 +661,8 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
     \end{equation}
     where the FOM ($\Psi$) is maximized for a design field $\rho$ with upper
     bound $\rho_{\text {max }}$ and lower bound $\rho_{\text {min }}$,
-    subject to the residual of the state equations of all the different physical
-    problems and constraints. In multiphysics optimization problems
-    there are $N$ state equations (\eqref{eq:multiphysics_strong})
-    and  $N_c$ inequality constraints. The optimization problem is solved using
+    subject to the residual of the state equation of the coupled multiphyiscs problem, and
+     $N_c$ inequality constraints. The optimization problem is solved using
     the gradient-based algorithm of the Method of Moving
     Asymptotes (MMA)~\cite{MMA} or the Globally Convergent Method of Moving Asymptotes
     (GCMMA)~\cite{GCMMA}, by iteratively updating the design field until a
@@ -700,7 +698,7 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
    $h^\text{th}$ element. One can also filter by solving a Helmholtz-type
     PDE~\cite{PDE_filter}
        \begin{equation}
-    -\left(\frac{r_f}{2 \sqrt{3}}\right)^2 \nabla
+    -\left(\frac{r_f}{2 \sqrt{3}}\right)^2 \nabla^2
     \tilde{\rho}+\tilde{\rho}=\rho\,.
        \end{equation}
     The filter operation is followed by a \textbf{smoothed Heaviside
@@ -764,7 +762,7 @@ In this thesis, we consider the case of \textbf{weak nonlinear coupling},
  where $N$ is the number of coupled problems and the Lagrange multipliers $\Lambda_i$ are the solution to the adjoint equations
     \begin{equation}\label{eq:adjoint_eqs}
       \mathbf{K}^\top_i \Lambda_i = -\left(\frac{\partial \Psi}{\partial \mathbf{u}_i}\right)^\top - \sum_{j=1}^{i-1} \left[ 
-         \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,,
+         \mathbf{u}^\top_j \left(\frac{\partial \mathbf{K}_j}{\partial \mathbf{u}_i}\right)^\top + \mathbf{C}^\top_{ji} + \sum^N_{k=j+1} \mathbf{u}^\top_k \left(\frac{\partial \mathbf{C}_{jk}}{\partial \mathbf{u}_i}\right)^\top \right]\Lambda_j  \quad \forall i \in [1, N] \,.
    \end{equation}
  Following these adjoint systems, one needs to solve the first adjoint equation ($i=1$) 
  and feed the solution to the following adjoint equation ($i=2$), and so on, until one can solve the last adjoint problem $i=N$; backwards compared to the forward problem (\eqref{eq:multiphysics_weak_nonlinear}).
